@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r0"
+  },
+  "devDependencies": {
+    "cz-customizable": "^7.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  }
+}

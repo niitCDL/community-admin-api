@@ -1,0 +1,135 @@
+2023-05-23 18:24:55.198 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 18:24:58.066 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 18:25:52.811 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 18:25:55.534 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 18:28:49.477 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 18:28:52.181 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:02:07.622 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:02:10.438 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:03:53.634 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:03:56.335 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:04:12.905 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:04:15.696 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:05:18.790 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:05:21.701 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:05:42.163 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:05:45.078 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:08:27.894 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:08:30.655 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:11:34.321 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:11:37.378 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:11:55.899 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:11:58.724 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:16:10.415 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:16:14.035 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:19:29.782 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:19:32.563 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:19:41.394 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,real_name,avatar,gender,email,phone,org_id,super_admin,status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:19:41.411 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:22:11.832 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:22:14.487 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:22:22.035 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,avatar,gender,email,phone,org_id,super_admin,status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:22:22.054 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:25:07.750 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:25:10.457 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:25:20.841 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:25:20.860 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:25:20.895 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:27:11.916 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:27:14.594 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:27:24.214 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:27:24.234 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:27:24.272 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:29:52.725 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:29:55.454 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:30:02.146 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:30:02.164 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:30:02.196 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:30:53.366 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:30:56.084 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:31:01.916 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:31:01.935 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:31:01.966 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:33:42.817 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:33:45.625 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:33:54.565 [http-nio-8080-exec-24] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:33:54.582 [http-nio-8080-exec-24] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:33:54.616 [http-nio-8080-exec-24] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:39:06.976 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:39:09.728 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:39:14.438 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:39:14.457 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:39:14.488 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:39:36.417 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:39:39.250 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:39:50.384 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:39:50.404 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:39:50.434 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:42:52.313 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:42:55.123 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:43:09.821 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:43:09.838 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:43:09.871 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:45:17.357 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:45:20.156 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:45:43.102 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:45:43.122 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:45:43.154 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:48:29.912 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:48:32.680 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:48:40.959 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:48:40.978 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:48:41.008 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:49:20.121 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:49:22.946 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:49:30.909 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:49:30.928 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:49:30.960 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 19:52:07.921 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 19:52:10.596 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 19:52:14.860 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 19:52:14.877 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 19:52:14.913 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 20:36:25.155 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 20:36:27.869 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 20:36:45.154 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 20:36:47.918 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 20:38:22.610 [http-nio-8080-exec-28] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-23 20:38:22.629 [http-nio-8080-exec-28] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-23 20:38:22.671 [http-nio-8080-exec-28] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-23 20:38:34.664 [http-nio-8080-exec-12] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 20:38:34.665 [http-nio-8080-exec-12] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 20:38:34.683 [http-nio-8080-exec-12] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-23 20:42:06.535 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 20:42:09.264 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 20:42:22.057 [http-nio-8080-exec-14] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 20:42:22.077 [http-nio-8080-exec-14] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 20:42:22.110 [http-nio-8080-exec-14] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-23 20:44:29.724 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 20:44:32.833 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 20:44:42.945 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 20:44:43.119 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 20:44:43.293 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-23 20:50:43.225 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 20:50:45.972 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 20:50:55.500 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 20:50:55.518 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 20:50:55.553 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-23 20:53:43.360 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 20:53:46.394 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 20:54:03.134 [http-nio-8080-exec-9] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 20:54:03.313 [http-nio-8080-exec-9] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 20:54:03.489 [http-nio-8080-exec-9] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-23 21:09:23.553 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 21:09:26.438 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 21:09:40.135 [http-nio-8080-exec-4] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 21:09:40.156 [http-nio-8080-exec-4] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 21:09:40.193 [http-nio-8080-exec-4] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-23 21:10:01.774 [http-nio-8080-exec-13] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 21:10:01.774 [http-nio-8080-exec-13] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 21:10:01.794 [http-nio-8080-exec-13] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-23 21:11:19.442 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-23 21:11:22.178 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-23 21:11:34.305 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
+2023-05-23 21:11:34.325 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
+2023-05-23 21:11:34.359 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1

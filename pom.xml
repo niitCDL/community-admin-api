@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.soft2242.one</groupId>
+    <artifactId>community-admin-api</artifactId>
+    <version>1.0.0-RELEASES</version>
+    <packaging>pom</packaging>
+    <name>community-admin-api</name>
+    <description>智慧社区后台管理系统 API 项目</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.0.5</version>
+    </parent>
+
+    <modules>
+        <module>admin-api-base</module>
+        <module>admin-api-core</module>
+        <module>admin-api-server</module>
+        <module>api-plugin</module>
+    </modules>
+
+    <properties>
+        <skipTests>true</skipTests>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>17</java.version>
+        <mybatisplus.version>3.5.3.1</mybatisplus.version>
+        <dameng.version>8.1.2.79</dameng.version>
+        <knife4j.version>4.1.0</knife4j.version>
+        <hutool.version>5.8.11</hutool.version>
+        <captcha.version>1.6.2</captcha.version>
+        <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <aliyun.oss.version>3.15.2</aliyun.oss.version>
+        <aliyun.dysmsapi.version>2.0.23</aliyun.dysmsapi.version>
+        <tencentcloud.sdk.version>3.1.574</tencentcloud.sdk.version>
+        <qiniu.version>7.12.1</qiniu.version>
+        <minio.version>8.5.1</minio.version>
+        <qcloud.cos.version>5.6.97</qcloud.cos.version>
+        <huaweicloud.obs.version>3.22.3</huaweicloud.obs.version>
+        <easyexcel.version>3.2.1</easyexcel.version>
+        <okio.version>3.3.0</okio.version>
+        <easytrans.version>2.1.11</easytrans.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatisplus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.whvcse</groupId>
+                <artifactId>easy-captcha</artifactId>
+                <version>${captcha.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun.oss</groupId>
+                <artifactId>aliyun-sdk-oss</artifactId>
+                <version>${aliyun.oss.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>dysmsapi20170525</artifactId>
+                <version>${aliyun.dysmsapi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tencentcloudapi</groupId>
+                <artifactId>tencentcloud-sdk-java</artifactId>
+                <version>${tencentcloud.sdk.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.qiniu</groupId>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <version>${qiniu.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.qcloud</groupId>
+                <artifactId>cos_api</artifactId>
+                <version>${qcloud.cos.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>okio</artifactId>
+                <groupId>com.squareup.okio</groupId>
+                <version>${okio.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fhs-opensource</groupId>
+                <artifactId>easy-trans-spring-boot-starter</artifactId>
+                <version>${easytrans.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fhs-opensource</groupId>
+                <artifactId>easy-trans-mybatis-plus-extend</artifactId>
+                <version>${easytrans.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+</project>
