@@ -1,0 +1,53 @@
+spring:
+  data:
+    redis:
+      database: 1
+      host: localhost
+      port: 6379
+      #password:
+      #timeout: 6000ms  # 连接超时时长（毫秒）
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/smart_community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+    username: root
+    password: 123456
+    hikari:
+      connection-timeout: 30000     # 等待连接池分配链接的最大时长（毫秒），超过这个时长还没有可用的连接则发生 SQLException，默认：30 秒
+      minimum-idle: 2               # 最小空闲连接数
+      maximum-pool-size: 10         # 最大连接数
+      auto-commit: true             # 自动提交
+      idle-timeout: 600000          # 连接超时的最大时长（毫秒），超时则被释放（retired），默认：10 分钟
+      max-lifetime: 1800000         # 连接的生命时长（毫秒），超时而且没被使用则被释放（retired），默认： 30 分钟
+      connection-test-query: SELECT 1
+      pool-name: MyHikariCP
+
+#storage:
+#  enabled: true
+#  config:
+#    # 存储类型：local、aliyun、minio
+#    type: local
+#    domain: http://localhost:8080
+#  local:
+#    path: /Users/moqi/Documents/upload
+
+storage:
+  enabled: true
+  config:
+    type: minio
+  minio:
+    access-key: admin
+    secret-key: 12345678
+    end-point: http://43.137.12.232:9000
+    bucket-name: images
+
+#storage:
+#  enabled: true
+#  config:
+#    type: aliyun
+#    domain: https://mqxu-oss.oss-cn-hangzhou.aliyuncs.com
+#  aliyun:
+#    access-key-id: xxxxx
+#    access-key-secret: xxxxx
+#    end-point: oss-cn-hangzhou.aliyuncs.com
+#    bucket-name: mqxu-oss

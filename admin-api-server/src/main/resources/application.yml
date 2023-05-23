@@ -1,0 +1,75 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    threads:
+      max: 1000
+      min-spare: 30
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      cookie:
+        http-only: true
+
+knife4j:
+  enable: true
+  setting:
+    custom-code: 500
+    enable-footer-custom: false
+
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: dev
+  application:
+    name: smart-community-admin-api
+  jackson:
+    time-zone: GMT+8
+  servlet:
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+
+storage:
+  enabled: true
+  config:
+    # 存储类型：local、aliyun、tencent、qiniu、huawei、minio
+    type: local
+    domain: http://localhost:8080
+  local:
+    path: /Users/moqi/Documents/upload
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: top.mqxu.*.entity
+  global-config:
+    # 数据库相关配置
+    db-config:
+      # ID自增
+      id-type: AUTO
+      # 逻辑已删除值
+      logic-delete-value: 1
+      # 逻辑未删除值
+      logic-not-delete-value: 0
+    banner: false
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
+  configuration-properties:
+    prefix:
+    blobType: BLOB
+    boolValue: TRUE
+
+#easy trans 数据翻译组件
+easy-trans:
+  #启用redis缓存 如果不用redis请设置为false
+  is-enable-redis: false
+  #启用全局翻译(拦截所有responseBody进行自动翻译)，如果对于性能要求很高可关闭此配置
+  is-enable-global: true
+  #启用平铺模式
+  is-enable-tile: true
