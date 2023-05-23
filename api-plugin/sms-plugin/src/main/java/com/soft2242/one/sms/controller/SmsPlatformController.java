@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * 短信平台
  *
- * @author moqi
+ * @author ao&dl
  */
 @RestController
 @RequestMapping("message/sms/platform")

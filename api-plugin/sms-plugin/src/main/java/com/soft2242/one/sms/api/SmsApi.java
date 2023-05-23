@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * 短信服务API
  *
- * @author moqi
+ * @author ao&dl
  */
 public interface SmsApi {
 

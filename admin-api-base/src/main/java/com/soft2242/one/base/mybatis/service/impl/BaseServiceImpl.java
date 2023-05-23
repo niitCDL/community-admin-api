@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 基础服务类
  *
- * @author moqi
+ * @author ao&dl
  */
 public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {
 

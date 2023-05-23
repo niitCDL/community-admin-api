@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Swagger配置
  *
- * @author moqi
+ * @author ao&dl
  */
 @Configuration
 public class SwaggerConfig {

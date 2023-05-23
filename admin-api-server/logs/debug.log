@@ -1,7 +1,0 @@
-2023-05-22 17:47:58.244 [main] DEBUG top.mqxu.FileUploadTest - Running with Spring Boot v3.0.5, Spring v6.0.7
-2023-05-22 17:48:00.304 [ForkJoinPool.commonPool-worker-1] DEBUG top.mqxu.system.dao.SysDictDataDao.selectList - ==>  Preparing: SELECT id,dict_type_id,dict_label,dict_value,label_class,remark,sort,creator,create_time,updater,update_time,deleted FROM sys_dict_data WHERE deleted=0
-2023-05-22 17:48:00.314 [ForkJoinPool.commonPool-worker-1] DEBUG top.mqxu.system.dao.SysDictDataDao.selectList - ==> Parameters: 
-2023-05-22 17:48:00.329 [ForkJoinPool.commonPool-worker-1] DEBUG top.mqxu.system.dao.SysDictDataDao.selectList - <==      Total: 31
-2023-05-22 17:48:00.333 [ForkJoinPool.commonPool-worker-1] DEBUG top.mqxu.system.dao.SysDictTypeDao.selectList - ==>  Preparing: SELECT id,dict_type,dict_name,remark,sort,dict_source,dict_sql,creator,create_time,updater,update_time,deleted FROM sys_dict_type WHERE deleted=0
-2023-05-22 17:48:00.334 [ForkJoinPool.commonPool-worker-1] DEBUG top.mqxu.system.dao.SysDictTypeDao.selectList - ==> Parameters: 
-2023-05-22 17:48:00.336 [ForkJoinPool.commonPool-worker-1] DEBUG top.mqxu.system.dao.SysDictTypeDao.selectList - <==      Total: 12

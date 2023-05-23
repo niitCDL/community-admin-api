@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * 匿名用户(token不存在、错误)，异常处理器
  *
- * @author moqi
+ * @author ao&dl
  */
 public class SecurityAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Entity基类
  *
- * @author moqi
+ * @author ao&dl
  */
 @Data
 public abstract class BaseEntity implements TransPojo {

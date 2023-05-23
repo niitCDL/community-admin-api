@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * 短信平台
  *
- * @author moqi
+ * @author ao&dl
  */
 @Service
 @AllArgsConstructor

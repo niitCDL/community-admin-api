@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * 登录用户信息
  *
- * @author moqi
+ * @author ao&dl
  */
 @Data
 public class UserDetail implements UserDetails {
@@ -24,17 +24,32 @@ public class UserDetail implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
-    private Long tenantId;
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 密码
+     */
     private String password;
-    private String realName;
-    private String avatar;
-    private Integer gender;
-    private String email;
-    private String mobile;
-    private Long orgId;
-    private Integer status;
+
+    /**
+     * 手机号
+     */
+    private String phone;
+
+    /**
+     * 超级管理员   0：否   1：是
+     */
     private Integer superAdmin;
+    /**
+     * 账号状态 (1:正常,2:停用,3:冻结,4:删除)
+     */
+    private Integer accountStatus;
+    /**
+     * 在线状态 (0：离线 1:在线)
+     */
+    private Integer onlineStatus;
 
     /**
      * 数据权限范围

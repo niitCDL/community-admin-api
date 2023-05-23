@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 短信平台
  *
- * @author moqi
+ * @author ao&dl
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

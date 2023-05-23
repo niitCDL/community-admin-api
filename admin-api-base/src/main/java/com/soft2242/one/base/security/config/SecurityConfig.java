@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * SpringSecurity 配置文件
  *
- * @author moqi
+ * @author ao&dl
  */
 @Configuration
 @EnableWebSecurity
@@ -47,16 +47,9 @@ public class SecurityConfig {
     private UserDetailsService userDetailsService;
 
     @Resource
-    private MobileUserDetailsService mobileUserDetailsService;
-
-    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Resource
-    private ApplicationEventPublisher applicationEventPublisher;
 
-    @Resource
-    private MobileVerifyCodeService mobileVerifyCodeService;
 
     @Bean
     DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -66,19 +59,13 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
-    @Bean
-    MobileAuthenticationProvider mobileAuthenticationProvider() {
-        return new MobileAuthenticationProvider(mobileUserDetailsService, mobileVerifyCodeService);
-    }
 
     @Bean
     public AuthenticationManager authenticationManager() {
         List<AuthenticationProvider> providerList = new ArrayList<>();
         providerList.add(daoAuthenticationProvider());
-        providerList.add(mobileAuthenticationProvider());
 
         ProviderManager providerManager = new ProviderManager(providerList);
-        providerManager.setAuthenticationEventPublisher(new DefaultAuthenticationEventPublisher(applicationEventPublisher));
 
         return providerManager;
     }

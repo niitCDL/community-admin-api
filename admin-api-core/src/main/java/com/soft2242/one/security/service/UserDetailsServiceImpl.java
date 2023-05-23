@@ -1,5 +1,7 @@
 package com.soft2242.one.security.service;
 
+import com.soft2242.one.system.dao.SysUserDao;
+import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.service.SysUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Service;
 /**
  * 账号登录 UserDetailsService
  *
- * @author moqi
+ * @author ao&dl
  */
 @Service
 @AllArgsConstructor

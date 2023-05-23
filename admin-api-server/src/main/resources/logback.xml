@@ -108,6 +108,6 @@
         <appender-ref ref="ERROR_FILE" />
     </root>
 
-    <logger name="top.mqxu" level="DEBUG"/>
+    <logger name="com.soft2242.one" level="DEBUG"/>
 
 </configuration>

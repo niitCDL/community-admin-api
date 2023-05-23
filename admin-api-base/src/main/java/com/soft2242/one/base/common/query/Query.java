@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Range;
 /**
  * 查询公共参数
  *
- * @author moqi
+ * @author ao&dl
  */
 @Data
 public class Query {

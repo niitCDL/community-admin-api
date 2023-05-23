@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * 启动主类
  *
- * @author moqi
+ * @author ao&dl
  */
 @SpringBootApplication
 public class ServerApplication extends SpringBootServletInitializer {

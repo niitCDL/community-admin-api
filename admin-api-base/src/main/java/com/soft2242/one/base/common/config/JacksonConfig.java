@@ -23,7 +23,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Jackson 配置
  *
- * @author moqi
+ * @author ao&dl
  */
 @Configuration
 public class JacksonConfig {

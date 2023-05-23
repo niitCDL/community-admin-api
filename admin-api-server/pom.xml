@@ -33,7 +33,7 @@
         </dependency>
 
         <dependency>
-            <groupId>top.mqxu</groupId>
+            <groupId>com.soft2242.one</groupId>
             <artifactId>storage-plugin</artifactId>
             <version>1.0.0-RELEASES</version>
         </dependency>

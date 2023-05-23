@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 /**
  * 基础Dao
  *
- * @author moqi
+ * @author ao&dl
  */
 public interface BaseDao<T> extends BaseMapper<T> {
 

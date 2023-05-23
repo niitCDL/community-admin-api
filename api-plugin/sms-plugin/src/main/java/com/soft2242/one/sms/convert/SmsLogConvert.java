@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 短信日志
  *
- * @author moqi
+ * @author ao&dl
  */
 @Mapper
 public interface SmsLogConvert {

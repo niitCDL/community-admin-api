@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Redis Cache
  *
- * @author moqi
+ * @author ao&dl
  */
 @Component
 public class RedisCache {

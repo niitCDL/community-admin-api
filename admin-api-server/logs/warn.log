@@ -1,1 +1,0 @@
-2023-05-22 17:47:59.932 [main] WARN  o.s.core.LocalVariableTableParameterNameDiscoverer - Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.fhs.trans.config.TransServiceConfig

@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 短信配置项
  *
- * @author moqi
+ * @author ao&dl
  */
 @Data
 public class SmsConfig {

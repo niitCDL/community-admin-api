@@ -3,7 +3,7 @@ package com.soft2242.one.base.common.constant;
 /**
  * 常量
  *
- * @author moqi
+ * @author ao&dl
  */
 public interface Constant {
     /**

@@ -11,7 +11,7 @@ import java.util.Collection;
 /**
  * 手机短信登录 AuthenticationToken
  *
- * @author moqi
+ * @author ao&dl
  */
 public class MobileAuthenticationToken extends AbstractAuthenticationToken {
     @Serial
