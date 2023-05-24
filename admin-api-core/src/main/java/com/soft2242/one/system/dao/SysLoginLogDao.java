@@ -2,10 +2,9 @@ package com.soft2242.one.system.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.soft2242.one.base.mybatis.dao.BaseDao;
+import com.soft2242.one.system.entity.SysLoginLogEntity;
 import com.soft2242.one.system.entity.SysUserEntity;
-import com.soft2242.one.system.entity.SysUserInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * 系统用户
@@ -13,9 +12,6 @@ import org.apache.ibatis.annotations.Param;
  * @author mqxu
  */
 @Mapper
-public interface SysUserInfoDao extends BaseDao<SysUserInfoEntity> {
+public interface SysLoginLogDao extends BaseDao<SysLoginLogEntity> {
 
-    SysUserInfoEntity getByAdminId(Long id);
-
-    void recordLastLoginTime(@Param("lastLoginTime")String date, @Param("id")Long id);
 }

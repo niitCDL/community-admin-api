@@ -49,6 +49,9 @@ public class SecurityConfig {
     @Resource
     private PasswordEncoder passwordEncoder;
 
+    @Resource
+    private ApplicationEventPublisher applicationEventPublisher;
+
 
 
     @Bean
@@ -66,6 +69,7 @@ public class SecurityConfig {
         providerList.add(daoAuthenticationProvider());
 
         ProviderManager providerManager = new ProviderManager(providerList);
+        providerManager.setAuthenticationEventPublisher(new DefaultAuthenticationEventPublisher(applicationEventPublisher));
 
         return providerManager;
     }
