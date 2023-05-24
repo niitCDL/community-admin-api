@@ -106,3 +106,34 @@
 2023-05-24 16:55:41.915 [http-nio-8080-exec-27] DEBUG com.soft2242.one.system.dao.SysMenuDao.deleteById - <==    Updates: 1
 2023-05-24 16:55:41.918 [http-nio-8080-exec-27] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==>  Preparing: UPDATE sys_role_menu SET deleted=1 WHERE deleted=0 AND (menu_id = ?)
 2023-05-24 16:55:41.918 [http-nio-8080-exec-27] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==> Parameters: 71(Long)
+2023-05-24 17:02:22.898 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:02:24.801 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:02:35.836 [http-nio-8080-exec-1] DEBUG c.soft2242.one.system.dao.SysMenuDao.selectCount - ==>  Preparing: SELECT COUNT( * ) AS total FROM sys_menu WHERE deleted=0 AND (pid = ?)
+2023-05-24 17:02:35.850 [http-nio-8080-exec-1] DEBUG c.soft2242.one.system.dao.SysMenuDao.selectCount - ==> Parameters: 71(Long)
+2023-05-24 17:02:35.878 [http-nio-8080-exec-1] DEBUG c.soft2242.one.system.dao.SysMenuDao.selectCount - <==      Total: 1
+2023-05-24 17:02:35.945 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysMenuDao.deleteById - ==>  Preparing: UPDATE sys_menu SET updater=?,update_time=?, deleted=1 WHERE id=? AND deleted=0
+2023-05-24 17:02:35.946 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysMenuDao.deleteById - ==> Parameters: 10000(Long), 2023-05-24 17:02:35.907(Timestamp), 71(Long)
+2023-05-24 17:02:35.975 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysMenuDao.deleteById - <==    Updates: 1
+2023-05-24 17:02:35.979 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==>  Preparing: UPDATE sys_role_menu SET deleted=1 WHERE deleted=0 AND (authority_id = ?)
+2023-05-24 17:02:35.980 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==> Parameters: 71(Long)
+2023-05-24 17:02:36.008 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - <==    Updates: 0
+2023-05-24 17:06:54.022 [http-nio-8080-exec-7] DEBUG c.soft2242.one.system.dao.SysMenuDao.selectCount - ==>  Preparing: SELECT COUNT( * ) AS total FROM sys_menu WHERE deleted=0 AND (pid = ?)
+2023-05-24 17:06:54.023 [http-nio-8080-exec-7] DEBUG c.soft2242.one.system.dao.SysMenuDao.selectCount - ==> Parameters: 70(Long)
+2023-05-24 17:06:54.037 [http-nio-8080-exec-7] DEBUG c.soft2242.one.system.dao.SysMenuDao.selectCount - <==      Total: 1
+2023-05-24 17:06:54.053 [http-nio-8080-exec-7] DEBUG com.soft2242.one.system.dao.SysMenuDao.deleteById - ==>  Preparing: UPDATE sys_menu SET updater=?,update_time=?, deleted=1 WHERE id=? AND deleted=0
+2023-05-24 17:06:54.054 [http-nio-8080-exec-7] DEBUG com.soft2242.one.system.dao.SysMenuDao.deleteById - ==> Parameters: 10000(Long), 2023-05-24 17:06:54.052(Timestamp), 70(Long)
+2023-05-24 17:06:54.084 [http-nio-8080-exec-7] DEBUG com.soft2242.one.system.dao.SysMenuDao.deleteById - <==    Updates: 1
+2023-05-24 17:06:54.087 [http-nio-8080-exec-7] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==>  Preparing: UPDATE sys_role_menu SET deleted=1 WHERE deleted=0 AND (authority_id = ?)
+2023-05-24 17:06:54.088 [http-nio-8080-exec-7] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==> Parameters: 70(Long)
+2023-05-24 17:06:54.117 [http-nio-8080-exec-7] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - <==    Updates: 0
+2023-05-24 17:08:32.992 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysRoleDao.deleteById - ==>  Preparing: UPDATE sys_role SET updater=?,update_time=?, deleted=1 WHERE id=? AND deleted=0
+2023-05-24 17:08:32.993 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysRoleDao.deleteById - ==> Parameters: 10000(Long), 2023-05-24 17:08:32.991(Timestamp), 2(Long)
+2023-05-24 17:08:33.026 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysUserRoleDao.delete - ==>  Preparing: UPDATE sys_role_admin SET deleted=1 WHERE deleted=0 AND (role_id IN (?))
+2023-05-24 17:08:33.026 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysUserRoleDao.delete - ==> Parameters: 2(Long)
+2023-05-24 17:08:33.054 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysUserRoleDao.delete - <==    Updates: 2
+2023-05-24 17:08:33.056 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==>  Preparing: UPDATE sys_role_menu SET deleted=1 WHERE deleted=0 AND (role_id IN (?))
+2023-05-24 17:08:33.057 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - ==> Parameters: 2(Long)
+2023-05-24 17:08:33.088 [http-nio-8080-exec-15] DEBUG com.soft2242.one.system.dao.SysRoleMenuDao.delete - <==    Updates: 0
+2023-05-24 17:08:33.091 [http-nio-8080-exec-15] DEBUG c.s.one.system.dao.SysRoleDataScopeDao.delete - ==>  Preparing: UPDATE sys_role_data_scope SET deleted=1 WHERE deleted=0 AND (role_id IN (?))
+2023-05-24 17:08:33.091 [http-nio-8080-exec-15] DEBUG c.s.one.system.dao.SysRoleDataScopeDao.delete - ==> Parameters: 2(Long)
+2023-05-24 17:08:33.119 [http-nio-8080-exec-15] DEBUG c.s.one.system.dao.SysRoleDataScopeDao.delete - <==    Updates: 0
