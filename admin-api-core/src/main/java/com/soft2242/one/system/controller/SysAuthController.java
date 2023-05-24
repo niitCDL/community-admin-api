@@ -1,6 +1,7 @@
 package com.soft2242.one.system.controller;
 
 import com.soft2242.one.base.common.utils.Result;
+import com.soft2242.one.base.security.utils.TokenUtils;
 import com.soft2242.one.system.service.SysAuthService;
 import com.soft2242.one.system.service.SysCaptchaService;
 import com.soft2242.one.system.vo.SysAccountLoginVO;
@@ -8,6 +9,7 @@ import com.soft2242.one.system.vo.SysCaptchaVO;
 import com.soft2242.one.system.vo.SysTokenVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,5 +39,13 @@ public class SysAuthController {
     public Result<SysTokenVO> login(@RequestBody SysAccountLoginVO login) {
         SysTokenVO token = sysAuthService.loginByAccount(login);
         return Result.ok(token);
+    }
+
+    @PostMapping("logout")
+    @Operation(summary = "退出")
+    public Result<String> logout(HttpServletRequest request) {
+        sysAuthService.logout(TokenUtils.getAccessToken(request));
+
+        return Result.ok();
     }
 }

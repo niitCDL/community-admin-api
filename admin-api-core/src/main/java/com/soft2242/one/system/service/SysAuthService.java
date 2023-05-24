@@ -17,4 +17,6 @@ public interface SysAuthService {
      * @param login 登录信息
      */
     SysTokenVO loginByAccount(SysAccountLoginVO login);
+
+    void logout(String accessToken);
 }
