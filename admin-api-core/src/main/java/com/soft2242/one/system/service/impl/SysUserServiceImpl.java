@@ -43,7 +43,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         //保存到admin表中
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setId(sysUserDao.getMaxId() + 1);
-        sysUserEntity.setUsername(user.getUserName());
+        sysUserEntity.setUsername(user.getUsername());
         sysUserEntity.setPassword(user.getPassword());
         sysUserEntity.setAccountStatus(UserStatusEnum.ENABLED.getValue());
         sysUserEntity.setOnlineStatus(UserOnlineEnum.OFFLINE.getValue());
