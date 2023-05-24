@@ -19,10 +19,13 @@ public class SysUserInfoVO implements Serializable {
     private Long adminId;
 
     @Schema(description = "登录账号")
-    private String userName;
+    private String username;
 
     @Schema(description = "登录密码")
     private String password;
+
+    @Schema(description = "手机号")
+    private String phone;
 
     @Schema(description = "是否是超管 1:是 0:不是")
     private Integer superAdmin;
