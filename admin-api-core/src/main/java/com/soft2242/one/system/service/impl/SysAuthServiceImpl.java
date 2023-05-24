@@ -2,6 +2,7 @@ package com.soft2242.one.system.service.impl;
 
 
 import cn.hutool.core.util.RandomUtil;
+import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.exception.ServerException;
 import com.soft2242.one.base.security.cache.TokenStoreCache;
 import com.soft2242.one.base.security.user.SecurityUser;
@@ -70,6 +71,17 @@ public class SysAuthServiceImpl implements SysAuthService {
         tokenStoreCache.saveUser(accessToken, user);
 
         return new SysTokenVO(accessToken);
+    }
+
+    @Override
+    public void logout(String accessToken) {
+        // 用户信息
+        UserDetail user = tokenStoreCache.getUser(accessToken);
+
+        // 删除用户信息
+        tokenStoreCache.deleteUser(accessToken);
+
+        // 保存登录日志
     }
 
 }
