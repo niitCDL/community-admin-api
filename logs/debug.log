@@ -133,3 +133,135 @@
 2023-05-23 21:11:34.305 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==>  Preparing: select * from sys_admin t1, sys_admin_info t2 where t1.id = t2.admin_id and t1.id = ?
 2023-05-23 21:11:34.325 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - ==> Parameters: 10000(Long)
 2023-05-23 21:11:34.359 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserInfoDao.getByAdminId - <==      Total: 1
+2023-05-24 15:33:47.365 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 15:33:50.370 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 15:34:21.789 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 15:34:21.811 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 15:34:21.845 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 15:35:38.297 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 15:35:41.108 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 15:35:52.512 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 15:35:52.533 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 15:35:52.568 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 15:41:56.153 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 15:41:58.873 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 15:42:18.972 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserDao.getMaxId - ==>  Preparing: select max(id) from sys_admin
+2023-05-24 15:42:18.991 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserDao.getMaxId - ==> Parameters: 
+2023-05-24 15:42:19.021 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserDao.getMaxId - <==      Total: 1
+2023-05-24 15:42:19.054 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserDao.insert - ==>  Preparing: INSERT INTO sys_admin ( id, username, password, account_status, online_status, creator, create_time, updater, update_time, deleted ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 15:42:19.056 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserDao.insert - ==> Parameters: 10001(Long), ls(String), {bcrypt}$2a$10$CgCmsYWZDcIj.SbtyJq6AuatQKRhSai2hhGI6Ni87T.qrecjGIwAa(String), 1(Integer), 0(Integer), 10000(Long), 2023-05-24 15:42:18.531(Timestamp), 10000(Long), 2023-05-24 15:42:18.531(Timestamp), 0(Integer)
+2023-05-24 15:42:19.096 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserDao.insert - <==    Updates: 1
+2023-05-24 15:42:19.103 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserInfoDao.insert - ==>  Preparing: INSERT INTO sys_admin_info ( admin_id, real_name, avatar, gender, sort, creator, create_time, updater, update_time, deleted ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 15:42:19.104 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserInfoDao.insert - ==> Parameters: 10001(Long), 默认用户名(String), hangzhou.aliyuncs.com/avatar/me.png(String), 0(Integer), 0(Integer), 10000(Long), 2023-05-24 15:42:18.531(Timestamp), 10000(Long), 2023-05-24 15:42:18.531(Timestamp), 0(Integer)
+2023-05-24 15:42:19.139 [http-nio-8080-exec-12] DEBUG com.soft2242.one.system.dao.SysUserInfoDao.insert - <==    Updates: 1
+2023-05-24 15:51:32.495 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 15:51:35.553 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 15:51:59.544 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 15:51:59.562 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 15:51:59.596 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 15:52:05.295 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 15:52:05.296 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 15:52:05.314 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 16:56:06.065 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 16:56:09.107 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 16:56:35.374 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 16:56:35.393 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 16:56:35.425 [http-nio-8080-exec-9] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 16:56:45.626 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 16:56:45.627 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 16:56:45.641 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 16:56:45.762 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 16:56:45.763 [http-nio-8080-exec-10] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 16:56:45.757(Timestamp), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), local.id.seewo.com(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 0(Integer), 2023-05-24 16:56:45.757(Timestamp)
+2023-05-24 16:58:57.898 [http-nio-8080-exec-13] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 16:58:57.899 [http-nio-8080-exec-13] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 16:58:57.914 [http-nio-8080-exec-13] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 16:58:58.028 [http-nio-8080-exec-13] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 16:58:58.029 [http-nio-8080-exec-13] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 16:56:45.757(Timestamp), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), local.id.seewo.com(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 0(Integer), 2023-05-24 16:56:45.757(Timestamp)
+2023-05-24 16:58:58.063 [http-nio-8080-exec-13] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:00:06.773 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:00:09.771 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:00:32.020 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:00:32.040 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:00:32.117 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:00:32.247 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:00:32.249 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 17:00:32.243(Timestamp), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), local.id.seewo.com(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 0(Integer), 2023-05-24 17:00:32.243(Timestamp)
+2023-05-24 17:00:32.287 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:00:32.335 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserDao.recordLastLoginTime - ==>  Preparing: update sys_admin set last_login_time = ? where id = ?
+2023-05-24 17:00:32.335 [http-nio-8080-exec-1] DEBUG c.s.one.system.dao.SysUserDao.recordLastLoginTime - ==> Parameters: 2023-05-24(String), 10000(Long)
+2023-05-24 17:04:37.686 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:04:40.557 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:04:52.354 [http-nio-8080-exec-25] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:04:52.373 [http-nio-8080-exec-25] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:04:52.405 [http-nio-8080-exec-25] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:04:52.554 [http-nio-8080-exec-25] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:04:52.555 [http-nio-8080-exec-25] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 17:04:52.55(Timestamp), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), local.id.seewo.com(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 0(Integer), 2023-05-24 17:04:52.55(Timestamp)
+2023-05-24 17:04:52.588 [http-nio-8080-exec-25] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:04:52.649 [http-nio-8080-exec-25] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==>  Preparing: update sys_admin_info set last_login_time = ? where admin_id = ?
+2023-05-24 17:04:52.649 [http-nio-8080-exec-25] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==> Parameters: 2023-05-24(String), 10000(Long)
+2023-05-24 17:04:52.748 [http-nio-8080-exec-25] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - <==    Updates: 1
+2023-05-24 17:09:30.255 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:09:33.108 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:09:40.755 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:09:40.774 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:09:40.806 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:09:40.943 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, address, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:09:40.944 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 17:09:40.937(Timestamp), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), local.id.seewo.com(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 内网IP(String), 0(Integer), 2023-05-24 17:09:40.937(Timestamp)
+2023-05-24 17:09:40.981 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:09:41.032 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==>  Preparing: update sys_admin_info set last_login_time = ? where admin_id = ?
+2023-05-24 17:09:41.032 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==> Parameters: 2023-05-24 17:09:40(String), 10000(Long)
+2023-05-24 17:09:41.065 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - <==    Updates: 1
+2023-05-24 17:18:57.989 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:19:00.904 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:19:27.030 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:19:27.050 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:19:27.084 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:19:27.232 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, address, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:19:27.234 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: null, Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), local.id.seewo.com(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 内网IP(String), 0(Integer), 2023-05-24 17:19:27.229(Timestamp)
+2023-05-24 17:19:27.270 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:19:27.318 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==>  Preparing: update sys_admin_info set last_login_time = ? where admin_id = ?
+2023-05-24 17:19:27.318 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==> Parameters: 2023-05-24 17:19:27(String), 10000(Long)
+2023-05-24 17:19:27.358 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - <==    Updates: 1
+2023-05-24 17:22:39.158 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:22:42.140 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:22:50.105 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:22:50.125 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:22:50.157 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:22:50.303 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, address, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:22:50.304 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 17:22:50(String), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), 0:0:0:0:0:0:0:1(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 内网IP(String), 0(Integer), 2023-05-24 17:22:50(String)
+2023-05-24 17:22:50.336 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:22:50.384 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==>  Preparing: update sys_admin_info set last_login_time = ? where admin_id = ?
+2023-05-24 17:22:50.384 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==> Parameters: 2023-05-24 17:22:50(String), 10000(Long)
+2023-05-24 17:22:50.415 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - <==    Updates: 1
+2023-05-24 17:26:46.176 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:26:49.068 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:27:00.529 [http-nio-8080-exec-22] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:27:00.549 [http-nio-8080-exec-22] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:27:00.593 [http-nio-8080-exec-22] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:27:00.731 [http-nio-8080-exec-22] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, address, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:27:00.733 [http-nio-8080-exec-22] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 17:27:00(String), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), 127.0.0.1(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 内网IP(String), 0(Integer), 2023-05-24 17:27:00(String)
+2023-05-24 17:27:00.767 [http-nio-8080-exec-22] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:27:00.818 [http-nio-8080-exec-22] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==>  Preparing: update sys_admin_info set last_login_time = ? where admin_id = ?
+2023-05-24 17:27:00.818 [http-nio-8080-exec-22] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==> Parameters: 2023-05-24 17:27:00(String), 10000(Long)
+2023-05-24 17:27:00.847 [http-nio-8080-exec-22] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - <==    Updates: 1
+2023-05-24 17:30:03.239 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:30:06.225 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:30:11.026 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:30:11.045 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:30:11.076 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:30:11.221 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, address, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:30:11.222 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 17:30:11(String), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), local.id.seewo.com(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 内网IP(String), 0(Integer), 2023-05-24 17:30:11(String)
+2023-05-24 17:30:11.261 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:30:11.316 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==>  Preparing: update sys_admin_info set last_login_time = ? where admin_id = ?
+2023-05-24 17:30:11.316 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==> Parameters: 2023-05-24 17:30:11(String), 10000(Long)
+2023-05-24 17:30:11.345 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - <==    Updates: 1
+2023-05-24 17:37:04.210 [main] DEBUG com.soft2242.one.ServerApplication - Running with Spring Boot v3.0.5, Spring v6.0.7
+2023-05-24 17:37:07.190 [main] DEBUG c.s.o.b.security.filter.AuthenticationTokenFilter - Filter 'authenticationTokenFilter' configured for use
+2023-05-24 17:37:12.350 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==>  Preparing: SELECT id,username,password,phone,super_admin,account_status,online_status,creator,create_time,updater,update_time,deleted FROM sys_admin WHERE deleted=0 AND (username = ?)
+2023-05-24 17:37:12.371 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - ==> Parameters: admin(String)
+2023-05-24 17:37:12.406 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysUserDao.selectList - <==      Total: 1
+2023-05-24 17:37:12.535 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==>  Preparing: INSERT INTO t_system_operation_log ( login_time, terminal_type, browser_type, os, device_name, device_mac, login_ip, address, deleted, create_time ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2023-05-24 17:37:12.537 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - ==> Parameters: 2023-05-24 17:37:12(String), Windows终端(String), Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/113.0(String), Windows 11(String), LAPTOP-LS9CBS64(String), 00-50-56-C0-00-08(String), 127.0.0.1(String), 内网IP(String), 0(Integer), 2023-05-24 17:37:12(String)
+2023-05-24 17:37:12.569 [http-nio-8080-exec-1] DEBUG com.soft2242.one.system.dao.SysLoginLogDao.insert - <==    Updates: 1
+2023-05-24 17:37:12.621 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==>  Preparing: update sys_admin_info set last_login_time = ? where admin_id = ?
+2023-05-24 17:37:12.622 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - ==> Parameters: 2023-05-24 17:37:12(String), 10000(Long)
+2023-05-24 17:37:12.654 [http-nio-8080-exec-1] DEBUG c.s.o.s.dao.SysUserInfoDao.recordLastLoginTime - <==    Updates: 1

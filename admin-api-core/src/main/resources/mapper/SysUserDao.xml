@@ -3,5 +3,8 @@
 
 <mapper namespace="com.soft2242.one.system.dao.SysUserDao">
 
-
+    <select id="getMaxId" resultType="java.lang.Long">
+        select max(id)
+        from sys_admin
+    </select>
 </mapper>
