@@ -35,4 +35,9 @@ public class SysUserEntity extends BaseEntity {
      * 在线状态 (0：离线 1:在线)
      */
     private Integer onlineStatus;
+
+    /**
+     * token
+     */
+    private String token;
 }

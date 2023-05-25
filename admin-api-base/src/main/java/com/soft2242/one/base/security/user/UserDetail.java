@@ -72,6 +72,11 @@ public class UserDetail implements UserDetails {
      */
     private String email;
 
+    /**
+     * token
+     */
+    private String token;
+
 
     /**
      * 数据权限范围

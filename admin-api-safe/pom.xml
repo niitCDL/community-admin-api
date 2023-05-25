@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.soft2242.one</groupId>
+        <artifactId>community-admin-api</artifactId>
+        <version>1.0.0-RELEASES</version>
+    </parent>
+
+    <artifactId>admin-api-safe</artifactId>
+    <version>1.0.0-RELEASES</version>
+    <packaging>jar</packaging>
+    <description>admin api 安防模块</description>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.soft2242.one</groupId>
+            <artifactId>admin-api-base</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
+    </dependencies>
+
+</project>

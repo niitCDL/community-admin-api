@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft2242.one.dao.NoticeReaderDao">
+
+    <select id="getList" resultType="com.soft2242.one.entity.NoticeReaderEntity">
+        select t1.*
+        from t_notice_reader t1 where t1.deleted = 0
+        <if test="noticeId != null and noticeId != 0">
+            and t1.notice_id = #{noticeId}
+        </if>
+        <if test="userId != null and userId != 0">
+            and t1.user_id = #{userId}
+        </if>
+    </select>
+</mapper>
