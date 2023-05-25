@@ -1,30 +1,27 @@
 package com.soft2242.one.service;
 
+import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.entity.PatrolPointsEntity;
-import com.soft2242.one.entity.PatrolRecordsEntity;
-import org.apache.ibatis.annotations.Param;
+import com.soft2242.one.query.PatrolPointsQuery;
+import com.soft2242.one.vo.PatrolPointsVO;
+
 
 import java.util.List;
 
 /**
- * @Author huang
- * @Description
- * @Date 2023 05 24 17 09
- **/
-public interface PatrolPointsService{
-    /**
-     * 根据社区id获取相匹配的所有巡更点信息
-     * @param communityId 社区id
-     * @return 巡更点list
-     */
+ * 巡更点表
+ *
+ * @author 软件2242 soft2242@gmail.com
+ * @since 1.0.0 2023-05-25
+ */
+public interface PatrolPointsService extends BaseService<PatrolPointsEntity> {
 
-    List<PatrolPointsEntity> getPointsList( Long  communityId);
+    PageResult<PatrolPointsVO> page(PatrolPointsQuery query);
 
-    /**
-     * 根据巡更点id查询所有的巡更记录
-     * @param pointId 巡更点id
-     * @return  巡更记录list
-     */
-    List<PatrolRecordsEntity> getRecordList(Long pointId);
+    void save(PatrolPointsVO vo);
+
+    void update(PatrolPointsVO vo);
+
+    void delete(List<Long> idList);
 }

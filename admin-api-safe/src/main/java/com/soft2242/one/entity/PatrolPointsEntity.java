@@ -1,70 +1,79 @@
 package com.soft2242.one.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
+import com.baomidou.mybatisplus.annotation.*;
 import java.util.Date;
 
 /**
- * @Author huang
- * @Description 巡更点实体类
- * @Date 2023 05 24 15 55
- **/
+ * 巡更点表
+ *
+ * @author 软件2242 soft2242@gmail.com
+ * @since 1.0.0 2023-05-25
+ */
+
 @Data
-@EqualsAndHashCode(callSuper = false)
 @TableName("t_patrol_points")
 public class PatrolPointsEntity {
-    /**
-     * 自增主键
-     */
-    private  Long id;
+	/**
+	* 自增主键
+	*/
+	@TableId
+	private Long id;
 
-    /**
-     * 所属社区id
-     */
-    private  Long communityId;
+	/**
+	* 所属小区id（t_communtiy）
+	*/
+	private Long communityId;
 
-    /**
-     * 巡更点名称
-     */
-    private String pointName;
+	/**
+	* 巡更点名称
+	*/
+	private String pointName;
 
+	/**
+	* 所在楼宇id（t_building）
+	*/
+	private Long buildingId;
 
+	/**
+	* 状态（0：正常，1：禁用）
+	*/
+	private Integer status;
 
-    /**
-     * 状态（0：正常，1：禁用）
-     */
-    private Integer status;
+	/**
+	* 删除标识（0：未删除，1：已删除）
+	*/
+	private Integer deleted;
 
+	/**
+	* 巡更点位置编号
+	*/
+	private String pointNumber;
 
-    /**
-     * 删除标识（0：未删除，1：已删除）
-     */
+	/**
+	* 创建者
+	*/
+	private Long creator;
 
-    private Integer deleted;
+	/**
+	* 经纬度坐标用","分隔
+	*/
+	private String coordinate;
 
-    /**
-     * 创建者
-     */
-    private  Long creator;
+	/**
+	* 创建时间
+	*/
+	private Date createTime;
 
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
+	/**
+	* 修改者
+	*/
+	private Long updater;
 
-    /**
-     * 修改者
-     */
-    private  Long  updater;
+	/**
+	* 修改时间
+	*/
+	private Date updateTime;
 
-    /**
-     * 修改时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private  Date updateTime;
 }

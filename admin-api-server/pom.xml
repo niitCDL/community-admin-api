@@ -32,6 +32,7 @@
             <version>1.0.0-RELEASES</version>
         </dependency>
 
+        
         <dependency>
             <groupId>com.soft2242.one</groupId>
             <artifactId>storage-plugin</artifactId>
@@ -42,6 +43,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+    
+        <dependency>
+            <groupId>com.soft2242.one</groupId>
+            <artifactId>admin-api-safe</artifactId>
+            <version>1.0.0-RELEASES</version>
         </dependency>
     </dependencies>
 
