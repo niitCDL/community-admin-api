@@ -17,6 +17,7 @@
     </parent>
 
     <modules>
+        <module>admin-api-community</module>
         <module>admin-api-base</module>
         <module>admin-api-core</module>
         <module>admin-api-server</module>
