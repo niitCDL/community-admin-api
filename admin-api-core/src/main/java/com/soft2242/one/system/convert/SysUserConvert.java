@@ -2,6 +2,7 @@ package com.soft2242.one.system.convert;
 
 import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.system.entity.SysUserEntity;
+import com.soft2242.one.system.entity.SysUserInfoEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
