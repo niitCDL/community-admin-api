@@ -2,23 +2,46 @@ package com.soft2242.one.system.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.exception.ServerException;
+import com.soft2242.one.base.common.utils.DateUtils;
+import com.soft2242.one.base.common.utils.ExcelUtils;
+import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.base.security.cache.TokenStoreCache;
 import com.soft2242.one.base.security.user.SecurityUser;
+import com.soft2242.one.system.convert.SysUserConvert;
 import com.soft2242.one.system.dao.SysUserDao;
 import com.soft2242.one.system.dao.SysUserInfoDao;
 import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
+import com.soft2242.one.system.enums.SuperAdminEnum;
 import com.soft2242.one.system.enums.UserGenderEnum;
 import com.soft2242.one.system.enums.UserOnlineEnum;
 import com.soft2242.one.system.enums.UserStatusEnum;
+import com.soft2242.one.system.query.SysUserQuery;
 import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.system.vo.SysUserInfoVO;
+import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户管理
@@ -35,8 +58,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
 
     private final TokenStoreCache tokenStoreCache;
 
-    public SysUserInfoEntity getUserInfoByAdminId(Long id){
-        return baseMapper.getByAdminId(id);
+    public SysUserInfoEntity getUserInfoByAdminId(Long id) {
+        return sysUserInfoDao.getByAdminId(id);
     }
 
     @Override
@@ -77,20 +100,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
 
     @Override
     public void recordLastLoginTime(String date, Long id) {
-        sysUserInfoDao.recordLastLoginTime(date,id);
+        sysUserInfoDao.recordLastLoginTime(date, id);
     }
 
     /**
      * 修改用户状态
-     * @param id 用户ID
+     *
+     * @param id            用户ID
      * @param accountStatus 用户状态
      */
     @Override
-    public void changeAccountStatus(Long id,Integer accountStatus) {
+    public void changeAccountStatus(Long id, Integer accountStatus) {
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setId(id);
         sysUserEntity.setAccountStatus(accountStatus);
-        if (UserStatusEnum.DISABLE.getValue() == accountStatus){
+        if (UserStatusEnum.DISABLE.getValue() == accountStatus) {
             tokenStoreCache.deleteUser(getTokenById(id));
             sysUserEntity.setToken("");
             sysUserEntity.setOnlineStatus(UserOnlineEnum.OFFLINE.getValue());
@@ -102,6 +126,56 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     @Override
     public void update(SysUserEntity sysUserEntity) {
         sysUserDao.updateById(sysUserEntity);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param query
+     * @return
+     */
+    @Override
+    public PageResult<SysUserVO> page(SysUserQuery query) {
+        // 查询参数
+        Map<String, Object> params = getParams(query);
+        // 分页查询
+        IPage<SysUserInfoEntity> page = getPage(query);
+        params.put(Constant.PAGE, page);
+
+        // 数据列表
+        List<SysUserVO> list = sysUserInfoDao.getList(params);
+        return new PageResult<>(list, page.getTotal());
+    }
+
+    @Override
+    public void delete(List<Long> idList) {
+        for (Long id : idList) {
+            sysUserInfoDao.delete(new QueryWrapper<SysUserInfoEntity>().eq("admin_id", id));
+        }
+        sysUserDao.deleteBatchIds(idList);
+    }
+
+    @Override
+    public void updatePassword(Long id, String newPassword) {
+        // 修改密码
+        SysUserEntity user = new SysUserEntity();
+        user.setId(id);
+        user.setPassword(newPassword);
+
+        sysUserDao.updateById(user);
+    }
+
+    @Override
+    public void export() {
+
+    }
+
+    private Map<String, Object> getParams(SysUserQuery query) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", query.getUsername());
+        params.put("phone", query.getPhone());
+        params.put("gender", query.getGender());
+        return params;
     }
 
     @Override

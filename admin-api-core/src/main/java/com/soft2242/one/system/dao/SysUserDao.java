@@ -6,6 +6,8 @@ import com.soft2242.one.system.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 系统用户
@@ -21,4 +23,5 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
     Long getMaxId();
 
     String getTokenById(@Param("id") Long id);
+
 }
