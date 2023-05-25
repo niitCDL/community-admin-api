@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft2242.one.dao.CommunityDao">
+
+    <select id="getList" resultType="com.soft2242.one.entity.Community">
+        SELECT t1.*
+        FROM t_community t1 WHERE t1.deleted = 0
+        <if test="title!=null and title.trim() != ''">
+            AND t1.community_name LIKE CONCAT('%',#{community_name},'%')
+        </if>
+    </select>
+</mapper>
