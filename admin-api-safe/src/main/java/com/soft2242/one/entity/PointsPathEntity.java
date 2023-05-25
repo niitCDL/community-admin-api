@@ -7,6 +7,7 @@ import lombok.Data;
 /**
  * 巡更点巡更线路关联表实体类
  * @author litao
+ * @since 1.0.0 2023-05-25
  */
 @Data
 @TableName("t_points_path")

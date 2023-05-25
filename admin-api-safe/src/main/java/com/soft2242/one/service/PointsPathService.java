@@ -1,6 +1,7 @@
 package com.soft2242.one.service;
 
 import com.soft2242.one.base.mybatis.service.BaseService;
+import com.soft2242.one.entity.PointsPathEntity;
 
 
 import java.util.List;
@@ -8,8 +9,9 @@ import java.util.List;
 /**
  * 巡更点和巡更线路关联业务接口
  * @author litao
+ * @since 1.0.0 2023-05-25
  */
-public interface PointsPathService extends BaseService<PointsPathService> {
+public interface PointsPathService extends BaseService<PointsPathEntity> {
 
     /**
      *根据巡更路线id，获取巡更点ID列表

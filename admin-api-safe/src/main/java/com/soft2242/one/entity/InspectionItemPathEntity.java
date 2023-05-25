@@ -7,10 +7,11 @@ import lombok.Data;
 /**
  * 巡检项目线路关联表实体类
  * @author litao
+ * @since 1.0.0 2023-05-25
  */
 @Data
 @TableName("t_project_path")
-public class ProjectPathEntity extends BaseEntity {
+public class InspectionItemPathEntity extends BaseEntity {
 
     /**
      * 巡检项目id

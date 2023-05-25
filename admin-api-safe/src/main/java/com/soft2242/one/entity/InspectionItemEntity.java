@@ -7,6 +7,7 @@ import lombok.Data;
 /**
  * 巡检项目实体类
  * @author litao
+ * @since 1.0.0 2023-05-25
  */
 @Data
 @TableName("t_inspection_item")
@@ -16,6 +17,11 @@ public class InspectionItemEntity extends BaseEntity {
      * 所属小区id
      */
     private Long communityId;
+
+    /**
+     * 所属小区名称
+     */
+    private String communityName;
 
     /**
      * 巡检项目名称
