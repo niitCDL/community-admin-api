@@ -8,7 +8,10 @@ import com.soft2242.one.base.security.cache.TokenStoreCache;
 import com.soft2242.one.base.security.user.SecurityUser;
 import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.base.security.utils.TokenUtils;
+import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
+import com.soft2242.one.system.enums.UserOnlineEnum;
+import com.soft2242.one.system.enums.UserStatusEnum;
 import com.soft2242.one.system.service.SysAuthService;
 import com.soft2242.one.system.service.SysCaptchaService;
 import com.soft2242.one.system.service.SysUserService;
@@ -56,6 +59,8 @@ public class SysAuthServiceImpl implements SysAuthService {
 
         // 用户信息
         UserDetail user = (UserDetail) authentication.getPrincipal();
+
+
         SysUserInfoEntity userInfo = sysUserService.getUserInfoByAdminId(user.getId());
 
         user.setRealName(userInfo.getRealName());
@@ -63,9 +68,15 @@ public class SysAuthServiceImpl implements SysAuthService {
         user.setEmail(userInfo.getEmail());
         user.setGender(userInfo.getGender());
 
-
         // 生成 accessToken
         String accessToken = TokenUtils.generator();
+
+        // 将登录成功的用户的token存放到数据库中 并记录在线状态
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setId(user.getId());
+        sysUserEntity.setToken(accessToken);
+        sysUserEntity.setOnlineStatus(UserOnlineEnum.ONLINE.getValue());
+        sysUserService.update(sysUserEntity);
 
         // 保存用户信息到缓存
         tokenStoreCache.saveUser(accessToken, user);
@@ -77,11 +88,16 @@ public class SysAuthServiceImpl implements SysAuthService {
     public void logout(String accessToken) {
         // 用户信息
         UserDetail user = tokenStoreCache.getUser(accessToken);
-
+        SysUserEntity entity = new SysUserEntity();
+        entity.setId(user.getId());
+        entity.setOnlineStatus(UserOnlineEnum.OFFLINE.getValue());
+        entity.setToken("");
         // 删除用户信息
         tokenStoreCache.deleteUser(accessToken);
 
-        // 保存登录日志
+        // 清除admin表中的token
+        // 修改在线状态
+        sysUserService.update(entity);
     }
 
 }

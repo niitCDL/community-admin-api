@@ -9,7 +9,7 @@ spring:
   datasource:
     # MySQL8
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.14.246.27:3306/db_community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://106.14.246.27:3306/db_community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
     username: root
     password: kobe24
     hikari:

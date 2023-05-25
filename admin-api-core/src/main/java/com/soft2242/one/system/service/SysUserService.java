@@ -12,4 +12,10 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void save(SysUserInfoVO user);
 
     void recordLastLoginTime(@Param("lastLoginTime")String date, @Param("id")Long id);
+
+    String getTokenById(Long id);
+
+    void changeAccountStatus(Long id, Integer accountStatus);
+
+    void update(SysUserEntity sysUserEntity);
 }

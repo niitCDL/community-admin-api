@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.PatrolRecordsDao">
+
+    <resultMap type="com.soft2242.one.entity.PatrolRecordsEntity" id="tPatrolRecordsMap">
+        <result property="id" column="id"/>
+        <result property="planId" column="plan_id"/>
+        <result property="pathId" column="path_id"/>
+        <result property="pointId" column="point_id"/>
+        <result property="inspectorId" column="inspector_id"/>
+        <result property="inspectorTime" column="inspector_time"/>
+        <result property="inspectorResult" column="inspector_result"/>
+        <result property="photoRequirement" column="photo_requirement"/>
+        <result property="photo" column="photo"/>
+        <result property="notes" column="notes"/>
+        <result property="status" column="status"/>
+        <result property="deleted" column="deleted"/>
+        <result property="creator" column="creator"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updater" column="updater"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+</mapper>

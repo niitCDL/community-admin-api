@@ -4,12 +4,14 @@ import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.system.convert.SysUserConvert;
 import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.enums.UserStatusEnum;
+import com.soft2242.one.system.service.SysMenuService;
 import com.soft2242.one.system.service.SysUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,6 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class SysUserDetailsServiceImpl implements SysUserDetailsService {
 
+    private final SysMenuService sysMenuService;
     @Override
     public UserDetails getUserDetails(SysUserEntity userEntity) {
         // 转换成UserDetail对象
@@ -36,7 +39,7 @@ public class SysUserDetailsServiceImpl implements SysUserDetailsService {
 //        userDetail.setDataScopeList(dataScopeList);
 
         // 用户权限列表
-        Set<String> authoritySet = new HashSet<>();
+        Set<String> authoritySet = sysMenuService.getUserAuthority(userDetail);
         userDetail.setAuthoritySet(authoritySet);
 
         return userDetail;
