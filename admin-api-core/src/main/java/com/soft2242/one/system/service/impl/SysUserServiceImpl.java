@@ -1,7 +1,10 @@
 package com.soft2242.one.system.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.soft2242.one.base.common.exception.ServerException;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
+import com.soft2242.one.base.security.cache.TokenStoreCache;
 import com.soft2242.one.base.security.user.SecurityUser;
 import com.soft2242.one.system.dao.SysUserDao;
 import com.soft2242.one.system.dao.SysUserInfoDao;
@@ -29,6 +32,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     private SysUserDao sysUserDao;
 
     private SysUserInfoDao sysUserInfoDao;
+
+    private final TokenStoreCache tokenStoreCache;
 
     public SysUserInfoEntity getUserInfoByAdminId(Long id){
         return baseMapper.getByAdminId(id);
@@ -73,6 +78,35 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     @Override
     public void recordLastLoginTime(String date, Long id) {
         sysUserInfoDao.recordLastLoginTime(date,id);
+    }
+
+    /**
+     * 修改用户状态
+     * @param id 用户ID
+     * @param accountStatus 用户状态
+     */
+    @Override
+    public void changeAccountStatus(Long id,Integer accountStatus) {
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setId(id);
+        sysUserEntity.setAccountStatus(accountStatus);
+        if (UserStatusEnum.DISABLE.getValue() == accountStatus){
+            tokenStoreCache.deleteUser(getTokenById(id));
+            sysUserEntity.setToken("");
+            sysUserEntity.setOnlineStatus(UserOnlineEnum.OFFLINE.getValue());
+        }
+        update(sysUserEntity);
+
+    }
+
+    @Override
+    public void update(SysUserEntity sysUserEntity) {
+        sysUserDao.updateById(sysUserEntity);
+    }
+
+    @Override
+    public String getTokenById(Long id) {
+        return sysUserDao.getTokenById(id);
     }
 
 }

@@ -14,10 +14,8 @@ import java.util.Objects;
 @AllArgsConstructor
 public enum UserStatusEnum {
 
-    ENABLED(1, "正常"),
-    DISABLE(2, "停用"),
-    FREEZE(3, "冻结"),
-    DELETE(4, "删除");
+    ENABLED(1, "启用"),
+    DISABLE(0, "禁用");
 
     private final int value;
     private final String name;
