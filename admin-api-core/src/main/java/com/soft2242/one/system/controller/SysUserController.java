@@ -54,12 +54,19 @@ public class SysUserController {
         return Result.ok();
     }
 
-    @GetMapping("info")
+    @PutMapping("info")
     @Operation(summary = "登录用户")
     public Result<SysUserVO> info() {
         UserDetail userDetail = SecurityUser.getUser();
         System.out.println(userDetail);
         SysUserVO user = SysUserInfoConvert.INSTANCE.convert(userDetail);
         return Result.ok(user);
+    }
+
+    @PutMapping
+    @Operation(summary = "修改用户状态")
+    public Result changeAccountStatus(Long id,Integer accountStatus) {
+        sysUserService.changeAccountStatus(id,accountStatus);
+        return Result.ok();
     }
 }

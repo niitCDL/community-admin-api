@@ -20,4 +20,5 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
     }
     Long getMaxId();
 
+    String getTokenById(@Param("id") Long id);
 }
