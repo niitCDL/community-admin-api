@@ -21,6 +21,7 @@
         <module>admin-api-core</module>
         <module>admin-api-server</module>
         <module>api-plugin</module>
+        <module>admin-api-smart</module>
     </modules>
 
     <properties>
