@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.system.dao.SysDepartmentDao">
+
+    <resultMap type="com.soft2242.one.system.entity.SysDepartmentEntity" id="sysDepartmentMap">
+        <result property="id" column="ID"/>
+        <result property="pid" column="pid"/>
+        <result property="name" column="name"/>
+        <result property="remark" column="remark"/>
+        <result property="sort" column="sort"/>
+        <result property="deleted" column="DELETED"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updater" column="UPDATER"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+    <select id="getList" resultType="com.soft2242.one.system.entity.SysDepartmentEntity">
+        select t1.*, (select t2.name from sys_department t2 where t2.id = t1.pid) parentName
+        from sys_department t1
+        where t1.deleted = 0
+        order by t1.sort
+    </select>
+    <select id="getIdAndPidList" resultType="com.soft2242.one.system.entity.SysDepartmentEntity">
+        select t1.id, t1.pid
+        from sys_department t1
+        where t1.deleted = 0
+    </select>
+
+</mapper>

@@ -253,7 +253,6 @@ public class IpUtils {
         } else {
             // 获取非本地IP的MAC地址
             try {
-                System.out.println(ipAddress);
                 Process p = Runtime.getRuntime()
                         .exec("nbtstat -A " + ipAddress);
                 System.out.println("===process==" + p);

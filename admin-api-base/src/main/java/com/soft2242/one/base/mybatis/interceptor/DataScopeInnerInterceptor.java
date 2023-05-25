@@ -35,7 +35,6 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
 
         // 拼接新SQL
         String buildSql = getSelect(boundSql.getSql(), scope);
-        System.out.println(buildSql);
         // 重写SQL
         PluginUtils.mpBoundSql(boundSql).sql(buildSql);
     }
