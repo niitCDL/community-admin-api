@@ -24,7 +24,7 @@ import java.util.List;
 * @since 1.0.0 2023-05-25
 */
 @RestController
-@RequestMapping("soft2242/plan")
+@RequestMapping("safe/plan")
 @Tag(name="巡更计划表")
 @AllArgsConstructor
 public class PatrolPlanController {
@@ -32,7 +32,7 @@ public class PatrolPlanController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-//    @PreAuthorize("hasAuthority('soft2242:plan:page')")
+    @PreAuthorize("hasAuthority('sys:safe:plan:page')")
     public Result<PageResult<PatrolPlanVO>> page(@ParameterObject @Valid PatrolPlanQuery query){
         PageResult<PatrolPlanVO> page = patrolPlanService.page(query);
 
@@ -41,7 +41,7 @@ public class PatrolPlanController {
 
     @GetMapping("{id}")
     @Operation(summary = "信息")
-//    @PreAuthorize("hasAuthority('soft2242:plan:info')")
+    @PreAuthorize("hasAuthority('sys:safe:plan:page')")
     public Result<PatrolPlanVO> get(@PathVariable("id") Long id){
         PatrolPlanEntity entity = patrolPlanService.getById(id);
 
@@ -50,7 +50,7 @@ public class PatrolPlanController {
 
     @PostMapping
     @Operation(summary = "保存")
-//    @PreAuthorize("hasAuthority('soft2242:plan:save')")
+  @PreAuthorize("hasAuthority('sys:safe:plan:add')")
     public Result<String> save(@RequestBody PatrolPlanVO vo){
         patrolPlanService.save(vo);
 
@@ -59,7 +59,7 @@ public class PatrolPlanController {
 
     @PutMapping
     @Operation(summary = "修改")
-//    @PreAuthorize("hasAuthority('soft2242:plan:update')")
+    @PreAuthorize("hasAuthority('sys:safe:plan:update')")
     public Result<String> update(@RequestBody @Valid PatrolPlanVO vo){
         patrolPlanService.update(vo);
 
@@ -68,7 +68,7 @@ public class PatrolPlanController {
 
     @DeleteMapping
     @Operation(summary = "删除")
-//    @PreAuthorize("hasAuthority('soft2242:plan:delete')")
+  @PreAuthorize("hasAuthority('sys:safe:plan:page')")
     public Result<String> delete(@RequestBody List<Long> idList){
         patrolPlanService.delete(idList);
 

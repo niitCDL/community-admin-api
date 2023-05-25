@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ import java.util.List;
 * @since 1.0.0 2023-05-25
 */
 @RestController
-@RequestMapping("admin-api-safe/item")
+@RequestMapping("safe/inspectionitem")
 @Tag(name="巡检项目")
 @AllArgsConstructor
 public class InspectionItemController {
@@ -32,7 +33,7 @@ public class InspectionItemController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-//    @PreAuthorize("hasAuthority('admin-api-safe:item:page')")
+    @PreAuthorize("hasAuthority('sys:safe:inspectionitem:page')")
     public Result<PageResult<InspectionItemVO>> page(@ParameterObject @Valid InspectionItemQuery query){
         System.out.println(query);
         PageResult<InspectionItemVO> page = inspectionItemService.page(query);
@@ -41,7 +42,7 @@ public class InspectionItemController {
 
     @GetMapping("{id}")
     @Operation(summary = "信息")
-//    @PreAuthorize("hasAuthority('admin-api-safe:item:info')")
+    @PreAuthorize("hasAuthority('sys:safe:inspectionitem:page')")
     public Result<InspectionItemVO> get(@PathVariable("id") Long id){
         InspectionItemEntity entity = inspectionItemService.getById(id);
 
@@ -50,7 +51,7 @@ public class InspectionItemController {
 
     @PostMapping
     @Operation(summary = "保存")
-//    @PreAuthorize("hasAuthority('admin-api-safe:item:save')")
+    @PreAuthorize("hasAuthority('sys:safe:inspectionitem:add')")
     public Result<String> save(@RequestBody InspectionItemVO vo){
         inspectionItemService.save(vo);
 
@@ -59,7 +60,7 @@ public class InspectionItemController {
 
     @PutMapping
     @Operation(summary = "修改")
-//  @PreAuthorize("hasAuthority('admin-api-safe:item:update')")
+    @PreAuthorize("hasAuthority('sys:safe:inspectionitem:update')")
     public Result<String> update(@RequestBody @Valid InspectionItemVO vo){
         inspectionItemService.update(vo);
         return Result.ok();
@@ -67,7 +68,7 @@ public class InspectionItemController {
 
     @DeleteMapping
     @Operation(summary = "删除")
-//  @PreAuthorize("hasAuthority('admin-api-safe:item:delete')")
+    @PreAuthorize("hasAuthority('sys:safe:inspectionitem:delete')")
     public Result<String> delete(@RequestBody List<Long> idList){
         inspectionItemService.delete(idList);
 
