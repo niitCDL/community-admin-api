@@ -5,7 +5,7 @@
     <select id="getList" resultType="com.soft2242.one.entity.Community">
         SELECT t1.*
         FROM t_community t1 WHERE t1.deleted = 0
-        <if test="title!=null and title.trim() != ''">
+        <if test="communityName!=null and communityName.trim() != ''">
             AND t1.community_name LIKE CONCAT('%',#{community_name},'%')
         </if>
     </select>
