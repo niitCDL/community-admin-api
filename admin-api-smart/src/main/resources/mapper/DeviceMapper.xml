@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.DeviceDao">
+
+    <select id="selectDeviceByPage" resultType="com.soft2242.one.vo.DeviceVO" parameterType="com.soft2242.one.query.DeviceQuery">
+        SELECT d.id as id, d.device_name, d.status, d.device_type, dt.type as deviceTypeName, d.community_id, tc.community_name as communityName, d.address,
+        d.qr_code, d.deleted, d.create_time, d.creator, d.update_time, d.updater
+        FROM t_device d
+        LEFT JOIN t_device_type dt on d.device_type = dt.id
+        LEFT JOIN t_community tc on d.community_id = tc.id
+        WHERE d.deleted = 0
+        <if test="deviceName != null and deviceName.trim() != ''">
+            AND d.device_name like "%"#{deviceName}"%"
+        </if>
+        <if test="address != null and address.trim() != ''">
+            AND d.address like "%"#{address}"%"
+        </if>
+        <if test="deviceType != null">
+            AND d.device_type = #{deviceType}
+        </if>
+        <if test="status != null">
+            AND d.status = #{status}
+        </if>
+        <if test="communityId != null">
+            AND d.community_id = #{communityId}
+        </if>
+        LIMIT ${page - 1}, ${limit}
+    </select>
+</mapper>

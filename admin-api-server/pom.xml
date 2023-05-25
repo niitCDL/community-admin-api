@@ -49,6 +49,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.soft2242.one</groupId>
+            <artifactId>admin-api-smart</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
