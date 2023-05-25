@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.system.dao.SysAdminDepartmentDao">
+
+    <resultMap type="com.soft2242.one.system.entity.SysAdminDepartmentEntity" id="sysAdminDepartmentMap">
+        <result property="id" column="ID"/>
+        <result property="adminId" column="ADMIN_ID"/>
+        <result property="departmentId" column="DEPARTMENT_ID"/>
+        <result property="deleted" column="DELETED"/>
+        <result property="creator" column="CREATOR"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updater" column="UPDATER"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+    </resultMap>
+    <select id="getAdminIdList" resultType="java.lang.Long">
+        select admin_id from sys_admin_department where department_id = #{DId} and deleted = 0
+    </select>
+
+</mapper>

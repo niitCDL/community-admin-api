@@ -54,7 +54,7 @@ public class SysUserController {
         return Result.ok();
     }
 
-    @PutMapping("info")
+    @GetMapping("info")
     @Operation(summary = "登录用户")
     public Result<SysUserVO> info() {
         UserDetail userDetail = SecurityUser.getUser();
