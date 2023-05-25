@@ -19,6 +19,8 @@ public class DateUtils {
      */
     public final static String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    public final static Date CURRENT_DATE = new Date();
+
     /**
      * 日期格式化 日期格式为：yyyy-MM-dd
      *
@@ -28,6 +30,7 @@ public class DateUtils {
     public static String format(Date date) {
         return format(date, DATE_PATTERN);
     }
+
 
     /**
      * 日期格式化 日期格式为：yyyy-MM-dd

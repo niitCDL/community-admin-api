@@ -1,6 +1,7 @@
 package com.soft2242.one.base.security.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,6 +51,27 @@ public class UserDetail implements UserDetails {
      * 在线状态 (0：离线 1:在线)
      */
     private Integer onlineStatus;
+
+    /**
+     * 头像
+     */
+    private String avatar;
+
+    /**
+     * 真实姓名
+     */
+    private String realName;
+
+    /**
+     * 在线状态 (0：保密 1:男 2:女)
+     */
+    private Integer gender;
+
+    /**
+     * 邮箱
+     */
+    private String email;
+
 
     /**
      * 数据权限范围

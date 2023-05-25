@@ -3,6 +3,12 @@
 
 <mapper namespace="com.soft2242.one.system.dao.SysUserInfoDao">
 
+    <update id="recordLastLoginTime">
+        update sys_admin_info
+        set last_login_time = #{lastLoginTime}
+        where admin_id = #{id}
+    </update>
+
 
     <select id="getByAdminId" resultType="com.soft2242.one.system.entity.SysUserInfoEntity">
         select *
