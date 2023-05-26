@@ -15,12 +15,8 @@
         FROM t_building t2,t_community t1  WHERE t1.id=t2.community_id
         AND t2.deleted = 0
         <if test="buildingName!=null and buildingName.trim() != ''">
-            AND t2.building_name LIKE CONCAT('%',#{building_name},'%')
+            AND t2.building_name LIKE CONCAT('%',#{buildingName},'%')
         </if>
-
     </select>
-<!--    SELECT t1.id , t2.id ,t1.community_name , t2.building_name ,t2.units,t2.used_area,t2.content,t2.create_time-->
-<!--    FROM building-->
-<!--    INNER JOIN community ON building.community_id = community.id;-->
 
 </mapper>
