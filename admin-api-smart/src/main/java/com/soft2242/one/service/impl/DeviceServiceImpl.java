@@ -41,7 +41,6 @@ public class DeviceServiceImpl extends BaseServiceImpl<DeviceDao, DeviceEntity> 
         wrapper.like(StringUtils.isNotEmpty(query.getDeviceName()), DeviceEntity::getDeviceName, query.getDeviceName());
         wrapper.eq(query.getStatus() != null, DeviceEntity::getStatus, query.getStatus());
         wrapper.eq(query.getDeviceType() != null, DeviceEntity::getDeviceType, query.getDeviceType());
-        wrapper.eq(query.getCommunityId() != null, DeviceEntity::getCommunityId, query.getCommunityId());
         wrapper.like(StringUtils.isNotEmpty(query.getAddress()), DeviceEntity::getAddress, query.getAddress());
         return wrapper;
     }

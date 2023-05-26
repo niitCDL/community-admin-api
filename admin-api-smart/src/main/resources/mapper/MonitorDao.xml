@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.MonitorDao">
+
+    <select id="selectPageByQuery" resultType="com.soft2242.one.vo.MonitorVO" parameterType="com.soft2242.one.query.MonitorQuery">
+        SELECT tm.id, tm.device_id, td.device_name as deviceName, tm.community_id, tc.community_name as communityName,
+        tm.monitor_name, tm.status, tm.enabled,
+        tm.monitor_type, tmt.type as monitorTypeName, tm.url, tm.orderd
+        FROM t_monitor tm
+        LEFT JOIN t_monitor_type tmt on tm.monitor_type = tmt.id
+        LEFT JOIN t_device td on tm.device_id = td.id
+        LEFT JOIN t_community tc on tm.community_id = tc.id
+        WHERE tm.deleted = 0
+        <if test="deviceId != null">
+            AND tm.device_id = #{deviceId}
+        </if>
+        <if test="monitorName != null and monitorName.trim() != ''">
+            AND tm.monitor_name = #{monitorName}
+        </if>
+        <if test="status != null">
+            AND tm.status = #{status}
+        </if>
+        <if test="monitorType != null">
+            AND tm.monitor_type = #{monitorType}
+        </if>
+        LIMIT ${page - 1}, ${limit}
+    </select>
+
+</mapper>
