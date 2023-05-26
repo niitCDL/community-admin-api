@@ -20,6 +20,7 @@ public interface SysRoleOperationLogService extends BaseService<SysRoleOperation
 
     void save(SysRoleOperationLogVO vo);
 
+    void log(Long operationObject,String operation,String reason);
     void update(SysRoleOperationLogVO vo);
 
     void delete(List<Long> idList);

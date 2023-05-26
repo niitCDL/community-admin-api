@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
+import com.soft2242.one.base.security.cache.TokenStoreCache;
+import com.soft2242.one.base.security.user.UserDetail;
+import com.soft2242.one.base.security.utils.TokenUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import com.soft2242.one.system.convert.SysRoleOperationLogConvert;
 import com.soft2242.one.system.entity.SysRoleOperationLogEntity;
@@ -15,7 +19,11 @@ import com.soft2242.one.system.dao.SysRoleOperationLogDao;
 import com.soft2242.one.system.service.SysRoleOperationLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +36,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SysRoleOperationLogServiceImpl extends BaseServiceImpl<SysRoleOperationLogDao, SysRoleOperationLogEntity> implements SysRoleOperationLogService {
 
+    private final TokenStoreCache tokenStoreCache;
     @Override
     public PageResult<SysRoleOperationLogVO> page(SysRoleOperationLogQuery query) {
         IPage<SysRoleOperationLogEntity> cusPage = baseMapper.getCusPage(getPage(query), getWrapper(query));
@@ -44,6 +53,25 @@ public class SysRoleOperationLogServiceImpl extends BaseServiceImpl<SysRoleOpera
         SysRoleOperationLogEntity entity = SysRoleOperationLogConvert.INSTANCE.convert(vo);
 
         baseMapper.insert(entity);
+    }
+
+    @Override
+    public void log(Long operationObject, String operation, String reason) {
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
+
+        SysRoleOperationLogEntity logEntity = new SysRoleOperationLogEntity();
+        logEntity.setCreateTime(new Date());
+        logEntity.setUpdateTime(new Date());
+        logEntity.setUpdater(user.getId());
+        logEntity.setCreator(user.getId());
+
+        logEntity.setOperationObject(operationObject);
+        logEntity.setOperate(operation);
+        logEntity.setReason(reason);
+
+         save(logEntity);
     }
 
     @Override

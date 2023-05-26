@@ -44,9 +44,6 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
     private final SysRoleDataScopeService sysRoleDataScopeService;
     private final SysUserRoleService sysUserRoleService;
     private final SysRoleOperationLogService sysRoleOperationLogService;
-    private final TokenStoreCache tokenStoreCache;
-
-    private HttpServletRequest request;
     @Override
     public PageResult<SysRoleVO> page(SysRoleQuery query) {
         IPage<SysRoleEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
@@ -81,19 +78,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
         baseMapper.insert(entity);
 
         // 新增操作日志
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
-        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
-
-        roleLogEntity.setOperate("新增");
-        roleLogEntity.setOperationObject(entity.getId());
-        roleLogEntity.setCreateTime(new Date());
-        roleLogEntity.setCreator(user.getId());
-        roleLogEntity.setUpdater(user.getId());
-        roleLogEntity.setUpdateTime(new Date());
-
-        sysRoleOperationLogService.save(roleLogEntity);
+        sysRoleOperationLogService.log(entity.getId(),"新增","");
 
         // 保存角色菜单关系
         sysRoleMenuService.saveOrUpdate(entity.getId(), vo.getMenuIdList());
@@ -111,19 +96,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
         sysRoleMenuService.saveOrUpdate(entity.getId(), vo.getMenuIdList());
 
         // 新增操作日志
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
-        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
-
-        roleLogEntity.setOperate("修改");
-        roleLogEntity.setOperationObject(entity.getId());
-        roleLogEntity.setCreateTime(new Date());
-        roleLogEntity.setCreator(user.getId());
-        roleLogEntity.setUpdater(user.getId());
-        roleLogEntity.setUpdateTime(new Date());
-
-        sysRoleOperationLogService.save(roleLogEntity);
+        sysRoleOperationLogService.log(entity.getId(),"修改","");
     }
 
     @Override
@@ -142,19 +115,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
         }
 
         // 新增操作日志
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
-        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
-
-        roleLogEntity.setOperate("修改数据权限");
-        roleLogEntity.setOperationObject(entity.getId());
-        roleLogEntity.setCreateTime(new Date());
-        roleLogEntity.setCreator(user.getId());
-        roleLogEntity.setUpdater(user.getId());
-        roleLogEntity.setUpdateTime(new Date());
-
-        sysRoleOperationLogService.save(roleLogEntity);
+        sysRoleOperationLogService.log(entity.getId(),"更新角色数据权限","");
     }
 
     @Override
@@ -173,20 +134,9 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
         sysRoleDataScopeService.deleteByRoleIdList(idList);
 
         // 新增操作日志
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        request = ((ServletRequestAttributes) requestAttributes).getRequest();
-        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
-
         for (Long id:idList
              ) {
-            SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
-            roleLogEntity.setOperate("删除");
-            roleLogEntity.setOperationObject(id);
-            roleLogEntity.setCreateTime(new Date());
-            roleLogEntity.setCreator(user.getId());
-            roleLogEntity.setUpdater(user.getId());
-            roleLogEntity.setUpdateTime(new Date());
-            sysRoleOperationLogService.save(roleLogEntity);
+            sysRoleOperationLogService.log(id,"新增","");
         }
     }
 
