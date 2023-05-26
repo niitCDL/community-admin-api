@@ -18,8 +18,8 @@ import lombok.EqualsAndHashCode;
 public class NoticeReaderQuery extends Query {
 
     @Schema(description = "公告id")
-    private Long noticeId;
+    private String noticeId;
     @Schema(description = "发布人")
-    private Long userId;
+    private String userId;
 
 }

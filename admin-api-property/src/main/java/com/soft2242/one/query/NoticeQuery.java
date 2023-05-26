@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Schema(description = "通知查询")
 public class NoticeQuery extends Query {
     @Schema(description = "公告id")
-    private Long noticeId;
+    private String noticeId;
 
     @Schema(description = "通知标题")
     private String title;
@@ -27,8 +27,8 @@ public class NoticeQuery extends Query {
 
 
     @Schema(description = "所属小区")
-    private Long communityId;
+    private String communityId;
     @Schema(description = "发布人")
-    private Long adminId;
+    private String adminId;
 
 }

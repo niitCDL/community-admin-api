@@ -1,95 +1,70 @@
 package com.soft2242.one.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-
-import com.soft2242.one.base.mybatis.entity.BaseEntity;
+import com.soft2242.one.base.common.utils.DateUtils;
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * 报修表
- * @TableName t_repair
- */
-@TableName(value ="t_repair")
+* 报修表
+*
+* @author xuelkong
+* @since 1.0.0 2023-05-26
+*/
 @Data
-public class RepairVO extends BaseEntity {
-    /**
-     * 自增主键
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+@Schema(description = "报修表")
+public class RepairVO implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 社区id
-     */
-    private Long communityId;
+	@Schema(description = "自增主键")
+	private Long id;
 
-    /**
-     * 报修人id
-     */
-    private Long userId;
+	@Schema(description = "社区id")
+	private Long communityId;
 
-    /**
-     * 报修类别(0:公共报修，1：个人报修)
-     */
-    private Integer type;
+	@Schema(description = "报修人id")
+	private Long userId;
 
-    /**
-     * 报修类型(0:路灯，1：厕所)
-     */
-    private Integer category;
+	@Schema(description = "报修类别(0:公共报修，1：个人报修)")
+	private Integer type;
 
-    /**
-     * 报修地址
-     */
-    private String place;
+	@Schema(description = "报修类型(0:路灯，1：厕所)")
+	private Integer category;
 
-    /**
-     * 报修标题
-     */
-    private String title;
+	@Schema(description = "报修地址")
+	private String place;
 
-    /**
-     * 报修内容
-     */
-    private String content;
+	@Schema(description = "报修标题")
+	private String title;
 
-    /**
-     * 图片
-     */
-    private String imgs;
+	@Schema(description = "报修内容")
+	private String content;
 
-    /**
-     * 处理状态（0：未处理，1：处理中，2：已处理，3：已评价）
-     */
-    private Integer state;
+	@Schema(description = "图片")
+	private String imgs;
 
-    /**
-     * 处理人id，逗号分隔
-     */
-    private String employeeIds;
+	@Schema(description = "处理状态（0：未处理，1：处理中，2：已处理，3：已评价）")
+	private Integer state;
 
-    /**
-     * 处理结果
-     */
-    private String result;
+	@Schema(description = "处理人id，逗号分隔")
+	private String employeeIds;
 
-    /**
-     * 处理时间
-     */
-    private LocalDateTime handleTime;
+	@Schema(description = "处理结果")
+	private String result;
 
-    /**
-     * 报修评价
-     */
-    private String evaluate;
+	@Schema(description = "处理时间")
+	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+	private Date handleTime;
 
-    /**
-     * 报修评价时间
-     */
-    private LocalDateTime evaluateTime;
+	@Schema(description = "报修评价")
+	private String evaluate;
+
+	@Schema(description = "报修评价时间")
+	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+	private Date evaluateTime;
+
+
+
 }

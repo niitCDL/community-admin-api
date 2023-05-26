@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 报修表
@@ -81,7 +82,7 @@ public class RepairEntity extends BaseEntity {
     /**
      * 处理时间
      */
-    private LocalDateTime handleTime;
+    private Date handleTime;
 
     /**
      * 报修评价
@@ -91,5 +92,5 @@ public class RepairEntity extends BaseEntity {
     /**
      * 报修评价时间
      */
-    private LocalDateTime evaluateTime;
+    private Date evaluateTime;
 }
