@@ -32,7 +32,7 @@ public class SysRoleOperationLogController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-    @PreAuthorize("hasAuthority('system:log:page')")
+    @PreAuthorize("hasAuthority('sys:log:page')")
     public Result<PageResult<SysRoleOperationLogVO>> page(@ParameterObject @Valid SysRoleOperationLogQuery query){
         PageResult<SysRoleOperationLogVO> page = sysRoleOperationLogService.page(query);
 
@@ -41,7 +41,7 @@ public class SysRoleOperationLogController {
 
     @GetMapping("{id}")
     @Operation(summary = "信息")
-    @PreAuthorize("hasAuthority('system:log:info')")
+    @PreAuthorize("hasAuthority('sys:log:info')")
     public Result<SysRoleOperationLogVO> get(@PathVariable("id") Long id){
         SysRoleOperationLogEntity entity = sysRoleOperationLogService.getById(id);
 
@@ -50,7 +50,7 @@ public class SysRoleOperationLogController {
 
     @PostMapping
     @Operation(summary = "保存")
-    @PreAuthorize("hasAuthority('system:log:save')")
+    @PreAuthorize("hasAuthority('sys:log:save')")
     public Result<String> save(@RequestBody SysRoleOperationLogVO vo){
         sysRoleOperationLogService.save(vo);
 
@@ -59,7 +59,7 @@ public class SysRoleOperationLogController {
 
     @PutMapping
     @Operation(summary = "修改")
-    @PreAuthorize("hasAuthority('system:log:update')")
+    @PreAuthorize("hasAuthority('sys:log:update')")
     public Result<String> update(@RequestBody @Valid SysRoleOperationLogVO vo){
         sysRoleOperationLogService.update(vo);
 
@@ -68,7 +68,7 @@ public class SysRoleOperationLogController {
 
     @DeleteMapping
     @Operation(summary = "删除")
-    @PreAuthorize("hasAuthority('system:log:delete')")
+    @PreAuthorize("hasAuthority('sys:log:delete')")
     public Result<String> delete(@RequestBody List<Long> idList){
         sysRoleOperationLogService.delete(idList);
 

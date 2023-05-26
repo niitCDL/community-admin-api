@@ -39,10 +39,14 @@ public class SysRoleOperationLogVO implements Serializable {
 	private Date updateTime;
 
 	@Schema(description = "操作")
-	private Integer operate;
+	private String operate;
+
+	@Schema(description = "操作对象ID")
+	private Long operationObject;
+
+	@Schema(description = "操作对象名称")
+	private String operationObjectName;
 
 	@Schema(description = "原因")
 	private String reason;
-
-
 }
