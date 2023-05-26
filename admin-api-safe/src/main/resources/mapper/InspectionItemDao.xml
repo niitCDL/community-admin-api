@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.soft2242.one.dao.InspectionItemDao">
+    <select id="getInspectionList" resultType="com.soft2242.one.vo.InspectionItemVO">
+        SELECT * FROM t_inspection_item t1,t_community t2
+        WHERE t1.community_id=t2.id AND t1.deleted=0
+        <if test="communityName!=null and communityName.trim()!=''">
+            AND t2.community_name LIKE CONCAT('%',#{communityName},'%')
+        </if>
+        <if test="name!=null and name.trim()!=''">
+            AND t1.name LIKE CONCAT('%',#{name},'%')
+        </if>
+    </select>
 </mapper>

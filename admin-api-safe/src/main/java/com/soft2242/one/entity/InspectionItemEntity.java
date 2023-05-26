@@ -18,10 +18,6 @@ public class InspectionItemEntity extends BaseEntity {
      */
     private Long communityId;
 
-    /**
-     * 所属小区名称
-     */
-    private String communityName;
 
     /**
      * 巡检项目名称
