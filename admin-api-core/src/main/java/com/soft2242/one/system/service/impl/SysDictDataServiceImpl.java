@@ -2,19 +2,26 @@ package com.soft2242.one.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.system.convert.SysDictDataConvert;
+import com.soft2242.one.system.convert.SysDictTypeConvert;
 import com.soft2242.one.system.dao.SysDictDataDao;
+import com.soft2242.one.system.dao.SysDictTypeDao;
 import com.soft2242.one.system.entity.SysDictDataEntity;
+import com.soft2242.one.system.entity.SysDictTypeEntity;
 import com.soft2242.one.system.query.SysDictDataQuery;
 import com.soft2242.one.system.service.SysDictDataService;
 import com.soft2242.one.system.vo.SysDictDataVO;
+import com.soft2242.one.system.vo.SysDictTypeVO;
+import com.soft2242.one.system.vo.SysDictVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +32,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class SysDictDataServiceImpl extends BaseServiceImpl<SysDictDataDao, SysDictDataEntity> implements SysDictDataService {
+
+    private SysDictTypeDao sysDictTypeDao;
 
     @Override
     public PageResult<SysDictDataVO> page(SysDictDataQuery query) {
@@ -61,6 +70,23 @@ public class SysDictDataServiceImpl extends BaseServiceImpl<SysDictDataDao, SysD
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+    }
+
+    @Override
+    public List<SysDictVO> getAllDicData() {
+        List<SysDictTypeEntity> dictTypeList = sysDictTypeDao.selectList(null);
+        List<SysDictVO> dictVOList = new ArrayList<>();
+        for (SysDictTypeEntity dictTypeEntity : dictTypeList) {
+
+            SysDictVO sysDictVO = new SysDictVO();
+            sysDictVO.setDictType(dictTypeEntity.getDictType());
+
+            List<SysDictDataEntity> sysDictDataEntities = baseMapper.selectList(new QueryWrapper<SysDictDataEntity>().eq("dict_type_id",dictTypeEntity.getId()));
+            sysDictVO.setDataList(SysDictDataConvert.INSTANCE.convertList2(sysDictDataEntities));
+
+            dictVOList.add(sysDictVO);
+        }
+        return dictVOList;
     }
 
 }

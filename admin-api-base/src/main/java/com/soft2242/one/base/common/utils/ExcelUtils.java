@@ -14,6 +14,7 @@ import com.fhs.core.trans.constant.TransType;
 import com.fhs.core.trans.util.ReflectUtils;
 import com.fhs.core.trans.vo.TransPojo;
 import com.fhs.trans.service.impl.DictionaryTransService;
+import com.soft2242.one.base.common.utils.HttpContextUtils;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
