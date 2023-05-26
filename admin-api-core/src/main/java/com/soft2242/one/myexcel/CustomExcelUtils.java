@@ -54,6 +54,9 @@ public class CustomExcelUtils {
             Field[] declaredFields = ele.getClass().getDeclaredFields();
             for (int j = 0; j < declaredFields.length; j++) {
                 Field declaredField = declaredFields[j];
+                if("serialVersionUID".equals(declaredField.getName())){
+                    continue;
+                }
                 String getMethodName = "get" + declaredField.getName().toUpperCase().charAt(0) + declaredField.getName().substring(1);
                 if (declaredField.isAnnotationPresent(MyTrans.class)){
                     MyTrans myTrans = declaredField.getAnnotation(MyTrans.class);
@@ -71,7 +74,7 @@ public class CustomExcelUtils {
                             break;
                         }
                     }
-                }else {
+                }else if(declaredField.isAnnotationPresent(MyExcelProperty.class)){
                     Method declaredMethod = eleClazz.getDeclaredMethod(getMethodName);
                     Object res = declaredMethod.invoke(ele);
                     cell = body.createCell(columValue);

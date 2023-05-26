@@ -9,6 +9,7 @@ import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.base.security.cache.TokenStoreCache;
 import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.base.security.utils.TokenUtils;
+import com.soft2242.one.myexcel.CustomExcelUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import com.soft2242.one.system.convert.SysRoleOperationLogConvert;
@@ -37,6 +38,7 @@ import java.util.List;
 public class SysRoleOperationLogServiceImpl extends BaseServiceImpl<SysRoleOperationLogDao, SysRoleOperationLogEntity> implements SysRoleOperationLogService {
 
     private final TokenStoreCache tokenStoreCache;
+    private final CustomExcelUtils customExcelUtils;
     @Override
     public PageResult<SysRoleOperationLogVO> page(SysRoleOperationLogQuery query) {
         IPage<SysRoleOperationLogEntity> cusPage = baseMapper.getCusPage(getPage(query), getWrapper(query));
@@ -85,6 +87,22 @@ public class SysRoleOperationLogServiceImpl extends BaseServiceImpl<SysRoleOpera
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+    }
+
+    @Override
+    public void export(String toPath) {
+        SysRoleOperationLogQuery sysRoleOperationLogQuery = new SysRoleOperationLogQuery();
+        sysRoleOperationLogQuery.setPage(1);
+        sysRoleOperationLogQuery.setLimit(999);
+
+        IPage<SysRoleOperationLogEntity> cusPage = baseMapper.getCusPage(getPage(sysRoleOperationLogQuery), getWrapper(sysRoleOperationLogQuery));
+        List<SysRoleOperationLogVO> list = SysRoleOperationLogConvert.INSTANCE.convertList(cusPage.getRecords());
+
+        try {
+            customExcelUtils.export(toPath,list);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import com.soft2242.one.system.entity.SysRoleOperationLogEntity;
 import com.soft2242.one.system.service.SysRoleOperationLogService;
 import com.soft2242.one.system.query.SysRoleOperationLogQuery;
 import com.soft2242.one.system.vo.SysRoleOperationLogVO;
+import org.apache.ibatis.annotations.Param;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -73,5 +74,11 @@ public class SysRoleOperationLogController {
         sysRoleOperationLogService.delete(idList);
 
         return Result.ok();
+    }
+
+    @GetMapping("export")
+    @Operation(summary = "导出")
+    public void export(String toPath){
+        sysRoleOperationLogService.export(toPath);
     }
 }
