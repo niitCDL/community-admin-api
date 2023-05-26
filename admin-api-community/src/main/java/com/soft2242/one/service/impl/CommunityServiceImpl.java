@@ -10,7 +10,6 @@ import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.CommunityConvert;
 import com.soft2242.one.dao.CommunityDao;
 import com.soft2242.one.entity.Community;
-import com.soft2242.one.mapper.CommunityMapper;
 import com.soft2242.one.query.CommunityQuery;
 import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.vo.CommunityVO;
