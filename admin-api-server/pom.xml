@@ -72,6 +72,11 @@
             <version>1.0.0-RELEASES</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.soft2242.one</groupId>
+            <artifactId>admin-api-society</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
 
     </dependencies>
 

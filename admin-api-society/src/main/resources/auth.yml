@@ -1,0 +1,6 @@
+auth:
+  ignore_urls:
+    - /notice/**
+
+    - /soft2242/**
+
