@@ -3,6 +3,7 @@ package com.soft2242.one.system.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import lombok.AllArgsConstructor;
@@ -29,9 +30,8 @@ public class SysRoleOperationLogServiceImpl extends BaseServiceImpl<SysRoleOpera
 
     @Override
     public PageResult<SysRoleOperationLogVO> page(SysRoleOperationLogQuery query) {
-        IPage<SysRoleOperationLogEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
-        return new PageResult<>(SysRoleOperationLogConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        IPage<SysRoleOperationLogEntity> cusPage = baseMapper.getCusPage(getPage(query), getWrapper(query));
+        return new PageResult<>(SysRoleOperationLogConvert.INSTANCE.convertList(cusPage.getRecords()), cusPage.getTotal());
     }
 
     private LambdaQueryWrapper<SysRoleOperationLogEntity> getWrapper(SysRoleOperationLogQuery query){

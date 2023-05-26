@@ -6,22 +6,30 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
+import com.soft2242.one.base.security.cache.TokenStoreCache;
+import com.soft2242.one.base.security.user.UserDetail;
+import com.soft2242.one.base.security.utils.TokenUtils;
 import com.soft2242.one.system.convert.SysRoleConvert;
+import com.soft2242.one.system.convert.SysRoleOperationLogConvert;
 import com.soft2242.one.system.dao.SysRoleDao;
 import com.soft2242.one.system.entity.SysRoleEntity;
+import com.soft2242.one.system.entity.SysRoleOperationLogEntity;
 import com.soft2242.one.system.enums.DataScopeEnum;
 import com.soft2242.one.system.query.SysRoleQuery;
-import com.soft2242.one.system.service.SysRoleDataScopeService;
-import com.soft2242.one.system.service.SysRoleMenuService;
-import com.soft2242.one.system.service.SysRoleService;
-import com.soft2242.one.system.service.SysUserRoleService;
+import com.soft2242.one.system.service.*;
 import com.soft2242.one.system.vo.SysRoleDataScopeVO;
 import com.soft2242.one.system.vo.SysRoleVO;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +43,10 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
     private final SysRoleMenuService sysRoleMenuService;
     private final SysRoleDataScopeService sysRoleDataScopeService;
     private final SysUserRoleService sysUserRoleService;
+    private final SysRoleOperationLogService sysRoleOperationLogService;
+    private final TokenStoreCache tokenStoreCache;
 
+    private HttpServletRequest request;
     @Override
     public PageResult<SysRoleVO> page(SysRoleQuery query) {
         IPage<SysRoleEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
@@ -69,6 +80,21 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
         entity.setDataScope(DataScopeEnum.SELF.getValue());
         baseMapper.insert(entity);
 
+        // 新增操作日志
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        request = ((ServletRequestAttributes) requestAttributes).getRequest();
+        SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
+        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
+
+        roleLogEntity.setOperate("新增");
+        roleLogEntity.setOperationObject(entity.getId());
+        roleLogEntity.setCreateTime(new Date());
+        roleLogEntity.setCreator(user.getId());
+        roleLogEntity.setUpdater(user.getId());
+        roleLogEntity.setUpdateTime(new Date());
+
+        sysRoleOperationLogService.save(roleLogEntity);
+
         // 保存角色菜单关系
         sysRoleMenuService.saveOrUpdate(entity.getId(), vo.getMenuIdList());
     }
@@ -83,6 +109,21 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
 
         // 更新角色菜单关系
         sysRoleMenuService.saveOrUpdate(entity.getId(), vo.getMenuIdList());
+
+        // 新增操作日志
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        request = ((ServletRequestAttributes) requestAttributes).getRequest();
+        SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
+        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
+
+        roleLogEntity.setOperate("修改");
+        roleLogEntity.setOperationObject(entity.getId());
+        roleLogEntity.setCreateTime(new Date());
+        roleLogEntity.setCreator(user.getId());
+        roleLogEntity.setUpdater(user.getId());
+        roleLogEntity.setUpdateTime(new Date());
+
+        sysRoleOperationLogService.save(roleLogEntity);
     }
 
     @Override
@@ -99,6 +140,21 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
         } else {
             sysRoleDataScopeService.deleteByRoleIdList(Collections.singletonList(vo.getId()));
         }
+
+        // 新增操作日志
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        request = ((ServletRequestAttributes) requestAttributes).getRequest();
+        SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
+        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
+
+        roleLogEntity.setOperate("修改数据权限");
+        roleLogEntity.setOperationObject(entity.getId());
+        roleLogEntity.setCreateTime(new Date());
+        roleLogEntity.setCreator(user.getId());
+        roleLogEntity.setUpdater(user.getId());
+        roleLogEntity.setUpdateTime(new Date());
+
+        sysRoleOperationLogService.save(roleLogEntity);
     }
 
     @Override
@@ -115,6 +171,23 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
 
         // 删除角色数据权限关系
         sysRoleDataScopeService.deleteByRoleIdList(idList);
+
+        // 新增操作日志
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        request = ((ServletRequestAttributes) requestAttributes).getRequest();
+        UserDetail user = tokenStoreCache.getUser(TokenUtils.getAccessToken(request));
+
+        for (Long id:idList
+             ) {
+            SysRoleOperationLogEntity roleLogEntity = new SysRoleOperationLogEntity();
+            roleLogEntity.setOperate("删除");
+            roleLogEntity.setOperationObject(id);
+            roleLogEntity.setCreateTime(new Date());
+            roleLogEntity.setCreator(user.getId());
+            roleLogEntity.setUpdater(user.getId());
+            roleLogEntity.setUpdateTime(new Date());
+            sysRoleOperationLogService.save(roleLogEntity);
+        }
     }
 
 }

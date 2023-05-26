@@ -4,6 +4,7 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.base.security.user.SecurityUser;
 import com.soft2242.one.base.security.user.UserDetail;
+import com.soft2242.one.base.security.utils.TokenUtils;
 import com.soft2242.one.system.convert.SysRoleConvert;
 import com.soft2242.one.system.entity.SysRoleEntity;
 import com.soft2242.one.system.query.SysRoleQuery;
@@ -13,6 +14,7 @@ import com.soft2242.one.system.vo.SysRoleDataScopeVO;
 import com.soft2242.one.system.vo.SysRoleVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
@@ -41,7 +43,7 @@ public class SysRoleController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-//    @PreAuthorize("hasAuthority('sys:role:page')")
+    @PreAuthorize("hasAuthority('sys:role:page')")
     public Result<PageResult<SysRoleVO>> page(@ParameterObject @Valid SysRoleQuery query) {
         PageResult<SysRoleVO> page = sysRoleService.page(query);
 
@@ -50,7 +52,7 @@ public class SysRoleController {
 
     @GetMapping("list")
     @Operation(summary = "列表")
-//    @PreAuthorize("hasAuthority('sys:role:list')")
+    @PreAuthorize("hasAuthority('sys:role:list')")
     public Result<List<SysRoleVO>> list() {
         List<SysRoleVO> list = sysRoleService.getList(new SysRoleQuery());
 
@@ -59,7 +61,7 @@ public class SysRoleController {
 
     @GetMapping("{id}")
     @Operation(summary = "信息")
-//    @PreAuthorize("hasAuthority('sys:role:info')")
+    @PreAuthorize("hasAuthority('sys:role:info')")
     public Result<SysRoleVO> get(@PathVariable("id") Long id) {
         SysRoleEntity entity = sysRoleService.getById(id);
 
@@ -79,7 +81,7 @@ public class SysRoleController {
 
     @PostMapping
     @Operation(summary = "保存")
-//    @PreAuthorize("hasAuthority('sys:role:save')")
+    @PreAuthorize("hasAuthority('sys:role:save')")
     public Result<String> save(@RequestBody @Valid SysRoleVO vo) {
         sysRoleService.save(vo);
 
@@ -88,7 +90,7 @@ public class SysRoleController {
 
     @PutMapping
     @Operation(summary = "修改")
-//    @PreAuthorize("hasAuthority('sys:role:update')")
+    @PreAuthorize("hasAuthority('sys:role:update')")
     public Result<String> update(@RequestBody @Valid SysRoleVO vo) {
         sysRoleService.update(vo);
 
@@ -97,7 +99,7 @@ public class SysRoleController {
 
     @PutMapping("data-scope")
     @Operation(summary = "数据权限")
-//    @PreAuthorize("hasAuthority('sys:role:update')")
+    @PreAuthorize("hasAuthority('sys:role:update')")
     public Result<String> dataScope(@RequestBody @Valid SysRoleDataScopeVO vo) {
         sysRoleService.dataScope(vo);
 
@@ -106,7 +108,7 @@ public class SysRoleController {
 
     @DeleteMapping
     @Operation(summary = "删除")
-//    @PreAuthorize("hasAuthority('sys:role:delete')")
+    @PreAuthorize("hasAuthority('sys:role:delete')")
     public Result<String> delete(@RequestBody List<Long> idList) {
         sysRoleService.delete(idList);
 

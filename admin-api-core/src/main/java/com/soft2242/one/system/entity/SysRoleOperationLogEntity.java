@@ -18,11 +18,22 @@ public class SysRoleOperationLogEntity extends BaseEntity {
 	/**
 	* 操作
 	*/
-	private Integer operate;
+	private String operate;
 
 	/**
 	* 原因
 	*/
 	private String reason;
+
+	/**
+	 * 操作对象ID
+	 */
+	private Long operationObject;
+
+	/**
+	 * 操作对象名称
+	 */
+	@TableField(exist = false)
+	private String operationObjectName;
 
 }
