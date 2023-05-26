@@ -3,20 +3,25 @@ package com.soft2242.one.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.InspectionItemEntityConvert;
 import com.soft2242.one.dao.InspectionItemDao;
+import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.InspectionItemEntity;
 import com.soft2242.one.query.InspectionItemQuery;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.InspectionItemService;
 import com.soft2242.one.vo.InspectionItemVO;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.mapstruct.ap.shaded.freemarker.template.utility.StringUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 巡检项目
@@ -27,18 +32,24 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class InspectionItemServiceImpl extends BaseServiceImpl<InspectionItemDao, InspectionItemEntity> implements InspectionItemService {
-
+    private  final ICommunityService communityService;
 
     @Override
     public PageResult<InspectionItemVO> page(InspectionItemQuery query) {
         IPage<InspectionItemEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
 
-        return new PageResult<>(InspectionItemEntityConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        List<InspectionItemVO> itemVOS = InspectionItemEntityConvert.INSTANCE.convertList(page.getRecords());
+        List<InspectionItemVO> collect = itemVOS.stream().map(item -> {
+            Community community = communityService.getById(item.getCommunityId());
+            item.setCommunityName(community.getCommunityName());
+            return item;
+        }).collect(Collectors.toList());
+        return new PageResult<>(collect, page.getTotal());
     }
 
     private LambdaQueryWrapper<InspectionItemEntity> getWrapper(InspectionItemQuery query){
         LambdaQueryWrapper<InspectionItemEntity> wrapper = Wrappers.lambdaQuery();
-//      wrapper.eq(StringUtils.isNotEmpty(query.ge), InspectionItemEntity::getCommunityId, query.getCommunityId());
+//        wrapper.eq(StringUtils.isNotEmpty(query.ge), InspectionItemEntity::getCommunityId, query.getCommunityId());
         wrapper.like(StringUtils.isNotEmpty(query.getCommunityName()), InspectionItemEntity::getCommunityName, query.getCommunityName());
         wrapper.like(StringUtils.isNotEmpty(query.getName()), InspectionItemEntity::getName, query.getName());
         return wrapper;
