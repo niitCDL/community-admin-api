@@ -4,6 +4,9 @@ package com.soft2242.one.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
+import com.soft2242.one.base.security.user.SecurityUser;
+import com.soft2242.one.base.security.user.UserDetail;
+import com.soft2242.one.convert.NoticeConvert;
 import com.soft2242.one.convert.NoticeQueryConvert;
 import com.soft2242.one.entity.NoticeEntity;
 import com.soft2242.one.entity.NoticeReaderEntity;
@@ -32,7 +35,7 @@ import java.util.List;
  * @create 2023/5/24 14:59
  */
 @RestController
-@RequestMapping("notice")
+@RequestMapping("property/notice")
 @AllArgsConstructor
 @Tag(name = "公告管理")
 public class NoticeController {
@@ -49,10 +52,24 @@ public class NoticeController {
         return Result.ok(page);
     }
 
+    @GetMapping("{id}")
+    @Operation(summary = "信息")
+//    @PreAuthorize("hasAuthority('soft2242:notice:info')")
+    public Result<NoticeVO> get(@PathVariable("id") Long id){
+        NoticeEntity entity = noticeService.getById(id);
+
+        return Result.ok(NoticeConvert.INSTANCE.convert(entity));
+    }
+
+
     @PostMapping
     @Operation(summary = "保存")
 //    @PreAuthorize("hasAuthority('sys:user:save')")
     public Result<String> save(@RequestBody @Valid NoticeVO vo) {
+        UserDetail userDetail = SecurityUser.getUser();
+        System.out.println(userDetail.getId());
+        vo.setAdminId(userDetail.getId());
+//        vo.setAdminId();
         noticeService.save(vo);
         return Result.ok();
     }

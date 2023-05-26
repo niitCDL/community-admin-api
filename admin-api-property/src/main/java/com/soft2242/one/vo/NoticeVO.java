@@ -40,7 +40,7 @@ public class NoticeVO implements Serializable {
     private Long communityId;
 
     @Schema(description = "发布人id", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "发布人id不能为空")
+//    @NotNull(message = "发布人id不能为空")
     private Long adminId;
 
 
@@ -79,7 +79,7 @@ public class NoticeVO implements Serializable {
 
 
     @Schema(description = "审核人id", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "审核人id不能为空")
+//    @NotNull(message = "审核人id不能为空")
     private Long reviewUerId;
     @Schema(description = "审核时间")
     @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
