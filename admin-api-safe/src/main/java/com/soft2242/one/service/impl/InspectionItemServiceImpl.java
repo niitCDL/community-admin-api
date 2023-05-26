@@ -11,6 +11,7 @@ import com.soft2242.one.dao.InspectionItemDao;
 import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.InspectionItemEntity;
 import com.soft2242.one.query.InspectionItemQuery;
+import com.soft2242.one.query.PatrolPlanQuery;
 import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.InspectionItemService;
 import com.soft2242.one.vo.InspectionItemVO;
@@ -20,7 +21,9 @@ import org.mapstruct.ap.shaded.freemarker.template.utility.StringUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -36,24 +39,38 @@ public class InspectionItemServiceImpl extends BaseServiceImpl<InspectionItemDao
 
     @Override
     public PageResult<InspectionItemVO> page(InspectionItemQuery query) {
-        IPage<InspectionItemEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+//        IPage<InspectionItemEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+//
+//        List<InspectionItemVO> itemVOS = InspectionItemEntityConvert.INSTANCE.convertList(page.getRecords());
+//        List<InspectionItemVO> collect = itemVOS.stream().map(item -> {
+//            Community community = communityService.getById(item.getCommunityId());
+//            item.setCommunityName(community.getCommunityName());
+//            return item;
+//        }).collect(Collectors.toList());
+//        return new PageResult<>(collect, page.getTotal());
 
-        List<InspectionItemVO> itemVOS = InspectionItemEntityConvert.INSTANCE.convertList(page.getRecords());
-        List<InspectionItemVO> collect = itemVOS.stream().map(item -> {
-            Community community = communityService.getById(item.getCommunityId());
-            item.setCommunityName(community.getCommunityName());
-            return item;
-        }).collect(Collectors.toList());
-        return new PageResult<>(collect, page.getTotal());
+        IPage<InspectionItemEntity> page = getPage(query);
+        Map<String,Object> params=getParams(query);
+        params.put("page",page);
+        List<InspectionItemVO> inspectionList = baseMapper.getInspectionList(params);
+        return new PageResult<>(inspectionList,page.getTotal());
+
     }
 
-    private LambdaQueryWrapper<InspectionItemEntity> getWrapper(InspectionItemQuery query){
-        LambdaQueryWrapper<InspectionItemEntity> wrapper = Wrappers.lambdaQuery();
-//        wrapper.eq(StringUtils.isNotEmpty(query.ge), InspectionItemEntity::getCommunityId, query.getCommunityId());
-        wrapper.like(StringUtils.isNotEmpty(query.getCommunityName()), InspectionItemEntity::getCommunityName, query.getCommunityName());
-        wrapper.like(StringUtils.isNotEmpty(query.getName()), InspectionItemEntity::getName, query.getName());
-        return wrapper;
-    }
+//    private LambdaQueryWrapper<InspectionItemEntity> getWrapper(InspectionItemQuery query){
+//        LambdaQueryWrapper<InspectionItemEntity> wrapper = Wrappers.lambdaQuery();
+////        wrapper.eq(StringUtils.isNotEmpty(query.ge), InspectionItemEntity::getCommunityId, query.getCommunityId());
+//        wrapper.like(StringUtils.isNotEmpty(query.getCommunityName()), InspectionItemEntity::getCommunityName, query.getCommunityName());
+//        wrapper.like(StringUtils.isNotEmpty(query.getName()), InspectionItemEntity::getName, query.getName());
+//        return wrapper;
+//    }
+
+        private Map<String,Object> getParams(InspectionItemQuery query){
+            Map<String,Object> parmas=new HashMap<>();
+            parmas.put("communityName",query.getCommunityName());
+            parmas.put("name",query.getName());
+            return parmas;
+}
 
     @Override
     public void save(InspectionItemVO vo) {

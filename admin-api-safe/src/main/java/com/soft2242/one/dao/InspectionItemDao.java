@@ -12,6 +12,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+import java.util.Map;
+
 /**
 * 巡检项目
 *
@@ -20,6 +23,5 @@ import org.apache.ibatis.annotations.Select;
 */
 @Mapper
 public interface InspectionItemDao extends BaseDao<InspectionItemEntity> {
-//    @Select("select * from t_inspection_item a left join t_community b on a.community_id=b.id")
-//    IPage<InspectionItemVO> selectpage1(IPage page, @Param("ew") Wrapper queryWrapper);
+    List<InspectionItemVO> getInspectionList(Map<String,Object> params);
 }
