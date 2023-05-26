@@ -73,4 +73,10 @@ public class DeviceController {
 
         return Result.ok();
     }
+
+    @GetMapping("list")
+    @Operation(summary = "全部设备")
+    public Result<List<DeviceEntity>> list() {
+        return Result.ok(deviceService.list());
+    }
 }
