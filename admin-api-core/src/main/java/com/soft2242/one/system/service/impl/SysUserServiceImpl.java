@@ -3,12 +3,8 @@ package com.soft2242.one.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.soft2242.one.base.common.constant.Constant;
-import com.soft2242.one.base.common.exception.ServerException;
-import com.soft2242.one.base.common.utils.CustomExcelUtils;
-import com.soft2242.one.base.common.utils.DateUtils;
-import com.soft2242.one.base.common.utils.ExcelUtils;
+import com.soft2242.one.myexcel.CustomExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.base.security.cache.TokenStoreCache;
@@ -18,7 +14,6 @@ import com.soft2242.one.system.dao.SysUserDao;
 import com.soft2242.one.system.dao.SysUserInfoDao;
 import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
-import com.soft2242.one.system.enums.SuperAdminEnum;
 import com.soft2242.one.system.enums.UserGenderEnum;
 import com.soft2242.one.system.enums.UserOnlineEnum;
 import com.soft2242.one.system.enums.UserStatusEnum;
@@ -28,18 +23,8 @@ import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +44,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     private SysUserInfoDao sysUserInfoDao;
 
     private final TokenStoreCache tokenStoreCache;
+
+    private final CustomExcelUtils customExcelUtils;
 
     public SysUserInfoEntity getUserInfoByAdminId(Long id) {
         return sysUserInfoDao.getByAdminId(id);
@@ -171,7 +158,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     public void export(String toPath) {
         List<SysUserExcelVO> userEntities = SysUserConvert.INSTANCE.convertList(sysUserDao.selectList(null));
         try {
-            CustomExcelUtils.export(toPath,userEntities);
+            customExcelUtils.export(toPath,userEntities);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

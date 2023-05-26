@@ -1,6 +1,7 @@
 package com.soft2242.one.system.vo;
 
-import com.soft2242.one.base.common.utils.MyExcelProperty;
+import com.soft2242.one.myexcel.MyExcelProperty;
+import com.soft2242.one.myexcel.MyTrans;
 import com.soft2242.one.base.mybatis.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,16 +31,29 @@ public class SysUserExcelVO extends BaseEntity {
      */
     @MyExcelProperty(value = "是否是超管")
     private Integer superAdmin;
+
     /**
      * 账号状态 (1:正常,2:停用,3:冻结,4:删除)
      */
-    @MyExcelProperty(value = "账号状态")
+    @MyTrans(key = "user_status",ref = "accountStatusLabel")
     private Integer accountStatus;
+
+    /**
+     * 对于账号状态的数据翻译
+     */
+    @MyExcelProperty(value = "账号状态")
+    private String accountStatusLabel;
     /**
      * 在线状态 (0：离线 1:在线)
      */
-    @MyExcelProperty(value = "在线状态")
+    @MyTrans(key = "online_status",ref = "onlineStatusLabel")
     private Integer onlineStatus;
+
+    /**
+     * 在线状态数据说明
+     */
+    @MyExcelProperty(value = "在线状态")
+    private String onlineStatusLabel;
 
     /**
      * token

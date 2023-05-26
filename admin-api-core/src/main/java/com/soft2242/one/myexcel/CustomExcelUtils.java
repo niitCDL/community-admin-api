@@ -1,9 +1,12 @@
-package com.soft2242.one.base.common.utils;
+package com.soft2242.one.myexcel;
 
+import com.soft2242.one.system.vo.SysDictVO;
+import lombok.AllArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,10 +17,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
+@Component
+@AllArgsConstructor
 public class CustomExcelUtils {
-    public static void export(String toPath, List<?> data) throws Exception {
+
+    private Map<String,List<SysDictVO.DictData>> dictData;
+
+    public void export(String toPath, List<?> data) throws Exception {
+        System.out.println(dictData);
         Integer total = data.size();
         //创建工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -35,18 +45,40 @@ public class CustomExcelUtils {
         }
         //
         HSSFRow body = null;
+        Integer columValue = 0;
         for (int i = 1; i <= total; i++) {
+            columValue = 0;
             Object ele = data.get(i - 1);
+            Class<?> eleClazz = ele.getClass();
             body = sheet.createRow(i);
             Field[] declaredFields = ele.getClass().getDeclaredFields();
             for (int j = 0; j < declaredFields.length; j++) {
                 Field declaredField = declaredFields[j];
-                String getMethod = "get" + declaredField.getName().toUpperCase().charAt(0) + declaredField.getName().substring(1);
-                Method declaredMethod = ele.getClass().getDeclaredMethod(getMethod);
-                Object res = declaredMethod.invoke(ele);
-                cell = body.createCell(j);
-                String resValue = res != null ? res.toString() : "";
-                cell.setCellValue(resValue);
+                String getMethodName = "get" + declaredField.getName().toUpperCase().charAt(0) + declaredField.getName().substring(1);
+                if (declaredField.isAnnotationPresent(MyTrans.class)){
+                    MyTrans myTrans = declaredField.getAnnotation(MyTrans.class);
+                    String key = myTrans.key();
+                    String ref = myTrans.ref();
+                    List<SysDictVO.DictData> dictDataList = dictData.get(key);
+                    String setMethodName = "set" + ref.toUpperCase().charAt(0) + ref.substring(1);
+                    //得到枚举值
+                    Method getMethod = eleClazz.getMethod(getMethodName);
+                    //枚举值的翻译到对应的属性
+                    Method setMethod = eleClazz.getMethod(setMethodName,eleClazz.getDeclaredField(ref).getType());
+                    for (SysDictVO.DictData dictValue : dictDataList) {
+                        if (Integer.valueOf(dictValue.getDictValue()) == getMethod.invoke(ele)) {
+                            setMethod.invoke(ele,dictValue.getDictLabel());
+                            break;
+                        }
+                    }
+                }else {
+                    Method declaredMethod = eleClazz.getDeclaredMethod(getMethodName);
+                    Object res = declaredMethod.invoke(ele);
+                    cell = body.createCell(columValue);
+                    String resValue = res != null ? res.toString() : "";
+                    cell.setCellValue(resValue);
+                    columValue++;
+                }
             }
         }
 
@@ -88,5 +120,6 @@ public class CustomExcelUtils {
         }
         return headers;
     }
+
 
 }
