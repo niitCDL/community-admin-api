@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.exception.ServerException;
+import com.soft2242.one.base.common.utils.CustomExcelUtils;
 import com.soft2242.one.base.common.utils.DateUtils;
 import com.soft2242.one.base.common.utils.ExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
@@ -23,6 +24,7 @@ import com.soft2242.one.system.enums.UserOnlineEnum;
 import com.soft2242.one.system.enums.UserStatusEnum;
 import com.soft2242.one.system.query.SysUserQuery;
 import com.soft2242.one.system.service.SysUserService;
+import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
@@ -166,9 +168,15 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     }
 
     @Override
-    public void export() {
-
+    public void export(String toPath) {
+        List<SysUserExcelVO> userEntities = SysUserConvert.INSTANCE.convertList(sysUserDao.selectList(null));
+        try {
+            CustomExcelUtils.export(toPath,userEntities);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     private Map<String, Object> getParams(SysUserQuery query) {
         Map<String, Object> params = new HashMap<>();
