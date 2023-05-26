@@ -41,6 +41,7 @@ storage:
     end-point: http://43.137.12.232:9000
     bucket-name: images
 
+
 #storage:
 #  enabled: true
 #  config:
