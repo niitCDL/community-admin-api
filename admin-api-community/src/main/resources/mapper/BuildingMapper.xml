@@ -10,9 +10,10 @@
 <!--            AND t2.building_name LIKE CONCAT('%',#{building_name},'%')-->
 <!--        </if>-->
 <!--    </select>-->
-    <select id="getList" resultType="com.soft2242.one.entity.Building">
-        SELECT *
-        FROM t_building t2  WHERE t2.deleted = 0
+    <select id="getList" resultType="com.soft2242.one.vo.BuildingVO">
+        SELECT t2.id ,t2.community_id ,t1.community_name as communityName , t2.building_name ,t2.units,t2.used_area,t2.content,t2.create_time
+        FROM t_building t2,t_community t1  WHERE t1.id=t2.community_id
+        AND t2.deleted = 0
         <if test="buildingName!=null and buildingName.trim() != ''">
             AND t2.building_name LIKE CONCAT('%',#{building_name},'%')
         </if>
