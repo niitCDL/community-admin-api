@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.PatrolPointsDao">
+
+    <select id="getPointsList" resultType="com.soft2242.one.vo.PatrolPointsVO">
+        select a.* ,b.community_name,c.building_name,c.units from t_patrol_points a
+        JOIN t_community b on a.community_id=b.id
+        JOIN t_building c on a.community_id=c.community_id and a.building_id=c.id
+        WHERE  a.deleted=0
+        <if test="communityId!=null">
+            AND b.id =#{communityId}
+        </if>
+    
+     
+    
+     
+    </select>
+
+
+</mapper>

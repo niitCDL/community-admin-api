@@ -2,6 +2,7 @@ package com.soft2242.one.dao;
 
 import com.soft2242.one.base.mybatis.dao.BaseDao;
 import com.soft2242.one.entity.Community;
+import com.soft2242.one.vo.CommunityVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,4 +17,6 @@ import java.util.Map;
 @Mapper
 public interface CommunityDao extends BaseDao<Community> {
     List<Community> getList(Map<String,Object> params);
+
+
 }

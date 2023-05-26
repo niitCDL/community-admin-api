@@ -9,36 +9,27 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
-* 设备表
+* 监控分组
 *
-* @author Flobby
-* @since 1.0.0 2023-05-25
+* @author Flobby 
+* @since 1.0.0 2023-05-26
 */
 @Data
-@Schema(description = "设备表")
-public class DeviceVO implements Serializable {
+@Schema(description = "监控分组")
+public class MonitorTypeVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Schema(description = "自增主键")
 	private Long id;
 
-	@Schema(description = "设备名称")
-	private String deviceName;
+	@Schema(description = "类型名称")
+	private String type;
 
-	@Schema(description = "状态（0：正常 1：故障）")
-	private Integer status;
+	@Schema(description = "类型描述")
+	private String des;
 
-	@Schema(description = "设备类别id")
-	private Long deviceType;
-
-	@Schema(description = "设备类别")
-	private String deviceTypeName;
-
-	@Schema(description = "设备位置")
-	private String address;
-
-	@Schema(description = "设备二维码url")
-	private String qrCode;
+	@Schema(description = "排序")
+	private Integer orderd;
 
 	@Schema(description = "删除标识（0：未删除 1：已删除）")
 	private Integer deleted;
@@ -56,5 +47,6 @@ public class DeviceVO implements Serializable {
 
 	@Schema(description = "修改者")
 	private Long updater;
+
 
 }

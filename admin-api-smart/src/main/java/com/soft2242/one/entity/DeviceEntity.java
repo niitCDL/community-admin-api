@@ -32,11 +32,6 @@ public class DeviceEntity extends BaseEntity {
 	private Long deviceType;
 
 	/**
-	* 设备所属小区id
-	*/
-	private Long communityId;
-
-	/**
 	* 设备位置
 	*/
 	private String address;

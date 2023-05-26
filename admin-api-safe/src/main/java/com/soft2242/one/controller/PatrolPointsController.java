@@ -3,9 +3,12 @@ package com.soft2242.one.controller;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.PatrolPointsConvert;
+import com.soft2242.one.dao.CommunityDao;
+import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.PatrolPointsEntity;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.service.PatrolPointsService;
+import com.soft2242.one.vo.CommunityVO;
 import com.soft2242.one.vo.PatrolPointsVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,14 +29,14 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("sys/point")
-@Tag(name="巡更点表")
+@Tag(name="巡更点")
 @AllArgsConstructor
 public class PatrolPointsController {
     private final PatrolPointsService PatrolPointsService;
 
     @GetMapping("page")
     @Operation(summary = "分页")
-//    @PreAuthorize("hasAuthority('sys:point:page')")
+    @PreAuthorize("hasAuthority('sys:point:page')")
     public Result<PageResult<PatrolPointsVO>> page(@ParameterObject @Valid PatrolPointsQuery query){
         PageResult<PatrolPointsVO> page = PatrolPointsService.page(query);
 
@@ -42,25 +45,36 @@ public class PatrolPointsController {
 
     @GetMapping("{id}")
     @Operation(summary = "详情信息")
-//    @PreAuthorize("hasAuthority('sys:point:info')")
+    @PreAuthorize("hasAuthority('sys:point:info')")
     public Result<PatrolPointsVO> get(@PathVariable("id") Long id){
         PatrolPointsEntity entity = PatrolPointsService.getById(id);
 
         return Result.ok(PatrolPointsConvert.INSTANCE.convert(entity));
     }
 
+
+
     @PostMapping
     @Operation(summary = "添加")
-//    @PreAuthorize("hasAuthority('sys:points:save')")
+    @PreAuthorize("hasAuthority('sys:point:save')")
     public Result<String> save(@RequestBody PatrolPointsVO vo){
         PatrolPointsService.save(vo);
-
         return Result.ok();
     }
 
+    @GetMapping("communties")
+    @Operation(summary = "获取所有小区id和名称")
+    public Result<List<CommunityVO>> searchCommunity(){
+        List<CommunityVO> communityVOS = PatrolPointsService.searchCommunity();
+        return Result.ok(communityVOS);
+    }
+
+
+
+
     @PutMapping
     @Operation(summary = "修改")
-//    @PreAuthorize("hasAuthority('sys:point:update')")
+    @PreAuthorize("hasAuthority('sys:point:update')")
     public Result<String> update(@RequestBody @Valid PatrolPointsVO vo){
         PatrolPointsService.update(vo);
 
@@ -69,7 +83,7 @@ public class PatrolPointsController {
 
     @DeleteMapping
     @Operation(summary = "删除")
-//    @PreAuthorize("hasAuthority('sys:point:delete')")
+    @PreAuthorize("hasAuthority('sys:point:delete')")
     public Result<String> delete(@RequestBody List<Long> idList){
         PatrolPointsService.delete(idList);
 

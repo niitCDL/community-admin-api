@@ -18,4 +18,6 @@ public class PatrolRecordsQuery extends Query {
     @Schema(description = "巡更点id")
     private Long pointId;
 
+
+
 }

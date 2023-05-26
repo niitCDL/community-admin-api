@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.PatrolRecordsDao">
+
+ 
+	<select id="searchList" resultType="com.soft2242.one.vo.PatrolRecordsVO">
+     SELECT a.id,b.REAL_NAME,c.PHONE FROM t_patrol_records  a
+     JOIN sys_admin_info b on a.inspector_id=b.ID
+     JOIN sys_admin c on b.ADMIN_ID=c.ID
+        <if test="id!=null and id.trim()!=''">
+            AND a.id =#{id}
+        </if>
+
+    </select>
+
+</mapper>

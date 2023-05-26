@@ -4,7 +4,7 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.entity.PatrolPathEntity;
 import com.soft2242.one.query.PatrolPathQuery;
-import com.soft2242.one.vo.PatrolPathVO;
+import com.soft2242.one.vo.*;
 
 import java.util.List;
 
@@ -19,8 +19,14 @@ public interface PatrolPathService extends BaseService<PatrolPathEntity> {
     PageResult<PatrolPathVO> page(PatrolPathQuery query);
 
     void save(PatrolPathVO vo);
+    List<CommunityVO> searchCommunity();
+    List<PatrolPointsVO> searchPoints();
+    List<InspectionItemVO> searchItems();
 
     void update(PatrolPathVO vo);
 
     void delete(List<Long> idList);
+
+
+
 }
