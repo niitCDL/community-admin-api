@@ -30,6 +30,12 @@
             <artifactId>admin-api-community</artifactId>
             <version>1.0.0-RELEASES</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.soft2242.one</groupId>
+            <artifactId>storage-plugin</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
     
         <dependency>
             <groupId>com.soft2242.one</groupId>

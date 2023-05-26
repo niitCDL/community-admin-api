@@ -33,7 +33,7 @@ public class InspectionItemVO implements Serializable {
 	private String name;
 
 	@Schema(description = "规格型号")
-	private String type;
+		private String type;
 
 	@Schema(description = "品牌厂商")
 	private String factory;
@@ -52,6 +52,7 @@ public class InspectionItemVO implements Serializable {
 
 	@Schema(description = "状态（0：启用，1：禁用）")
 	private Integer status;
+
 
 	@Schema(description = "创建时间")
 	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
