@@ -8,13 +8,13 @@
         select t1.*
             from t_notice t1 where t1.deleted = 0
         <if test="title != null and title.trim() != ''">
-            and t1.title = #{title}
+            and t1.title like CONCAT('%',#{title},'%')
         </if>
         <if test="noticeId != null and noticeId.trim() != ''">
             and t1.id = #{noticeId}
         </if>
         <if test="content != null and content.trim() != ''">
-            and t1.content = #{content}
+            and t1.content like   CONCAT('%',#{content},'%')
         </if>
         <if test="communityId != null and communityId != 0">
             and t1.community_id = #{communityId}
