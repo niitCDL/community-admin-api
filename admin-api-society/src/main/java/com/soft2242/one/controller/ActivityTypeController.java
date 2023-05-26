@@ -72,7 +72,6 @@ public class ActivityTypeController {
 //    @PreAuthorize("hasAuthority('soft2242:type:update')")
     public Result<String> update(@RequestBody @Valid ActivityTypeVO vo) {
         activityTypeService.update(vo);
-
         return Result.ok();
     }
 
