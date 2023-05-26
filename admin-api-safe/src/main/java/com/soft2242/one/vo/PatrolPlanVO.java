@@ -39,6 +39,9 @@ public class PatrolPlanVO implements Serializable {
 	@Schema(description = "巡更人姓名")
 	private String REALNAME;
 
+	@Schema(description = "线路名称")
+	private String wayName;
+
 	@Schema(description = "拍照要求（0不要求拍照，1要求拍照）")
 	private Integer photoRequirement;
 
@@ -59,4 +62,7 @@ public class PatrolPlanVO implements Serializable {
 	@Schema(description = "状态（0：正常，1：禁用）")
 	private Integer status;
 
+	@Schema(description = "创建时间")
+	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+	private Date createTime;
 }
