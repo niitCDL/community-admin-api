@@ -36,7 +36,7 @@ public class CommunityController {
 
     @GetMapping("page")
     @Operation(summary = "社区分页")
-    //@PreAuthorize("hasAuthority('sys:community:page')")
+    @PreAuthorize("hasAuthority('sys:community:page')")
     public Result<PageResult<CommunityVO>> page(@ParameterObject @Valid CommunityQuery query) {
         PageResult<CommunityVO> page = communityService.page(query);
         return Result.ok(page);
@@ -51,7 +51,7 @@ public class CommunityController {
 
     @GetMapping("{id}")
     @Operation(summary = "社区信息")
-    //@PreAuthorize("hasAuthority('sys:notice:info')")
+    @PreAuthorize("hasAuthority('sys:community:info')")
     public Result<CommunityVO> get(@PathVariable("id") Long id) {
         Community entity = communityService.getById(id);
         return Result.ok(CommunityConvert.INSTANCE.convert(entity));
@@ -59,7 +59,7 @@ public class CommunityController {
 
     @PostMapping
     @Operation(summary = "新增社区")
-    //@PreAuthorize("hasAuthority('sys:notice:save')")
+    //@PreAuthorize("hasAuthority('sys:community:save')")
     public Result<String> save(@RequestBody CommunityVO vo) {
         communityService.save(vo);
         return Result.ok();
@@ -67,7 +67,7 @@ public class CommunityController {
 
     @PutMapping
     @Operation(summary = "修改社区")
-    //@PreAuthorize("hasAuthority('sys:notice:update')")
+    //@PreAuthorize("hasAuthority('sys:community:update')")
     public Result<String> update(@RequestBody @Valid CommunityVO vo) {
         communityService.update(vo);
         return Result.ok();
@@ -75,7 +75,7 @@ public class CommunityController {
 
     @PostMapping("/delete")
     @Operation(summary = "批量删除社区")
-    //@PreAuthorize("hasAuthority('sys:notice:delete')")
+    //@PreAuthorize("hasAuthority('sys:community:delete')")
     public Result<String> delete(@RequestBody(required = false) List<Long> ids) {
         communityService.delete(ids);
         return Result.ok("删除成功");

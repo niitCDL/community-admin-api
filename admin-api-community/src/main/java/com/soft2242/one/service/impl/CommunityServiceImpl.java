@@ -41,10 +41,10 @@ public class CommunityServiceImpl extends BaseServiceImpl<CommunityDao, Communit
         IPage<Community> page = baseMapper.selectPage(getPage(query), getWrapper(query));
         params.put(Constant.PAGE,page);
         List<Community> list = baseMapper.getList(params);
-        Community community = list.get(0);
-        System.out.println(community.toString());
-        //return new PageResult<>(NoticeConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
-        return new PageResult<>(CommunityConvert.INSTANCE.convertList(list),page.getTotal());
+//        Community community = list.get(0);
+//        System.out.println(community.toString());
+        return new PageResult<>(CommunityConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        //return new PageResult<>(CommunityConvert.INSTANCE.convertList(list),page.getTotal());
     }
 
     private Map<String,Object> getParams(CommunityQuery query){

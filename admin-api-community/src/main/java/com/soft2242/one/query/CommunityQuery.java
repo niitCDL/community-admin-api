@@ -15,6 +15,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "社区管理查询")
 public class CommunityQuery extends Query {
+    @Schema(description = "社区ID")
+    private Long id;
     @Schema(description = "社区名称")
     private String communityName;
 }
