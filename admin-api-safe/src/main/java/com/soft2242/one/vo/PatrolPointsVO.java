@@ -8,53 +8,53 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
-* 巡更点表
+* 分页巡更点表
 *
 * @author 软件2242 soft2242@gmail.com
 * @since 1.0.0 2023-05-25
 */
 @Data
-@Schema(description = "巡更点表")
+@Schema(description = "分页巡更")
 public class PatrolPointsVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Schema(description = "自增主键")
 	private Long id;
 
-	@Schema(description = "所属小区id（t_communtiy）")
+	@Schema(description = "所属小区id（t_communtiy")
 	private Long communityId;
 
-	@Schema(description = "巡更点名称")
-	private String pointName;
+	@Schema(description = "所属小区名称")
+	private  String communityName;
+
 
 	@Schema(description = "所在楼宇id（t_building）")
 	private Long buildingId;
 
+
+	@Schema(description = "所属楼宇名称")
+	private  String buildingName;
+
+	@Schema(description = "单元号")
+	private Integer units;
+	@Schema(description = "巡更点名称")
+	private String pointName;
+
+
 	@Schema(description = "状态（0：正常，1：禁用）")
 	private Integer status;
 
-	@Schema(description = "删除标识（0：未删除，1：已删除）")
-	private Integer deleted;
+
 
 	@Schema(description = "巡更点位置编号")
 	private String pointNumber;
 
-	@Schema(description = "创建者")
-	private Long creator;
+
 
 	@Schema(description = "经纬度坐标用','分隔")
 	private String coordinate;
 
-	@Schema(description = "创建时间")
-	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
-	private Date createTime;
 
-	@Schema(description = "修改者")
-	private Long updater;
-
-	@Schema(description = "修改时间")
-	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
-	private Date updateTime;
 
 
 }

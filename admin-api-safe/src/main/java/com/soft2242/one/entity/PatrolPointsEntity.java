@@ -1,5 +1,6 @@
 package com.soft2242.one.entity;
 
+import com.soft2242.one.base.mybatis.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.baomidou.mybatisplus.annotation.*;
@@ -14,7 +15,7 @@ import java.util.Date;
 
 @Data
 @TableName("t_patrol_points")
-public class PatrolPointsEntity {
+public class PatrolPointsEntity extends BaseEntity {
 	/**
 	* 自增主键
 	*/
@@ -41,39 +42,20 @@ public class PatrolPointsEntity {
 	*/
 	private Integer status;
 
-	/**
-	* 删除标识（0：未删除，1：已删除）
-	*/
-	private Integer deleted;
+
 
 	/**
 	* 巡更点位置编号
 	*/
 	private String pointNumber;
 
-	/**
-	* 创建者
-	*/
-	private Long creator;
+
 
 	/**
 	* 经纬度坐标用","分隔
 	*/
 	private String coordinate;
 
-	/**
-	* 创建时间
-	*/
-	private Date createTime;
 
-	/**
-	* 修改者
-	*/
-	private Long updater;
-
-	/**
-	* 修改时间
-	*/
-	private Date updateTime;
 
 }

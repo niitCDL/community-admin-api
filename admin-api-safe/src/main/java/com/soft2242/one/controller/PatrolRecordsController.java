@@ -26,7 +26,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping("soft2242/records")
-@Tag(name="巡更记录表")
+@Tag(name="巡更记录")
 @AllArgsConstructor
 public class PatrolRecordsController {
     private final PatrolRecordsService tPatrolRecordsService;

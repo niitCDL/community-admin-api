@@ -3,7 +3,12 @@ package com.soft2242.one.dao;
 
 import com.soft2242.one.base.mybatis.dao.BaseDao;
 import com.soft2242.one.entity.PatrolPointsEntity;
+import com.soft2242.one.vo.PatrolPlanVO;
+import com.soft2242.one.vo.PatrolPointsVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
 * 巡更点表
@@ -13,5 +18,7 @@ import org.apache.ibatis.annotations.Mapper;
 */
 @Mapper
 public interface PatrolPointsDao extends BaseDao<PatrolPointsEntity> {
-	
+    List<PatrolPointsVO> getPointsList(Map<String,Object> params);
+
+
 }
