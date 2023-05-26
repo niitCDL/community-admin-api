@@ -23,8 +23,11 @@ public class PatrolPathVO implements Serializable {
 	@Schema(description = "自增主键")
 	private Long id;
 
-	@Schema(description = "所属小区")
+	@Schema(description = "所属小区id")
 	private Long communityId;
+
+	@Schema(description = "所属小区名称")
+	private  String communtiyName;
 
 	@Schema(description = "巡更路线名")
 	private String wayName;

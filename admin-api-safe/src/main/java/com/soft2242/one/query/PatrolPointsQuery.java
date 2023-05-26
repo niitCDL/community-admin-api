@@ -19,4 +19,6 @@ public class PatrolPointsQuery extends Query {
     private Long communityId;
 
 
+
+
 }

@@ -5,19 +5,30 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
+import com.soft2242.one.convert.CommunityConvert;
 import com.soft2242.one.convert.PatrolPointsConvert;
+import com.soft2242.one.dao.CommunityDao;
 import com.soft2242.one.dao.PatrolPointsDao;
+import com.soft2242.one.entity.Community;
+import com.soft2242.one.entity.PatrolPlanEntity;
 import com.soft2242.one.entity.PatrolPointsEntity;
+import com.soft2242.one.mapper.CommunityMapper;
+import com.soft2242.one.query.PatrolPlanQuery;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.service.PatrolPointsService;
+import com.soft2242.one.vo.CommunityVO;
+import com.soft2242.one.vo.PatrolPlanVO;
 import com.soft2242.one.vo.PatrolPointsVO;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.data.support.PageableExecutionUtils.getPage;
 
@@ -33,22 +44,41 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
 
     @Override
     public PageResult<PatrolPointsVO> page(PatrolPointsQuery query) {
-        IPage<PatrolPointsEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
-        return new PageResult<>(PatrolPointsConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        Map<String, Object> params = getParams(query);
+        IPage<PatrolPointsEntity> page = getPage(query);
+        params.put("page",page);
+        List<PatrolPointsVO> pointsList = baseMapper.getPointsList(params);
+        return new PageResult<>(pointsList, page.getTotal());
     }
 
-    private LambdaQueryWrapper<PatrolPointsEntity> getWrapper(PatrolPointsQuery query){
-        LambdaQueryWrapper<PatrolPointsEntity> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(StringUtils.isNotEmpty(String.valueOf(query.getCommunityId())), PatrolPointsEntity::getId, query.getCommunityId());
-        return wrapper;
+//    private LambdaQueryWrapper<PatrolPointsEntity> getWrapper(PatrolPointsQuery query){
+//        LambdaQueryWrapper<PatrolPointsEntity> wrapper = Wrappers.lambdaQuery();
+//        if (query.getCommunityId()!=null) {
+//            wrapper.eq(StringUtils.isNotEmpty(String.valueOf(query.getCommunityId())), PatrolPointsEntity::getId, query.getCommunityId());
+//        }
+//
+//        return wrapper;
+//    }
+
+    private Map<String,Object> getParams(PatrolPointsQuery query){
+        Map<String,Object> parmas=new HashMap<>();
+        parmas.put("communityId",query.getCommunityId());
+        return parmas;
     }
 
     @Override
     public void save(PatrolPointsVO vo) {
         PatrolPointsEntity entity = PatrolPointsConvert.INSTANCE.convert(vo);
-
         baseMapper.insert(entity);
+    }
+
+    @Resource
+    private  CommunityDao dao;
+    @Override
+    public  List<CommunityVO> searchCommunity() {
+        List<Community> communities = dao.selectList(null);
+        List<CommunityVO> communityVOS = CommunityConvert.INSTANCE.convertList(communities);
+        return  communityVOS;
     }
 
     @Override
