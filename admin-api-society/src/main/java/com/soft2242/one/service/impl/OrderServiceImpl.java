@@ -16,8 +16,6 @@ import com.soft2242.one.vo.OrderExcelVO;
 import com.soft2242.one.vo.OrderVO;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.aspectj.weaver.ast.Var;
-import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,22 +63,12 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         ExcelUtils.readAnalysis(file, OrderExcelVO.class, new ExcelFinishCallBack<>() {
             @Override
             public void doAfterAllAnalysed(List<OrderExcelVO> result) {
-                System.out.println("result");
-                System.out.println("result");
-                System.out.println("result");
-                System.out.println("result");
-                System.out.println("result");
                 System.out.println(result);
                 saveUser(result);
             }
 
             @Override
             public void doSaveBatch(List<OrderExcelVO> result) {
-                System.out.println("result");
-                System.out.println("result");
-                System.out.println("result");
-                System.out.println("result");
-                System.out.println("result");
                 System.out.println(result);
                 saveUser(result);
             }
@@ -88,13 +76,6 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
             private void saveUser(List<OrderExcelVO> result) {
                 ExcelUtils.parseDict(result);
                 List<Order> orders = OrderConvert.INSTANCE.convertListEntity(result);
-                System.out.println("");
-                System.out.println("");
-                System.out.println("");
-                System.out.println("");
-                System.out.println("");
-                System.out.println("");
-                System.out.println(orders);
 //                保存
                 saveBatch(orders);
             }
@@ -105,11 +86,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     @SneakyThrows
     public void export() {
         List<Order> list = list(Wrappers.lambdaQuery(Order.class).eq(Order::getStatus, 0));
-        System.out.println("list");
-        System.out.println("list");
-        System.out.println("list");
-        System.out.println("list");
-        System.out.println("list");
+
         System.out.println(list);
         List<OrderExcelVO> orderExcelVOS = OrderConvert.INSTANCE.convertList2(list);
         System.out.println(orderExcelVOS);
