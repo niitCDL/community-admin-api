@@ -38,11 +38,10 @@ public class BuildingServiceImpl extends BaseServiceImpl<BuildingDao, Building> 
         Map<String,Object> params = getParams(query);
         IPage<Building> page = baseMapper.selectPage(getPage(query), getWrapper(query));
         params.put(Constant.PAGE,page);
-        List<Building> list = baseMapper.getList(params);
+        List<BuildingVO> list = baseMapper.getList(params);
 
-        Building building = list.get(0);
-        System.out.println(building.toString());
-        return new PageResult<>(BuildingConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+
+        return new PageResult<>(list, page.getTotal());
         //return new PageResult<>(CommunityConvert.INSTANCE.convertList(list),page.getTotal());
     }
 
