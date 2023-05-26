@@ -3,10 +3,15 @@ package com.soft2242.one.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -16,6 +21,10 @@ import java.time.LocalDateTime;
  * @author Dr.king
  * @since 2023-05-25
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @TableName("t_building")
 public class Building implements Serializable {
 
@@ -66,7 +75,7 @@ public class Building implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 更新者
@@ -76,110 +85,7 @@ public class Building implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCommunityId() {
-        return communityId;
-    }
-
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
-    }
-
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public void setBuildingName(String buildingName) {
-        this.buildingName = buildingName;
-    }
-
-    public Integer getUnits() {
-        return units;
-    }
-
-    public void setUnits(Integer units) {
-        this.units = units;
-    }
-
-    public Integer getUsedArea() {
-        return usedArea;
-    }
-
-    public void setUsedArea(Integer usedArea) {
-        this.usedArea = usedArea;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Byte getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Byte deleted) {
-        this.deleted = deleted;
-    }
-
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(Long updater) {
-        this.updater = updater;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Building{" +
-            "id = " + id +
-            ", communityId = " + communityId +
-            ", buildingName = " + buildingName +
-            ", units = " + units +
-            ", usedArea = " + usedArea +
-            ", content = " + content +
-            ", deleted = " + deleted +
-            ", creator = " + creator +
-            ", createTime = " + createTime +
-            ", updater = " + updater +
-            ", updateTime = " + updateTime +
-        "}";
-    }
 }

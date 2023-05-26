@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.soft2242.one.mapper.BuildingMapper">
+<mapper namespace="com.soft2242.one.dao.BuildingDao">
+
+
+<!--    <select id="getList" resultType="com.soft2242.one.entity.Building">-->
+<!--        SELECT t2.*-->
+<!--        FROM t_building t2 WHERE t2.deleted = 0-->
+<!--        <if test="buildingName!=null and buildingName.trim() != ''">-->
+<!--            AND t2.building_name LIKE CONCAT('%',#{building_name},'%')-->
+<!--        </if>-->
+<!--    </select>-->
+    <select id="getList" resultType="com.soft2242.one.entity.Building">
+        SELECT *
+        FROM t_building t2  WHERE t2.deleted = 0
+        <if test="buildingName!=null and buildingName.trim() != ''">
+            AND t2.building_name LIKE CONCAT('%',#{building_name},'%')
+        </if>
+
+    </select>
+<!--    SELECT t1.id , t2.id ,t1.community_name , t2.building_name ,t2.units,t2.used_area,t2.content,t2.create_time-->
+<!--    FROM building-->
+<!--    INNER JOIN community ON building.community_id = community.id;-->
 
 </mapper>
