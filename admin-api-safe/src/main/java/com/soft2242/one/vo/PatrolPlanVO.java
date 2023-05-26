@@ -36,6 +36,9 @@ public class PatrolPlanVO implements Serializable {
 	@Schema(description = "巡更人id")
 	private Long inspectorId;
 
+	@Schema(description = "巡更人姓名")
+	private String REALNAME;
+
 	@Schema(description = "拍照要求（0不要求拍照，1要求拍照）")
 	private Integer photoRequirement;
 

@@ -23,10 +23,6 @@ public class PatrolPlanEntity extends BaseEntity {
 	*/
 	private Long communityId;
 
-	/**
-	* 小区名称
-	*/
-	private String communityName;
 
 	/**
 	* 巡更计划名

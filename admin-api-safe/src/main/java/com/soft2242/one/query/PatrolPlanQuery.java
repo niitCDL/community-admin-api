@@ -24,4 +24,7 @@ public class PatrolPlanQuery extends Query {
 
     @Schema(description = "巡更计划名")
     private String planName;
+
+    @Schema(description = "巡更人姓名")
+    private String name;
 }

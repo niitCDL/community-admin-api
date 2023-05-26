@@ -94,4 +94,5 @@ public class CommunityServiceImpl extends BaseServiceImpl<CommunityDao, Communit
         wrapper.like(StrUtil.isNotBlank(query.getCommunityName()), Community::getCommunityName, query.getCommunityName());
         return wrapper;
     }
+
 }
