@@ -2,9 +2,12 @@ package com.soft2242.one.vo;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.soft2242.one.base.common.utils.DateUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
 * 巡检项目
@@ -49,4 +52,9 @@ public class InspectionItemVO implements Serializable {
 
 	@Schema(description = "状态（0：启用，1：禁用）")
 	private Integer status;
+
+
+	@Schema(description = "创建时间")
+	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+	private Date createTime;
 }
