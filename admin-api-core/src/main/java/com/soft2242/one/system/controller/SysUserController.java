@@ -119,8 +119,8 @@ public class SysUserController {
 
     @GetMapping("export")
     @Operation(summary = "导出用户")
-    public void export(String toPath) {
-        sysUserService.export(toPath);
+    public void export() {
+        sysUserService.export();
     }
 
     @PostMapping("import")

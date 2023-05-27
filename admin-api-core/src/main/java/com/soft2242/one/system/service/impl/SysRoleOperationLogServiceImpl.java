@@ -89,7 +89,7 @@ public class SysRoleOperationLogServiceImpl extends BaseServiceImpl<SysRoleOpera
     }
 
     @Override
-    public void export(String toPath) {
+    public void export() {
         SysRoleOperationLogQuery sysRoleOperationLogQuery = new SysRoleOperationLogQuery();
         sysRoleOperationLogQuery.setPage(1);
         sysRoleOperationLogQuery.setLimit(999);
@@ -98,7 +98,7 @@ public class SysRoleOperationLogServiceImpl extends BaseServiceImpl<SysRoleOpera
         List<SysRoleOperationLogVO> list = SysRoleOperationLogConvert.INSTANCE.convertList(cusPage.getRecords());
 
         try {
-            customExcelUtils.export(toPath,list);
+            customExcelUtils.export(list);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

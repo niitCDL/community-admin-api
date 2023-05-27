@@ -1,10 +1,8 @@
 package com.soft2242.one.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.soft2242.one.base.mybatis.entity.BaseEntity;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,7 +22,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @TableName("t_building")
-public class Building implements Serializable {
+public class Building extends BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -63,7 +61,7 @@ public class Building implements Serializable {
     /**
      * 删除标识（0：未删除 1：已删除）
      */
-    private Byte deleted;
+    private Integer deleted;
 
     /**
      * 创建者

@@ -7,6 +7,7 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,8 +28,7 @@ public class CustomExcelUtils {
 
     private Map<String, List<SysDictVO.DictData>> dictData;
 
-    public void export(String toPath, List<?> data) throws Exception {
-        System.out.println(dictData);
+    public void export(List<?> data) throws Exception {
         Integer total = data.size();
         //创建工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -136,8 +136,12 @@ public class CustomExcelUtils {
                 obj = clazz.getConstructor(null).newInstance();
                 for (int j = 0; j < declaredFields.length; j++) {
                     HSSFCell cell = row.getCell(cellIndex);
+                    cell.setCellType(CellType.STRING);
                     Field field = declaredFields[j];
                     String fieldName = field.getName();
+                    if ("serialVersionUID".equals(fieldName)) {
+                        continue;
+                    }
                     String setMethodName = "set" + fieldName.toUpperCase().charAt(0) + fieldName.substring(1);
                     Class<?> type = field.getType();
                     Method setMethod = clazz.getMethod(setMethodName, type);
@@ -165,6 +169,7 @@ public class CustomExcelUtils {
                 dataList.add(obj);
             }
         } catch (Exception e) {
+            System.out.println("导入失败");
             throw new RuntimeException(e);
         }
     }
