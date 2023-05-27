@@ -8,5 +8,8 @@
         <if test="communityName!=null and communityName.trim() != ''">
             AND t1.community_name LIKE CONCAT('%',#{community_name},'%')
         </if>
+        <if test="address!=null and address.trim() != ''">
+            AND t1.address LIKE CONCAT('%',#{address},'%')
+        </if>
     </select>
 </mapper>

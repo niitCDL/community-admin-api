@@ -9,9 +9,12 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.CommunityConvert;
 import com.soft2242.one.dao.CommunityDao;
+import com.soft2242.one.entity.Building;
 import com.soft2242.one.entity.Community;
+import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.query.CommunityQuery;
 import com.soft2242.one.service.ICommunityService;
+import com.soft2242.one.vo.BuildingVO;
 import com.soft2242.one.vo.CommunityVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,8 +43,6 @@ public class CommunityServiceImpl extends BaseServiceImpl<CommunityDao, Communit
         IPage<Community> page = baseMapper.selectPage(getPage(query), getWrapper(query));
         params.put(Constant.PAGE,page);
         List<Community> list = baseMapper.getList(params);
-//        Community community = list.get(0);
-//        System.out.println(community.toString());
         return new PageResult<>(CommunityConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
         //return new PageResult<>(CommunityConvert.INSTANCE.convertList(list),page.getTotal());
     }
@@ -50,6 +51,7 @@ public class CommunityServiceImpl extends BaseServiceImpl<CommunityDao, Communit
         System.out.println(query);
         Map<String,Object> params = new HashMap<>();
         params.put("communityName",query.getCommunityName());
+        params.put("address",query.getAddress());
         return params;
     }
 
@@ -91,6 +93,7 @@ public class CommunityServiceImpl extends BaseServiceImpl<CommunityDao, Communit
     private Wrapper<Community> getWrapper(CommunityQuery query) {
         LambdaQueryWrapper<Community> wrapper = new LambdaQueryWrapper<>();
         wrapper.like(StrUtil.isNotBlank(query.getCommunityName()), Community::getCommunityName, query.getCommunityName());
+        wrapper.like(StrUtil.isNotBlank(query.getAddress()), Community::getAddress, query.getAddress());
         return wrapper;
     }
 

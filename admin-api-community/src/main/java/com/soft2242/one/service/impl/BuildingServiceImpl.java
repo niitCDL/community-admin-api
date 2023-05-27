@@ -10,8 +10,10 @@ import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.BuildingConvert;
 import com.soft2242.one.dao.BuildingDao;
 import com.soft2242.one.entity.Building;
+import com.soft2242.one.entity.Community;
 import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.service.IBuildingService;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.vo.BuildingVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,20 +35,31 @@ import java.util.Map;
 @AllArgsConstructor
 public class BuildingServiceImpl extends BaseServiceImpl<BuildingDao, Building> implements IBuildingService {
 
-    @Override
-    public PageResult<BuildingVO> page(BuildingQuery query) {
-        Map<String,Object> params = getParams(query);
-        IPage<Building> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-        params.put(Constant.PAGE,page);
-        List<BuildingVO> list = baseMapper.getList(params);
-        return new PageResult<>(list, page.getTotal());
-        //return new PageResult<>(CommunityConvert.INSTANCE.convertList(list),page.getTotal());
-    }
+
+//    @Override
+//    public PageResult<BuildingVO> page(BuildingQuery query) {
+//        Map<String,Object> params = getParams(query);
+//        IPage<Building> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+//        params.put(Constant.PAGE,page);
+//        List<BuildingVO> list = baseMapper.getList(params);
+//        return new PageResult<>(list, page.getTotal());
+//        //return new PageResult<>(CommunityConvert.INSTANCE.convertList(list),page.getTotal());
+//    }
+        @Override
+        public PageResult<BuildingVO> page(BuildingQuery query) {
+            IPage<Building> page = getPage(query);
+            Map<String,Object> params=getParams(query);
+            params.put("page",page);
+            List<BuildingVO> list = baseMapper.getList(params);
+            return new PageResult<>(list,page.getTotal());
+        }
 
     private Map<String,Object> getParams(BuildingQuery query){
         System.out.println(query);
         Map<String,Object> params = new HashMap<>();
         params.put("buildingName",query.getBuildingName());
+        params.put("communityName",query.getCommunityName());
+        params.put("units",query.getUnits());
         return params;
     }
 

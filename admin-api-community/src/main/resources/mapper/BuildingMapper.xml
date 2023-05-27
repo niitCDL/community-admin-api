@@ -17,6 +17,12 @@
         <if test="buildingName!=null and buildingName.trim() != ''">
             AND t2.building_name LIKE CONCAT('%',#{buildingName},'%')
         </if>
+        <if test="communityName!=null and communityName.trim() != ''">
+            AND t1.community_name LIKE CONCAT('%',#{communityName},'%')
+        </if>
+        <if test="units!=null and units.trim() != ''">
+            AND t2.units LIKE CONCAT('%',#{units},'%')
+        </if>
     </select>
 
 </mapper>

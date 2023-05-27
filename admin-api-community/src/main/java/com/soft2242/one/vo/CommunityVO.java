@@ -23,25 +23,19 @@ public class CommunityVO {
     private Long id;
 
     @Schema(description = "社区名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "社区名称不能为空")
     private String communityName;
 
     @Schema(description = "社区地址", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "社区地址不能为空")
     private String address;
 
     @Schema(description = "社区面积", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "社区地址不能为空")
     private Integer coverArea;
     @Schema(description = "社区图片", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "社区地址不能为空")
     private String communityImgs;
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "社区地址不能为空")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createTime;
     @Schema(description = "社区备注", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "社区地址不能为空")
     private String content;
 
 }
