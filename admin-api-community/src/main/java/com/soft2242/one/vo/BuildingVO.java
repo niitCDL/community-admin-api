@@ -21,29 +21,19 @@ public class BuildingVO {
 
     @Schema(description = "id")
     private Long id;
-
-
     @Schema(description = "社区ID", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "楼宇地址不能为空")
     private Long communityId;
     @Schema(description = "社区名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "楼宇地址不能为空")
     private String communityName;
     @Schema(description = "楼宇名称", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "楼宇地址不能为空")
     private String buildingName;
-
     @Schema(description = "所在单元", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "楼宇地址不能为空")
     private Integer units;
     @Schema(description = "使用面积", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "楼宇地址不能为空")
     private Integer usedArea;
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "楼宇地址不能为空")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createTime;
     @Schema(description = "楼宇备注", requiredMode = Schema.RequiredMode.REQUIRED)
-    //@NotBlank(message = "楼宇地址不能为空")
     private String content;
 }
