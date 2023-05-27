@@ -1,13 +1,13 @@
 package com.soft2242.one.system.service;
 
 
+import com.soft2242.one.base.common.myexcel.SysDictVO;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.system.entity.SysDictDataEntity;
 import com.soft2242.one.system.entity.SysDictTypeEntity;
 import com.soft2242.one.system.query.SysDictDataQuery;
 import com.soft2242.one.system.vo.SysDictDataVO;
-import com.soft2242.one.system.vo.SysDictVO;
 
 import java.util.List;
 

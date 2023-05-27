@@ -1,8 +1,8 @@
 package com.soft2242.one.system.convert;
 
+import com.soft2242.one.base.common.myexcel.SysDictVO;
 import com.soft2242.one.system.entity.SysDictDataEntity;
 import com.soft2242.one.system.vo.SysDictDataVO;
-import com.soft2242.one.system.vo.SysDictVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
