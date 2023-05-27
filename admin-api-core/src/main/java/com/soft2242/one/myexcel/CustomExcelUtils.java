@@ -1,30 +1,37 @@
 package com.soft2242.one.myexcel;
 
+import com.soft2242.one.base.common.utils.HttpContextUtils;
 import com.soft2242.one.system.vo.SysDictVO;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 
 @Component
 @AllArgsConstructor
 public class CustomExcelUtils {
 
-    private Map<String,List<SysDictVO.DictData>> dictData;
+    private Map<String, List<SysDictVO.DictData>> dictData;
 
     public void export(String toPath, List<?> data) throws Exception {
         System.out.println(dictData);
@@ -54,11 +61,11 @@ public class CustomExcelUtils {
             Field[] declaredFields = ele.getClass().getDeclaredFields();
             for (int j = 0; j < declaredFields.length; j++) {
                 Field declaredField = declaredFields[j];
-                if("serialVersionUID".equals(declaredField.getName())){
+                if ("serialVersionUID".equals(declaredField.getName())) {
                     continue;
                 }
                 String getMethodName = "get" + declaredField.getName().toUpperCase().charAt(0) + declaredField.getName().substring(1);
-                if (declaredField.isAnnotationPresent(MyTrans.class)){
+                if (declaredField.isAnnotationPresent(MyTrans.class)) {
                     MyTrans myTrans = declaredField.getAnnotation(MyTrans.class);
                     String key = myTrans.key();
                     String ref = myTrans.ref();
@@ -67,14 +74,14 @@ public class CustomExcelUtils {
                     //得到枚举值
                     Method getMethod = eleClazz.getMethod(getMethodName);
                     //枚举值的翻译到对应的属性
-                    Method setMethod = eleClazz.getMethod(setMethodName,eleClazz.getDeclaredField(ref).getType());
+                    Method setMethod = eleClazz.getMethod(setMethodName, eleClazz.getDeclaredField(ref).getType());
                     for (SysDictVO.DictData dictValue : dictDataList) {
                         if (Integer.valueOf(dictValue.getDictValue()) == getMethod.invoke(ele)) {
-                            setMethod.invoke(ele,dictValue.getDictLabel());
+                            setMethod.invoke(ele, dictValue.getDictLabel());
                             break;
                         }
                     }
-                }else if(declaredField.isAnnotationPresent(MyExcelProperty.class)){
+                } else if (declaredField.isAnnotationPresent(MyExcelProperty.class)) {
                     Method declaredMethod = eleClazz.getDeclaredMethod(getMethodName);
                     Object res = declaredMethod.invoke(ele);
                     cell = body.createCell(columValue);
@@ -89,22 +96,16 @@ public class CustomExcelUtils {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         String timeStamp = format.format(date);
         String excelName = timeStamp + "-" + data.get(0).getClass().getSimpleName() + ".xls";
-        //创建文件
-        String filePath = new String(toPath + File.separator + excelName);
-        File file = new File(filePath);
-        try {
-            file.createNewFile();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        String fileName = URLEncoder.encode(excelName, "UTF-8");
         //文件输出流
         try {
-            FileOutputStream stream = new FileOutputStream(file);
-            //写入
-            workbook.write(stream);
-            //关闭输出流
-            stream.close();
+            HttpServletResponse response = HttpContextUtils.getHttpServletResponse();
+            response.setCharacterEncoding("utf-8");
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-disposition", "attachment;filename*=" + fileName);
+            BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
+            workbook.write(bos);
+            bos.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,6 +123,56 @@ public class CustomExcelUtils {
             }
         }
         return headers;
+    }
+
+
+    public void importExcel(MultipartFile file, Class clazz,List dataList) throws Exception {
+        InputStream inputStream = file.getInputStream();
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+            //工作表
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            int rows = sheet.getPhysicalNumberOfRows();
+            Object obj = null;
+            Field[] declaredFields = clazz.getDeclaredFields();
+            int cellIndex = 0;
+            for (int i = 1; i < rows; i++) {
+                HSSFRow row = sheet.getRow(i);
+                cellIndex = 0;
+                obj = clazz.getConstructor(null).newInstance();
+                for (int j = 0; j < declaredFields.length; j++) {
+                    HSSFCell cell = row.getCell(cellIndex);
+                    Field field = declaredFields[j];
+                    String fieldName = field.getName();
+                    String setMethodName = "set" + fieldName.toUpperCase().charAt(0) + fieldName.substring(1);
+                    Class<?> type = field.getType();
+                    Method setMethod = clazz.getMethod(setMethodName, type);
+                    String getMethodName = "get" + fieldName.toUpperCase().charAt(0) + fieldName.substring(1);
+                    if (field.isAnnotationPresent(MyTrans.class)) {
+                        MyTrans trans = field.getAnnotation(MyTrans.class);
+                        String ref = trans.ref();
+                        String key = trans.key();
+                        //要从数据字典中拿到dictLabel所对应的dicValue
+                        String dictValue = "";
+                        List<SysDictVO.DictData> dictDataList = dictData.get(key);
+                        for (SysDictVO.DictData data : dictDataList) {
+                            if (data.getDictLabel().equals(cell.getStringCellValue())) {
+                                dictValue = data.getDictValue();
+                            }
+                        }
+                        Object parseValue = type.getConstructor(String.class).newInstance(dictValue);
+                        setMethod.invoke(obj, parseValue);
+                    } else if (field.isAnnotationPresent(MyExcelProperty.class)) {
+                        Object parseValue = type.getConstructor(String.class).newInstance(cell.getStringCellValue());
+                        setMethod.invoke(obj, parseValue);
+                        cellIndex++;
+                    }
+                }
+                dataList.add(obj);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
