@@ -5,6 +5,7 @@ import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.entity.Building;
 import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.vo.BuildingVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -53,4 +54,6 @@ public interface IBuildingService extends BaseService<Building> {
      */
     void delete(List<Long> ids);
 
+    void export();
+    void importByExcel(MultipartFile file);
 }

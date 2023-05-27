@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.constant.Constant;
+import com.soft2242.one.base.common.myexcel.CustomExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.BuildingConvert;
@@ -14,11 +15,17 @@ import com.soft2242.one.entity.Community;
 import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.service.IBuildingService;
 import com.soft2242.one.service.ICommunityService;
+import com.soft2242.one.system.convert.SysUserConvert;
+import com.soft2242.one.system.entity.SysUserEntity;
+import com.soft2242.one.system.vo.SysUserExcelVO;
+import com.soft2242.one.vo.BatchBuildingVO;
 import com.soft2242.one.vo.BuildingVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +43,7 @@ import java.util.Map;
 public class BuildingServiceImpl extends BaseServiceImpl<BuildingDao, Building> implements IBuildingService {
 
 
-//    @Override
+    //    @Override
 //    public PageResult<BuildingVO> page(BuildingQuery query) {
 //        Map<String,Object> params = getParams(query);
 //        IPage<Building> page = baseMapper.selectPage(getPage(query), getWrapper(query));
@@ -45,21 +52,23 @@ public class BuildingServiceImpl extends BaseServiceImpl<BuildingDao, Building> 
 //        return new PageResult<>(list, page.getTotal());
 //        //return new PageResult<>(CommunityConvert.INSTANCE.convertList(list),page.getTotal());
 //    }
-        @Override
-        public PageResult<BuildingVO> page(BuildingQuery query) {
-            IPage<Building> page = getPage(query);
-            Map<String,Object> params=getParams(query);
-            params.put("page",page);
-            List<BuildingVO> list = baseMapper.getList(params);
-            return new PageResult<>(list,page.getTotal());
-        }
+    private final CustomExcelUtils customExcelUtils;
 
-    private Map<String,Object> getParams(BuildingQuery query){
+    @Override
+    public PageResult<BuildingVO> page(BuildingQuery query) {
+        IPage<Building> page = getPage(query);
+        Map<String, Object> params = getParams(query);
+        params.put("page", page);
+        List<BuildingVO> list = baseMapper.getList(params);
+        return new PageResult<>(list, page.getTotal());
+    }
+
+    private Map<String, Object> getParams(BuildingQuery query) {
         System.out.println(query);
-        Map<String,Object> params = new HashMap<>();
-        params.put("buildingName",query.getBuildingName());
-        params.put("communityName",query.getCommunityName());
-        params.put("units",query.getUnits());
+        Map<String, Object> params = new HashMap<>();
+        params.put("buildingName", query.getBuildingName());
+        params.put("communityName", query.getCommunityName());
+        params.put("units", query.getUnits());
         return params;
     }
 
@@ -89,6 +98,31 @@ public class BuildingServiceImpl extends BaseServiceImpl<BuildingDao, Building> 
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> ids) {
         removeByIds(ids);
+    }
+
+    @Override
+    public void export() {
+        List<BatchBuildingVO> userEntities = BuildingConvert.INSTANCE.convert2List(baseMapper.selectList(null));
+        try {
+            customExcelUtils.export(userEntities);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void importByExcel(MultipartFile file) {
+        try {
+            List<BatchBuildingVO> dataVoList = new ArrayList<>();
+            customExcelUtils.importExcel(file, BatchBuildingVO.class,dataVoList);
+            System.out.println("导入成功！！！！");
+            List<Building> buildings = BuildingConvert.INSTANCE.convertListEntity(dataVoList);
+            for (Building building : buildings) {
+                baseMapper.insert(building);
+            }
+            System.out.println("导入成功");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

@@ -78,7 +78,7 @@ public class SysRoleOperationLogController {
 
     @GetMapping("export")
     @Operation(summary = "导出")
-    public void export(String toPath){
-        sysRoleOperationLogService.export(toPath);
+    public void export(){
+        sysRoleOperationLogService.export();
     }
 }

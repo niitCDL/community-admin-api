@@ -31,7 +31,7 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
 
     void updatePassword(Long id, String encode);
 
-    void export(String toPath);
+    void export();
 
     void importByExcel(MultipartFile file);
 }

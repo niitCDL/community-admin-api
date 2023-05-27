@@ -84,5 +84,20 @@ public class BuildingController {
         return Result.ok("删除成功");
     }
 
+    @GetMapping("export")
+    @Operation(summary = "导出楼宇")
+    //@PreAuthorize("hasAuthority('sys:user:export')")
+    public void export(){
+        buildingService.export();
+    }
 
+    @PostMapping("import")
+    @Operation(summary = "导入楼宇")
+    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return Result.error("请选择需要上传的文件");
+        }
+        buildingService.importByExcel(file);
+        return Result.ok();
+    }
 }

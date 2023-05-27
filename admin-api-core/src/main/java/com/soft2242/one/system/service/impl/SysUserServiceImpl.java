@@ -153,10 +153,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     }
 
     @Override
-    public void export(String toPath) {
+    public void export() {
         List<SysUserExcelVO> userEntities = SysUserConvert.INSTANCE.convertList(sysUserDao.selectList(null));
         try {
-            customExcelUtils.export(toPath,userEntities);
+            customExcelUtils.export(userEntities);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -25,5 +25,5 @@ public interface SysRoleOperationLogService extends BaseService<SysRoleOperation
 
     void delete(List<Long> idList);
 
-    void export(String toPath);
+    void export();
 }
