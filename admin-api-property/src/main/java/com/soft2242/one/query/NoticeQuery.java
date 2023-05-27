@@ -4,6 +4,9 @@ import com.soft2242.one.base.common.query.Query;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 
 /**
@@ -27,8 +30,11 @@ public class NoticeQuery extends Query {
 
 
     @Schema(description = "所属小区")
-    private String communityId;
+    private String[] communityId;
     @Schema(description = "发布人")
     private String adminId;
+    @Schema(description = "创建时间")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date[] createTime;
 
 }
