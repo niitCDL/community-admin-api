@@ -20,4 +20,7 @@ public interface SysUserConvert {
     UserDetail convertDetail(SysUserEntity entity);
 
     List<SysUserExcelVO> convertList(List<SysUserEntity> selectList);
+
+    List<SysUserEntity> convertList2(List<SysUserExcelVO> dataVoList);
+
 }

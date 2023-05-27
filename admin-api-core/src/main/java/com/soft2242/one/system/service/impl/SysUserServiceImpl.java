@@ -24,11 +24,11 @@ import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 用户管理
@@ -159,6 +159,21 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         List<SysUserExcelVO> userEntities = SysUserConvert.INSTANCE.convertList(sysUserDao.selectList(null));
         try {
             customExcelUtils.export(toPath,userEntities);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void importByExcel(MultipartFile file) {
+        try {
+            List<SysUserExcelVO> dataVoList = new ArrayList<>();
+            customExcelUtils.importExcel(file, SysUserExcelVO.class,dataVoList);
+            List<SysUserEntity> sysUserEntities = SysUserConvert.INSTANCE.convertList2(dataVoList);
+            for (SysUserEntity sysUserEntity : sysUserEntities) {
+                sysUserDao.insert(sysUserEntity);
+            }
+            System.out.println("导入成功");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

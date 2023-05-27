@@ -11,6 +11,7 @@ import com.soft2242.one.system.convert.SysUserInfoConvert;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.query.SysUserQuery;
 import com.soft2242.one.system.service.SysUserService;
+import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserPasswordVO;
 import com.soft2242.one.system.vo.SysUserVO;
@@ -22,6 +23,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -123,5 +125,15 @@ public class SysUserController {
     @Operation(summary = "导出用户")
     public void export(String toPath) {
         sysUserService.export(toPath);
+    }
+
+    @PostMapping("import")
+    @Operation(summary = "导入用户")
+    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return Result.error("请选择需要上传的文件");
+        }
+        sysUserService.importByExcel(file);
+        return Result.ok();
     }
 }

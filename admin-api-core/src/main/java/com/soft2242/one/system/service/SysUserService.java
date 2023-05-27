@@ -8,6 +8,7 @@ import com.soft2242.one.system.query.SysUserQuery;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,4 +32,6 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void updatePassword(Long id, String encode);
 
     void export(String toPath);
+
+    void importByExcel(MultipartFile file);
 }
