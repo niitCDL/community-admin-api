@@ -6,7 +6,9 @@ import com.soft2242.one.convert.BuildingConvert;
 import com.soft2242.one.entity.Building;
 import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.service.IBuildingService;
+import com.soft2242.one.storage.service.StorageService;
 import com.soft2242.one.vo.BuildingVO;
+import com.soft2242.one.vo.SysFileUploadVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -14,6 +16,7 @@ import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -31,6 +34,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BuildingController {
     private final IBuildingService buildingService;
+
 
 
     @GetMapping("page")
@@ -57,7 +61,7 @@ public class BuildingController {
     }
 
     @PostMapping
-    @Operation(summary = "新增社区")
+    @Operation(summary = "新增楼宇")
     //@PreAuthorize("hasAuthority('sys:community:save')")
     public Result<String> save(@RequestBody BuildingVO vo) {
         buildingService.save(vo);
@@ -72,11 +76,13 @@ public class BuildingController {
         return Result.ok();
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @Operation(summary = "批量删除楼宇")
-    //@PreAuthorize("hasAuthority('sys:community:delete')")
+    //@PreAuthorize("hasAuthority('sys:building:delete')")
     public Result<String> delete(@RequestBody(required = false) List<Long> ids) {
         buildingService.delete(ids);
         return Result.ok("删除成功");
     }
+
+
 }
