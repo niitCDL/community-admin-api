@@ -84,4 +84,18 @@ public class OrderExcelVO implements Serializable , TransPojo {
     private Long updater;
 
 
+    /**
+     * 房屋表主键
+     */
+    @ExcelProperty("房屋表主键")
+    private Long houseId;
+
+    /**
+     * 业主表主键
+     */
+    @ExcelProperty("业主表主键")
+    private Long ownerId;
+
+
+
 }

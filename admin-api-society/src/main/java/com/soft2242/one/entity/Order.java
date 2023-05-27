@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author ysh
@@ -103,6 +103,32 @@ public class Order implements Serializable {
      */
     private LocalDateTime updateTime;
 
+    /**
+     * 房屋表主键
+     */
+    private Long houseId;
+
+    /**
+     * 业主表主键
+     */
+    private Long ownerId;
+
+    public Long getHouseId() {
+        return houseId;
+    }
+
+    public void setHouseId(Long houseId) {
+        this.houseId = houseId;
+    }
+
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public Long getId() {
         return id;
     }
@@ -110,6 +136,7 @@ public class Order implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
     public Long getUserId() {
         return userId;
     }
@@ -117,6 +144,7 @@ public class Order implements Serializable {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
     public Long getComminityId() {
         return comminityId;
     }
@@ -124,6 +152,7 @@ public class Order implements Serializable {
     public void setComminityId(Long comminityId) {
         this.comminityId = comminityId;
     }
+
     public Long getBillId() {
         return billId;
     }
@@ -131,6 +160,7 @@ public class Order implements Serializable {
     public void setBillId(Long billId) {
         this.billId = billId;
     }
+
     public Long getParkRecordId() {
         return parkRecordId;
     }
@@ -138,6 +168,7 @@ public class Order implements Serializable {
     public void setParkRecordId(Long parkRecordId) {
         this.parkRecordId = parkRecordId;
     }
+
     public Integer getOrderType() {
         return orderType;
     }
@@ -145,6 +176,7 @@ public class Order implements Serializable {
     public void setOrderType(Integer orderType) {
         this.orderType = orderType;
     }
+
     public String getPrice() {
         return price;
     }
@@ -152,6 +184,7 @@ public class Order implements Serializable {
     public void setPrice(String price) {
         this.price = price;
     }
+
     public Double getAmount() {
         return amount;
     }
@@ -159,6 +192,7 @@ public class Order implements Serializable {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
+
     public Double getMoney() {
         return money;
     }
@@ -166,6 +200,7 @@ public class Order implements Serializable {
     public void setMoney(Double money) {
         this.money = money;
     }
+
     public Integer getStatus() {
         return status;
     }
@@ -173,6 +208,7 @@ public class Order implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
     public LocalDateTime getPayTime() {
         return payTime;
     }
@@ -180,6 +216,7 @@ public class Order implements Serializable {
     public void setPayTime(LocalDateTime payTime) {
         this.payTime = payTime;
     }
+
     public Integer getDeleted() {
         return deleted;
     }
@@ -187,6 +224,7 @@ public class Order implements Serializable {
     public void setDeleted(Integer deleted) {
         this.deleted = deleted;
     }
+
     public LocalDateTime getCreateTime() {
         return createTime;
     }
@@ -194,6 +232,7 @@ public class Order implements Serializable {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
+
     public Long getCreator() {
         return creator;
     }
@@ -201,6 +240,7 @@ public class Order implements Serializable {
     public void setCreator(Long creator) {
         this.creator = creator;
     }
+
     public Long getUpdater() {
         return updater;
     }
@@ -208,6 +248,7 @@ public class Order implements Serializable {
     public void setUpdater(Long updater) {
         this.updater = updater;
     }
+
     public LocalDateTime getUpdateTime() {
         return updateTime;
     }
@@ -219,22 +260,22 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return "Order{" +
-            "id=" + id +
-            ", userId=" + userId +
-            ", comminityId=" + comminityId +
-            ", billId=" + billId +
-            ", parkRecordId=" + parkRecordId +
-            ", orderType=" + orderType +
-            ", price=" + price +
-            ", amount=" + amount +
-            ", money=" + money +
-            ", status=" + status +
-            ", payTime=" + payTime +
-            ", deleted=" + deleted +
-            ", createTime=" + createTime +
-            ", creator=" + creator +
-            ", updater=" + updater +
-            ", updateTime=" + updateTime +
-        "}";
+                "id=" + id +
+                ", userId=" + userId +
+                ", comminityId=" + comminityId +
+                ", billId=" + billId +
+                ", parkRecordId=" + parkRecordId +
+                ", orderType=" + orderType +
+                ", price=" + price +
+                ", amount=" + amount +
+                ", money=" + money +
+                ", status=" + status +
+                ", payTime=" + payTime +
+                ", deleted=" + deleted +
+                ", createTime=" + createTime +
+                ", creator=" + creator +
+                ", updater=" + updater +
+                ", updateTime=" + updateTime +
+                "}";
     }
 }
