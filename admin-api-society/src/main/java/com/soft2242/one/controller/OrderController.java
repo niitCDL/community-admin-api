@@ -16,6 +16,8 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * <p>
  * 前端控制器
@@ -36,6 +38,7 @@ public class OrderController {
     @GetMapping("page")
     @Operation(summary = "分页查询")
     public Result<PageResult<OrderVO>> page(@ParameterObject @Valid OrderQuery query) {
+//        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段
         PageResult<OrderVO> page = orderSevice.page(query);
         return Result.ok(page);
     }
@@ -92,5 +95,13 @@ public class OrderController {
         orderSevice.export();
     }
 
+
+    @DeleteMapping
+    @Operation(summary = "批量删除")
+//    @PreAuthorize("hasAuthority('soft2242:type:delete')")
+    public Result<String> delete(@RequestBody List<Long> idList){
+        orderSevice.delete(idList);
+        return Result.ok();
+    }
 
 }

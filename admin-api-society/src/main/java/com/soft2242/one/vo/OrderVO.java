@@ -119,5 +119,8 @@ public class OrderVO implements Serializable {
     @Schema(description = "订单结束时间")
     private LocalDateTime endTime;
 
+    @Schema(description = "房屋地址")
+    private String houseNumber;
+
 
 }

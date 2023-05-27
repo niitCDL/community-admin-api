@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 /**
  * 活动分类
@@ -75,11 +77,11 @@ public class ActivityTypeController {
         return Result.ok();
     }
 
-//    @DeleteMapping
-//    @Operation(summary = "删除")
-////    @PreAuthorize("hasAuthority('soft2242:type:delete')")
-//    public Result<String> delete(@RequestBody List<Long> idList){
-//        activityTypeService.delete(idList);
-//        return Result.ok();
-//    }
+    @DeleteMapping
+    @Operation(summary = "批量删除")
+//    @PreAuthorize("hasAuthority('soft2242:type:delete')")
+    public Result<String> delete(@RequestBody List<Long> idList){
+        activityTypeService.delete(idList);
+        return Result.ok();
+    }
 }

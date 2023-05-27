@@ -14,11 +14,14 @@ import com.soft2242.one.query.OrderQuery;
 import com.soft2242.one.service.IOrderService;
 import com.soft2242.one.vo.OrderExcelVO;
 import com.soft2242.one.vo.OrderVO;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import com.soft2242.one.service.IHouseService;
 
 import java.util.List;
 
@@ -32,6 +35,8 @@ import java.util.List;
 @AllArgsConstructor
 
 public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implements IOrderService {
+    @Autowired
+    IHouseService houseService;
 
     private LambdaQueryWrapper<Order> getWrapper(OrderQuery query) {
         LambdaQueryWrapper<Order> wrapper = Wrappers.lambdaQuery();
@@ -41,7 +46,13 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     @Override
     public PageResult<OrderVO> page(OrderQuery query) {
         IPage<Order> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-        return new PageResult<>(OrderConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        List<OrderVO> orderVOS = OrderConvert.INSTANCE.convertList(page.getRecords());
+//        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段
+        orderVOS.forEach(orderVO ->{
+            orderVO.setHouseNumber( houseService.getById(orderVO.getHouseId()).getHouseNumber());
+        });
+
+        return new PageResult<>(orderVOS,page.getTotal());
     }
 
     @Override
@@ -52,6 +63,11 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     @Override
     public void update(OrderVO vo) {
         updateById(OrderConvert.INSTANCE.convert(vo));
+    }
+
+    @Override
+    public void delete(List<Long> idList) {
+        removeByIds(idList);
     }
 
     @Override

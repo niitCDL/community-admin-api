@@ -29,4 +29,5 @@ public interface IVisitorService extends BaseService<Visitor> {
 
     void update(VisitorVO vo);
 
+
 }
