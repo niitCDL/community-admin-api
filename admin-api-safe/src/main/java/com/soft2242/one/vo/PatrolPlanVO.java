@@ -49,12 +49,12 @@ public class PatrolPlanVO implements Serializable {
 	private Integer planCycle;
 
 	@Schema(description = "计划开始时间")
-	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
-	private Date startTime;
+	@JsonFormat(pattern = DateUtils.TIME_PATTERN)
+	private String startTime;
 
 	@Schema(description = "计划结束时间")
-	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
-	private Date endTime;
+	@JsonFormat(pattern = DateUtils.TIME_PATTERN)
+	private String endTime;
 
 	@Schema(description = "备注")
 	private String notes;

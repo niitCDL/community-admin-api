@@ -67,7 +67,7 @@ public class InspectionItemServiceImpl extends BaseServiceImpl<InspectionItemDao
 
         private Map<String,Object> getParams(InspectionItemQuery query){
             Map<String,Object> parmas=new HashMap<>();
-            parmas.put("communityName",query.getCommunityName());
+            parmas.put("communityId",query.getCommunityId());
             parmas.put("name",query.getName());
             return parmas;
 }

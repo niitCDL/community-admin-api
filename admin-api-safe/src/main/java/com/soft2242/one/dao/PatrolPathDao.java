@@ -5,6 +5,7 @@ import com.soft2242.one.entity.PatrolPathEntity;
 import com.soft2242.one.vo.PatrolPathVO;
 import com.soft2242.one.vo.PatrolPointsVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -18,4 +19,7 @@ import java.util.Map;
 @Mapper
 public interface PatrolPathDao extends BaseDao<PatrolPathEntity> {
     List<PatrolPathVO> getPathList(Map<String,Object> params);
+
+    List<PatrolPathVO> getPathListByCommunityId(@Param("communityId") Long communityId);
+
 }

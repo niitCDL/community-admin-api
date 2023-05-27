@@ -22,6 +22,9 @@ public interface PatrolPathService extends BaseService<PatrolPathEntity> {
     List<CommunityVO> searchCommunity();
     List<PatrolPointsVO> searchPoints();
     List<InspectionItemVO> searchItems();
+    public List<PatrolPathVO> getPathListByCommId(Long commId);
+
+    public List<ComAndPathVO> getCommAndPath();
 
     void update(PatrolPathVO vo);
 

@@ -47,7 +47,6 @@ public class PatrolPlanController {
 
         return Result.ok(PatrolPlanConvert.INSTANCE.convert(entity));
     }
-
     @PostMapping
     @Operation(summary = "保存")
   @PreAuthorize("hasAuthority('sys:safe:plan:add')")

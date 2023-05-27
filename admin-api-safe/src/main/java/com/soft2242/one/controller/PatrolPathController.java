@@ -6,10 +6,7 @@ import com.soft2242.one.convert.PatrolPathConvert;
 import com.soft2242.one.entity.PatrolPathEntity;
 import com.soft2242.one.query.PatrolPathQuery;
 import com.soft2242.one.service.PatrolPathService;
-import com.soft2242.one.vo.CommunityVO;
-import com.soft2242.one.vo.InspectionItemVO;
-import com.soft2242.one.vo.PatrolPathVO;
-import com.soft2242.one.vo.PatrolPointsVO;
+import com.soft2242.one.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -77,6 +74,13 @@ public class PatrolPathController {
     public Result<List<InspectionItemVO>> searchPlans(){
         List<InspectionItemVO> inspectionItemVOS = PatrolPathService.searchItems();
         return Result.ok(inspectionItemVOS);
+    }
+
+    @GetMapping("communityid")
+    @Operation(summary = "获取小区的巡更路线")
+    public Result<List<ComAndPathVO>> getPlanListByCommunityId(){
+        List<ComAndPathVO> commAndPath = PatrolPathService.getCommAndPath();
+        return Result.ok(commAndPath);
     }
 
 

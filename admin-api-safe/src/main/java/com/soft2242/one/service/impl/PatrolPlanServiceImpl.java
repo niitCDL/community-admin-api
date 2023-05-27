@@ -53,7 +53,7 @@ public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, Patrol
 
     private Map<String,Object> getParams(PatrolPlanQuery query){
         Map<String,Object> parmas=new HashMap<>();
-        parmas.put("communityName",query.getCommunityName());
+        parmas.put("communityId",query.getCommunityId());
         parmas.put("planName",query.getPlanName());
         parmas.put("name",query.getName());
         return parmas;

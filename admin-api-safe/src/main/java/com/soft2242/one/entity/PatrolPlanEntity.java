@@ -52,12 +52,12 @@ public class PatrolPlanEntity extends BaseEntity {
 	/**
 	* 计划开始时间
 	*/
-	private Date startTime;
+	private String startTime;
 
 	/**
 	* 计划结束时间
 	*/
-	private Date endTime;
+	private String endTime;
 
 	/**
 	* 备注
