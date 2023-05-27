@@ -1,10 +1,14 @@
 package com.soft2242.one.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -14,6 +18,10 @@ import java.time.LocalDateTime;
  * @author Dr.king
  * @since 2023-05-25
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @TableName("t_house")
 public class House implements Serializable {
 
@@ -68,7 +76,8 @@ public class House implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     /**
      * 更新者
@@ -78,141 +87,20 @@ public class House implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
-
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
+    /**
+     * 社区名称
+     */
     private String communityName;
-
+    /**
+     * 楼宇名称
+     */
     private String buildingName;
+    /**
+     * 所在单元
+     */
+    private Integer units;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCommunityId() {
-        return communityId;
-    }
-
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
-    }
-
-    public Long getBuildingId() {
-        return buildingId;
-    }
-
-    public void setBuildingId(Long buildingId) {
-        this.buildingId = buildingId;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
-    }
-
-    public void setHouseNumber(String houseNumber) {
-        this.houseNumber = houseNumber;
-    }
-
-    public Integer getHouseArea() {
-        return houseArea;
-    }
-
-    public void setHouseArea(Integer houseArea) {
-        this.houseArea = houseArea;
-    }
-
-    public Byte getHouseStatus() {
-        return houseStatus;
-    }
-
-    public void setHouseStatus(Byte houseStatus) {
-        this.houseStatus = houseStatus;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Byte getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Byte deleted) {
-        this.deleted = deleted;
-    }
-
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(Long updater) {
-        this.updater = updater;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getCommunityName() {
-        return communityName;
-    }
-
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
-    }
-
-    public String getBuildingName() {
-        return buildingName;
-    }
-
-    public void setBuildingName(String buildingName) {
-        this.buildingName = buildingName;
-    }
-
-    @Override
-    public String toString() {
-        return "House{" +
-            "id = " + id +
-            ", communityId = " + communityId +
-            ", buildingId = " + buildingId +
-            ", houseNumber = " + houseNumber +
-            ", houseArea = " + houseArea +
-            ", houseStatus = " + houseStatus +
-            ", content = " + content +
-            ", deleted = " + deleted +
-            ", creator = " + creator +
-            ", createTime = " + createTime +
-            ", updater = " + updater +
-            ", updateTime = " + updateTime +
-            ", communityName = " + communityName +
-            ", buildingName = " + buildingName +
-        "}";
-    }
 }
