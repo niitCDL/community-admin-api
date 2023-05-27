@@ -32,7 +32,7 @@ public class ActivityController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-    @PreAuthorize("hasAuthority('soft2242:activity:page')")
+//    @PreAuthorize("hasAuthority('soft2242:activity:page')")
     public Result<PageResult<ActivityVO>> page(@ParameterObject @Valid ActivityQuery query) {
         PageResult<ActivityVO> page = activityService.page(query);
 
@@ -41,7 +41,7 @@ public class ActivityController {
 
     @GetMapping("{id}")
     @Operation(summary = "信息")
-    @PreAuthorize("hasAuthority('soft2242:activity:info')")
+//    @PreAuthorize("hasAuthority('soft2242:activity:info')")
     public Result<ActivityVO> get(@PathVariable("id") Long id) {
         Activity entity = activityService.getById(id);
 
@@ -50,7 +50,7 @@ public class ActivityController {
 
     @PostMapping
     @Operation(summary = "保存")
-    @PreAuthorize("hasAuthority('soft2242:activity:save')")
+//    @PreAuthorize("hasAuthority('soft2242:activity:save')")
     public Result<String> save(@RequestBody ActivityVO vo) {
         activityService.save(vo);
 
@@ -59,7 +59,7 @@ public class ActivityController {
 
     @PutMapping
     @Operation(summary = "修改")
-    @PreAuthorize("hasAuthority('soft2242:activity:update')")
+//    @PreAuthorize("hasAuthority('soft2242:activity:update')")
     public Result<String> update(@RequestBody @Valid ActivityVO vo) {
         activityService.update(vo);
 
@@ -69,7 +69,7 @@ public class ActivityController {
     //    逻辑删除
     @PutMapping("delete/{id}")
     @Operation(summary = "删除")
-    @PreAuthorize("hasAuthority('soft2242:activity:update')")
+//    @PreAuthorize("hasAuthority('soft2242:activity:update')")
     public Result<String> delete(@PathVariable("id") Long id) {
         Activity entity = activityService.getById(id);
         entity.setDeleted(1);

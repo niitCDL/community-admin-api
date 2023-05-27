@@ -8,10 +8,12 @@ import com.soft2242.one.query.OrderQuery;
 import com.soft2242.one.vo.OrderVO;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author ysh
@@ -28,4 +30,5 @@ public interface IOrderService extends BaseService<Order> {
     void importByExcel(MultipartFile file);
 
     void export();
+
 }
