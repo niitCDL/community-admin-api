@@ -8,12 +8,16 @@ import com.soft2242.one.base.security.user.SecurityUser;
 import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.convert.NoticeConvert;
 import com.soft2242.one.convert.NoticeQueryConvert;
+import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.NoticeEntity;
 import com.soft2242.one.entity.NoticeReaderEntity;
 import com.soft2242.one.query.NoticeQuery;
 import com.soft2242.one.query.NoticeReaderQuery;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.NoticeReaderService;
 import com.soft2242.one.service.NoticeService;
+import com.soft2242.one.system.entity.SysUserInfoEntity;
+import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.vo.NoticeVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,13 +46,22 @@ public class NoticeController {
 
     private final NoticeService noticeService;
     private final NoticeReaderService noticeReaderService;
-
-
+    private final SysUserService sysUserService;
+    private final ICommunityService communityService;
     @GetMapping("page")
     @Operation(summary = "分页")
 //    @PreAuthorize("hasAuthority('sys:user:page')")
     public Result<PageResult<NoticeVO>> page(@ParameterObject @Valid NoticeQuery query) {
         PageResult<NoticeVO> page = noticeService.page(query);
+
+        List<NoticeVO> list = page.getList();
+        for (NoticeVO vo: list) {
+            SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(vo.getAdminId());
+            Community community = communityService.getById(vo.getCommunityId());
+            vo.setUserName(entity.getRealName());
+            vo.setCommunityName(community.getCommunityName());
+        }
+
         return Result.ok(page);
     }
 

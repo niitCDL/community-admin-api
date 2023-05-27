@@ -19,7 +19,7 @@ public class NoticeReaderQuery extends Query {
 
     @Schema(description = "公告id")
     private String noticeId;
-    @Schema(description = "发布人")
+    @Schema(description = "阅读人")
     private String userId;
 
 }
