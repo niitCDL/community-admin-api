@@ -25,6 +25,7 @@
         <module>admin-api-smart</module>
         <module>admin-api-safe</module>
         <module>admin-api-property</module>
+        <module>admin-api-society</module>
     </modules>
 
     <properties>
