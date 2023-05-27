@@ -1,5 +1,6 @@
 package com.soft2242.one.controller;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.OrderConvert;
@@ -39,12 +40,14 @@ public class OrderController {
         return Result.ok(page);
     }
 
+
     @GetMapping("{id}")
     @Operation(summary = "账单查询")
     public Result<OrderVO> get(@PathVariable("id") Long id) {
         Order entity = orderSevice.getById(id);
         return Result.ok(OrderConvert.INSTANCE.convert(entity));
     }
+
 
     @PostMapping
     @Operation(summary = "生成订单")
@@ -61,6 +64,15 @@ public class OrderController {
         return Result.ok();
     }
 
+    @GetMapping("delete/{id}")
+    @Operation(summary = "删除订单")
+    public Result<String> delete(@PathVariable @Valid Long id) {
+        Order entity = orderSevice.getById(id);
+        entity.setDeleted(1);
+        orderSevice.update(OrderConvert.INSTANCE.convert(entity));
+        return Result.ok();
+    }
+
 
     //    批量导入账单
     @PostMapping("import")
@@ -74,7 +86,7 @@ public class OrderController {
     }
 
     @GetMapping("export")
-    @Operation(summary = "导出订单")
+    @Operation(summary = "批量导出订单")
 
     public void export() {
         orderSevice.export();

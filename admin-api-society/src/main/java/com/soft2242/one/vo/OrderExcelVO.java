@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * Author: James
@@ -82,6 +83,24 @@ public class OrderExcelVO implements Serializable , TransPojo {
      */
     @ExcelProperty("更新者")
     private Long updater;
+
+
+    /**
+     * 房屋表主键
+     */
+    @ExcelProperty("房屋表主键")
+    private Long houseId;
+
+    /**
+     * 业主表主键
+     */
+    @ExcelProperty("业主表主键")
+    private Long ownerId;
+
+
+    @ExcelProperty("订单结束时间")
+    private LocalDateTime endTime;
+
 
 
 }
