@@ -116,5 +116,8 @@ public class OrderVO implements Serializable {
     @Schema(description = "业主")
     private Long ownerId;
 
+    @Schema(description = "订单结束时间")
+    private LocalDateTime endTime;
+
 
 }

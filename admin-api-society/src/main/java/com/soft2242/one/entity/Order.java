@@ -3,6 +3,8 @@ package com.soft2242.one.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
  * @since 2023-05-25
  */
 @Data
+@AllArgsConstructor
+@Builder
 @TableName("t_order")
 public class Order implements Serializable {
 
@@ -113,149 +117,153 @@ public class Order implements Serializable {
      */
     private Long ownerId;
 
-    public Long getHouseId() {
-        return houseId;
-    }
+    private LocalDateTime endTime;
 
-    public void setHouseId(Long houseId) {
-        this.houseId = houseId;
-    }
-
-    public Long getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(Long ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getComminityId() {
-        return comminityId;
-    }
-
-    public void setComminityId(Long comminityId) {
-        this.comminityId = comminityId;
-    }
-
-    public Long getBillId() {
-        return billId;
-    }
-
-    public void setBillId(Long billId) {
-        this.billId = billId;
-    }
-
-    public Long getParkRecordId() {
-        return parkRecordId;
-    }
-
-    public void setParkRecordId(Long parkRecordId) {
-        this.parkRecordId = parkRecordId;
-    }
-
-    public Integer getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(Integer orderType) {
-        this.orderType = orderType;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public Double getMoney() {
-        return money;
-    }
-
-    public void setMoney(Double money) {
-        this.money = money;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getPayTime() {
-        return payTime;
-    }
-
-    public void setPayTime(LocalDateTime payTime) {
-        this.payTime = payTime;
-    }
-
-    public Integer getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Integer deleted) {
-        this.deleted = deleted;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
-    }
-
-    public Long getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(Long updater) {
-        this.updater = updater;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
+//
+//
+//    public Long getHouseId() {
+//        return houseId;
+//    }
+//
+//    public void setHouseId(Long houseId) {
+//        this.houseId = houseId;
+//    }
+//
+//    public Long getOwnerId() {
+//        return ownerId;
+//    }
+//
+//    public void setOwnerId(Long ownerId) {
+//        this.ownerId = ownerId;
+//    }
+//
+//    public Long getId() {
+//        return id;
+//    }
+//
+//    public void setId(Long id) {
+//        this.id = id;
+//    }
+//
+//    public Long getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(Long userId) {
+//        this.userId = userId;
+//    }
+//
+//    public Long getComminityId() {
+//        return comminityId;
+//    }
+//
+//    public void setComminityId(Long comminityId) {
+//        this.comminityId = comminityId;
+//    }
+//
+//    public Long getBillId() {
+//        return billId;
+//    }
+//
+//    public void setBillId(Long billId) {
+//        this.billId = billId;
+//    }
+//
+//    public Long getParkRecordId() {
+//        return parkRecordId;
+//    }
+//
+//    public void setParkRecordId(Long parkRecordId) {
+//        this.parkRecordId = parkRecordId;
+//    }
+//
+//    public Integer getOrderType() {
+//        return orderType;
+//    }
+//
+//    public void setOrderType(Integer orderType) {
+//        this.orderType = orderType;
+//    }
+//
+//    public String getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(String price) {
+//        this.price = price;
+//    }
+//
+//    public Double getAmount() {
+//        return amount;
+//    }
+//
+//    public void setAmount(Double amount) {
+//        this.amount = amount;
+//    }
+//
+//    public Double getMoney() {
+//        return money;
+//    }
+//
+//    public void setMoney(Double money) {
+//        this.money = money;
+//    }
+//
+//    public Integer getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(Integer status) {
+//        this.status = status;
+//    }
+//
+//    public LocalDateTime getPayTime() {
+//        return payTime;
+//    }
+//
+//    public void setPayTime(LocalDateTime payTime) {
+//        this.payTime = payTime;
+//    }
+//
+//    public Integer getDeleted() {
+//        return deleted;
+//    }
+//
+//    public void setDeleted(Integer deleted) {
+//        this.deleted = deleted;
+//    }
+//
+//    public LocalDateTime getCreateTime() {
+//        return createTime;
+//    }
+//
+//    public void setCreateTime(LocalDateTime createTime) {
+//        this.createTime = createTime;
+//    }
+//
+//    public Long getCreator() {
+//        return creator;
+//    }
+//
+//    public void setCreator(Long creator) {
+//        this.creator = creator;
+//    }
+//
+//    public Long getUpdater() {
+//        return updater;
+//    }
+//
+//    public void setUpdater(Long updater) {
+//        this.updater = updater;
+//    }
+//
+//    public LocalDateTime getUpdateTime() {
+//        return updateTime;
+//    }
+//
+//    public void setUpdateTime(LocalDateTime updateTime) {
+//        this.updateTime = updateTime;
+//    }
 
     @Override
     public String toString() {
