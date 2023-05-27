@@ -1,7 +1,7 @@
 package com.soft2242.one.system.vo;
 
-import com.soft2242.one.myexcel.MyExcelProperty;
-import com.soft2242.one.myexcel.MyTrans;
+import com.soft2242.one.base.common.myexcel.MyExcelProperty;
+import com.soft2242.one.base.common.myexcel.MyTrans;
 import com.soft2242.one.base.mybatis.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

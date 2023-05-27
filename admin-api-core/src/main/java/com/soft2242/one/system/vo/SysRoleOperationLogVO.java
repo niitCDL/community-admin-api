@@ -1,7 +1,7 @@
 package com.soft2242.one.system.vo;
 
 import com.soft2242.one.base.common.utils.DateUtils;
-import com.soft2242.one.myexcel.MyExcelProperty;
+import com.soft2242.one.base.common.myexcel.MyExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
