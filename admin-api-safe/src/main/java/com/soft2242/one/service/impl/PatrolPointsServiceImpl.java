@@ -1,7 +1,5 @@
 package com.soft2242.one.service.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
@@ -10,27 +8,20 @@ import com.soft2242.one.convert.PatrolPointsConvert;
 import com.soft2242.one.dao.CommunityDao;
 import com.soft2242.one.dao.PatrolPointsDao;
 import com.soft2242.one.entity.Community;
-import com.soft2242.one.entity.PatrolPlanEntity;
 import com.soft2242.one.entity.PatrolPointsEntity;
-import com.soft2242.one.mapper.CommunityMapper;
-import com.soft2242.one.query.PatrolPlanQuery;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.service.PatrolPointsService;
 import com.soft2242.one.vo.CommunityVO;
-import com.soft2242.one.vo.PatrolPlanVO;
 import com.soft2242.one.vo.PatrolPointsVO;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.springframework.data.support.PageableExecutionUtils.getPage;
 
 /**
  * 巡更点表
@@ -79,6 +70,14 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
         List<Community> communities = dao.selectList(null);
         List<CommunityVO> communityVOS = CommunityConvert.INSTANCE.convertList(communities);
         return  communityVOS;
+    }
+
+    @Resource
+    PatrolPointsDao patrolPointsDao;
+    @Override
+    public PatrolPointsVO getById(Long id) {
+        PatrolPointsVO byId = patrolPointsDao.getById(id);
+        return byId;
     }
 
     @Override

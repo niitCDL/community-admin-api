@@ -16,6 +16,16 @@
     
      
     </select>
+	<select id="getById" resultType="com.soft2242.one.vo.PatrolPointsVO">
+        select a.* ,b.community_name,c.building_name,c.units from t_patrol_points a
+        JOIN t_community b on a.community_id=b.id
+        JOIN t_building c on a.community_id=c.community_id and a.building_id=c.id
+        WHERE  a.deleted=0
+        <if test="id!=null">
+            AND a.id =#{id}
+        </if>
+
+    </select>
 
 
 </mapper>
