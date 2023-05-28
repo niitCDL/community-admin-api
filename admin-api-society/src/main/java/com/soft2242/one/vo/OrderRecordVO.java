@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * Author: James
  * Date: 2023/5/28 15:07
@@ -45,14 +47,17 @@ public class OrderRecordVO {
     @Schema(description = "费用统计")
     private Double count;
 
-    @Schema(description = "状态1")
+    @Schema(description = "未完成")
     private Integer status1;
 
-    @Schema(description = "状态2")
+    @Schema(description = "已完成")
     private Integer status2;
 
     @Schema(description = "支付率")
     private Double percent;
+
+    @Schema(description = "支付率")
+    private LocalDateTime endTime;
 
 
 

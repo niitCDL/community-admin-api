@@ -3,6 +3,7 @@ package com.soft2242.one.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
 import com.soft2242.one.base.common.excel.ExcelFinishCallBack;
 import com.soft2242.one.base.common.utils.ExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
@@ -14,12 +15,12 @@ import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.OrderQuery;
 import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.IOrderService;
-import com.soft2242.one.vo.CommunityVO;
 import com.soft2242.one.vo.OrderExcelVO;
 import com.soft2242.one.vo.OrderRecordVO;
 import com.soft2242.one.vo.OrderVO;
-import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.soft2242.one.service.IHouseService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -134,22 +136,80 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     public List<OrderRecordVO> getRecordList() {
         List<Order> list = getList();
         List<OrderRecordVO> orderRecordVOS = new ArrayList<>();
+        List<OrderRecordVO> recordList = new ArrayList<>();
+        List<CheckBean> checkList = new ArrayList<>();
 
-//        遍历
         for (Order order : list) {
-
             orderRecordVOS.add(OrderRecordVO.builder()
-                    .comminityId(order.getComminityId())
+                    .comminityId(houseService.getById(order.getHouseId()).getCommunityId())
                     .houseId(order.getHouseId())
                     .communityName(communityService.getById(houseService.getById(order.getHouseId()).getCommunityId()).getCommunityName())
                     .houseNumber(houseService.getById(order.getHouseId()).getHouseNumber())
-                    .waterFee(order.getMoney())
-                    .electricFee(order.getMoney())
-                    .propertyFee(order.getMoney())
                     .status1(order.getStatus())
                     .status2(order.getStatus())
+                    .waterFee(0.0)
+                    .electricFee(0.0)
+                    .propertyFee(0.0)
+                    .endTime(order.getEndTime())
                     .build());
         }
-        return orderRecordVOS;
+//        遍历
+        for (OrderRecordVO order : orderRecordVOS) {
+            int count = 0;
+            int status2 = 0;
+            double percent = 0.0;
+//        去除重复
+            if (checkList.contains(new CheckBean(order.getHouseId(), order.getComminityId())))
+                continue;
+
+//            判断是否存在相同户号和社区号,如果存在则累计计算费用
+            for (Order o : list) {
+                if (order.getHouseId().equals(o.getHouseId()) && order.getComminityId().equals(houseService.getById(o.getHouseId()).getCommunityId())) {
+//                    记录账单费用
+                    if (o.getOrderType() == 3)
+                        order.setWaterFee(o.getMoney());
+                    else if (o.getOrderType() == 4)
+                        order.setElectricFee(o.getMoney());
+                    else if (o.getOrderType() == 5)
+                        order.setPropertyFee(o.getMoney());
+                    else {
+                        order.setWaterFee(0.0);
+                        order.setElectricFee(0.0);
+                        order.setPropertyFee(0.0);
+                    }
+                    count = +1;
+//                    记录订单完成状态
+                    if (o.getStatus() == 1)
+                        status2 = +1;
+                }
+
+            }
+            if (status2 == 0) {
+                percent = 0.0;
+            } else
+                percent = (double) status2 / count;
+//            记录订单总金额和完成度
+
+            order.setCount(order.getElectricFee() + order.getWaterFee() + order.getPropertyFee());
+            order.setPercent(percent);
+//                合成一条新的记录
+            if (!recordList.contains(order)) {
+                recordList.add(order);
+                checkList.add(new CheckBean(order.getHouseId(), order.getComminityId()));
+            }
+        }
+//        去除重复
+//        List<OrderRecordVO> tamp = new ArrayList<>(new HashSet<>(recordList));
+
+        return recordList;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    class CheckBean {
+        private Long houseId;
+        private Long comminityId;
+
     }
 }
