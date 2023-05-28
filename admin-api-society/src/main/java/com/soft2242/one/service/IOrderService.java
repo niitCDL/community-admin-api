@@ -26,6 +26,8 @@ public interface IOrderService extends BaseService<Order> {
     void save(OrderVO vo);
 
     void update(OrderVO vo);
+    void delete(List<Long> idList);
+
 
     void importByExcel(MultipartFile file);
 
