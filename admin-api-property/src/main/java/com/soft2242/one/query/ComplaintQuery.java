@@ -19,7 +19,7 @@ import java.util.Date;
 @Schema(description = "投诉查询")
 public class ComplaintQuery extends Query {
     @Schema(description = "社区id")
-    private String communityId;
+    private String[] communityId;
 
     @Schema(description = "投诉类型(0:物业服务，1:社区服务)")
     private String type;

@@ -133,6 +133,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         List<SysUserVO> list = sysUserInfoDao.getList(params);
         return new PageResult<>(list, page.getTotal());
     }
+    public List<SysUserVO> getList() {
+        List<SysUserVO> list = sysUserInfoDao.getList(null);
+        return list;
+    }
 
     @Override
     public void delete(List<Long> idList) {

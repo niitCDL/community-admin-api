@@ -7,6 +7,7 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.RepairConvert;
 import com.soft2242.one.dao.RepairDao;
+import com.soft2242.one.entity.NoticeEntity;
 import com.soft2242.one.entity.RepairEntity;
 import com.soft2242.one.query.RepairQuery;
 import com.soft2242.one.service.RepairService;
@@ -38,9 +39,11 @@ public class RepairServiceImpl extends BaseServiceImpl<RepairDao, RepairEntity> 
 
     private LambdaQueryWrapper<RepairEntity> getWrapper(RepairQuery query){
         LambdaQueryWrapper<RepairEntity> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(StringUtils.isNotEmpty(query.getCommunityId()), RepairEntity::getCommunityId, query.getCommunityId());
+        wrapper.in(ArrayUtils.isNotEmpty(query.getCommunityId()),RepairEntity::getCommunityId, query.getCommunityId());
         wrapper.like(StringUtils.isNotEmpty(query.getTitle()), RepairEntity::getTitle, query.getTitle());
         wrapper.eq(StringUtils.isNotEmpty(query.getState()) , RepairEntity::getState, query.getState());
+        wrapper.eq(StringUtils.isNotEmpty(query.getType()) , RepairEntity::getType, query.getType());
+//        wrapper.ge(query.getCreateTime() != null,RepairEntity::getCreateTime, query.getCreateTime());
         wrapper.between(ArrayUtils.isNotEmpty(query.getCreateTime()), RepairEntity::getCreateTime, ArrayUtils.isNotEmpty(query.getCreateTime()) ? query.getCreateTime()[0] : null, ArrayUtils.isNotEmpty(query.getCreateTime()) ? query.getCreateTime()[1] : null);
         return wrapper;
     }

@@ -83,6 +83,12 @@ public class SysUserController {
         PageResult<SysUserVO> page = sysUserService.page(query);
         return Result.ok(page);
     }
+    @GetMapping("list")
+    @Operation(summary = "用户列表")
+    public Result<List<SysUserVO>> list() {
+        List<SysUserVO> list = sysUserService.getList();
+        return Result.ok(list);
+    }
 
     @DeleteMapping
     @Operation(summary = "删除")

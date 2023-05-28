@@ -20,7 +20,7 @@
 
 
     <select id="getList" resultType="com.soft2242.one.system.vo.SysUserVO">
-        select t1.username,t2.real_name,t2.gender,t1.phone,t2.email,t1.create_time,t1.account_status
+        select t1.id,t1.username,t2.real_name,t2.gender,t1.phone,t2.email,t1.create_time,t1.account_status
         from sys_admin t1,sys_admin_info t2
         where
         t1.id = t2.admin_id and

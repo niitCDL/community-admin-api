@@ -51,18 +51,6 @@ public class NoticeServiceImpl extends BaseServiceImpl<NoticeDao, NoticeEntity> 
         return wrapper;
     }
 
-//    private Map<String, Object> getParams(NoticeQuery query) {
-//        Map<String, Object> params = new HashMap<>();
-//        params.put("title", query.getTitle());
-//        params.put("content", query.getContent());
-//        params.put("communityId", query.getCommunityId());
-//        params.put("adminId", query.getAdminId());
-//
-//        // 数据权限
-////        params.put(Constant.DATA_SCOPE, getDataScope("t1", null));
-//
-//        return params;
-//    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)

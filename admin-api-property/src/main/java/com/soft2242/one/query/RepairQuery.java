@@ -19,13 +19,16 @@ import java.util.Date;
 @Schema(description = "报修表查询")
 public class RepairQuery extends Query {
     @Schema(description = "社区id")
-    private String communityId;
+    private String[] communityId;
 
     @Schema(description = "报修标题")
     private String title;
 
     @Schema(description = "处理状态（0：未处理，1：处理中，2：已处理，3：已评价）")
     private String state;
+
+    @Schema(description = "报修类型")
+    private String type;
 
     @Schema(description = "创建时间")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
