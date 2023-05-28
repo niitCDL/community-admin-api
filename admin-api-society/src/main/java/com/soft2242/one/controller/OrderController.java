@@ -107,6 +107,11 @@ public class OrderController {
     public void export() {
         orderSevice.export();
     }
+    @GetMapping("exportCount")
+    @Operation(summary = "批量导出统计订单")
+    public void export2() {
+        orderSevice.export2();
+    }
 
 
     @DeleteMapping

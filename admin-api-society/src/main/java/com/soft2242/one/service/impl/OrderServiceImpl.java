@@ -42,7 +42,7 @@ import java.util.List;
 @AllArgsConstructor
 
 public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implements IOrderService {
-    @Autowired
+//    @Autowired
     IHouseService houseService;
     private final ICommunityService communityService;
 
@@ -119,7 +119,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         System.out.println(orderExcelVOS);
         ExcelUtils.excelExport(OrderExcelVO.class, "order_export", "sheet1", orderExcelVOS);
     }
-
+    @Override
+    @SneakyThrows
+    public void export2() {
+        List<OrderRecordVO> list = getRecordList();
+        System.out.println(list);
+        List<OrderRecordVO> orderExcelVOS = (list);
+        System.out.println(orderExcelVOS);
+        ExcelUtils.excelExport(OrderRecordVO.class, "orderRecord_export", "sheet1", orderExcelVOS);
+    }
     @Override
     public List<Order> findByHouseId(Long id) {
         List<Order> list = list(Wrappers.lambdaQuery(Order.class).eq(Order::getHouseId, id));
@@ -135,8 +143,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     @Override
     public List<OrderRecordVO> getRecordList() {
         List<Order> list = getList();
-        List<OrderRecordVO> orderRecordVOS = new ArrayList<>();
         List<OrderRecordVO> recordList = new ArrayList<>();
+
+        List<OrderRecordVO> orderRecordVOS = new ArrayList<>();
         List<CheckBean> checkList = new ArrayList<>();
 
         for (Order order : list) {

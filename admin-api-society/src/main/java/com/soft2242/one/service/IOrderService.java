@@ -34,6 +34,7 @@ public interface IOrderService extends BaseService<Order> {
     void importByExcel(MultipartFile file);
 
     void export();
+    void export2();
     List<Order> findByHouseId(Long id);
 
     List<Order > getList();
