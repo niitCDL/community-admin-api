@@ -14,6 +14,7 @@ import com.soft2242.one.service.IHouseService;
 import com.soft2242.one.service.IOrderService;
 import com.soft2242.one.vo.CommunityVO;
 import com.soft2242.one.vo.HouseVO;
+import com.soft2242.one.vo.OrderRecordVO;
 import com.soft2242.one.vo.OrderVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,6 +24,7 @@ import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.PipedOutputStream;
 import java.util.List;
 
 /**
@@ -127,6 +129,13 @@ public class OrderController {
         return Result.ok(list);
     }
 
+    @GetMapping("orderList")
+    @Operation(summary = "订单列表")
+    public Result<List<Order>> orderList() {
+        List<Order> list = orderSevice.getList();
+        return Result.ok(list);
+    }
+
     @GetMapping("money/{id}")
     @Operation(summary = "根据房屋查询账单")
     public Result<List<OrderVO>> getByHouseNum(@PathVariable("id") Long id) {
@@ -135,8 +144,11 @@ public class OrderController {
         return Result.ok(orderVOS);
     }
 
-//    @GetMapping("record/{id}")
-//    @Operation(summary = "统计账单")
+    @GetMapping("record")
+    @Operation(summary = "统计账单")
+    public Result<List<OrderRecordVO>> getRecord() {
+        return Result.ok(orderSevice.getRecordList());
+    }
 
 
 

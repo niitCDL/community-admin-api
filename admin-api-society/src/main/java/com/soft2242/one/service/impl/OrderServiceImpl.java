@@ -9,11 +9,14 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.OrderConvert;
 import com.soft2242.one.dao.OrderMapper;
+import com.soft2242.one.entity.House;
 import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.OrderQuery;
 import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.IOrderService;
+import com.soft2242.one.vo.CommunityVO;
 import com.soft2242.one.vo.OrderExcelVO;
+import com.soft2242.one.vo.OrderRecordVO;
 import com.soft2242.one.vo.OrderVO;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -24,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.soft2242.one.service.IHouseService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,12 +55,13 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         IPage<Order> page = baseMapper.selectPage(getPage(query), getWrapper(query));
         List<OrderVO> orderVOS = OrderConvert.INSTANCE.convertList(page.getRecords());
 //        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段和小区字段
-        orderVOS.forEach(orderVO ->{
-            orderVO.setHouseNumber( houseService.getById(orderVO.getHouseId()).getHouseNumber());
-            orderVO.setCommunityName( communityService.getById(orderVO.getComminityId()).getCommunityName());
+        orderVOS.forEach(orderVO -> {
+            House house = houseService.getById(orderVO.getHouseId());
+            orderVO.setHouseNumber(house.getHouseNumber());
+            orderVO.setCommunityName(communityService.getById(house.getCommunityId()).getCommunityName());
         });
 
-        return new PageResult<>(orderVOS,page.getTotal());
+        return new PageResult<>(orderVOS, page.getTotal());
     }
 
     @Override
@@ -110,7 +115,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         System.out.println(list);
         List<OrderExcelVO> orderExcelVOS = OrderConvert.INSTANCE.convertList2(list);
         System.out.println(orderExcelVOS);
-        ExcelUtils.excelExport(OrderExcelVO.class,"order_export","sheet1",orderExcelVOS);
+        ExcelUtils.excelExport(OrderExcelVO.class, "order_export", "sheet1", orderExcelVOS);
     }
 
     @Override
@@ -119,6 +124,32 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         return list;
     }
 
+    @Override
+    public List<Order> getList() {
+        List<Order> list = baseMapper.selectList(getWrapper(new OrderQuery()));
+        return list;
+    }
 
+    @Override
+    public List<OrderRecordVO> getRecordList() {
+        List<Order> list = getList();
+        List<OrderRecordVO> orderRecordVOS = new ArrayList<>();
 
+//        遍历
+        for (Order order : list) {
+
+            orderRecordVOS.add(OrderRecordVO.builder()
+                    .comminityId(order.getComminityId())
+                    .houseId(order.getHouseId())
+                    .communityName(communityService.getById(houseService.getById(order.getHouseId()).getCommunityId()).getCommunityName())
+                    .houseNumber(houseService.getById(order.getHouseId()).getHouseNumber())
+                    .waterFee(order.getMoney())
+                    .electricFee(order.getMoney())
+                    .propertyFee(order.getMoney())
+                    .status1(order.getStatus())
+                    .status2(order.getStatus())
+                    .build());
+        }
+        return orderRecordVOS;
+    }
 }
