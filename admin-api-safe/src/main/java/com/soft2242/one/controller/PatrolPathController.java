@@ -28,7 +28,7 @@ import java.util.List;
 * @since 1.0.0 2023-05-25
 */
 @RestController
-@RequestMapping("sys/path/index")
+@RequestMapping("safe/path")
 @Tag(name="巡更路线")
 @AllArgsConstructor
 public class PatrolPathController {
@@ -44,7 +44,7 @@ public class PatrolPathController {
 
     @GetMapping("{id}")
     @Operation(summary = "信息")
-//    @PreAuthorize("hasAuthority('soft2242:path:info')")
+    @PreAuthorize("hasAuthority('safe:path:info')")
     public Result<PatrolPathVO> get(@PathVariable("id") Long id){
         PatrolPathEntity entity = PatrolPathService.getById(id);
 
@@ -53,7 +53,7 @@ public class PatrolPathController {
 
     @PostMapping
     @Operation(summary = "保存")
-//    @PreAuthorize("hasAuthority('soft2242:path:save')")
+    @PreAuthorize("hasAuthority('safe:path:save')")
     public Result<String> save(@RequestBody PatrolPathVO vo){
         PatrolPathService.save(vo);
         return Result.ok();
@@ -83,7 +83,7 @@ public class PatrolPathController {
 
     @PutMapping
     @Operation(summary = "修改")
-//    @PreAuthorize("hasAuthority('soft2242:path:update')")
+    @PreAuthorize("hasAuthority('safe:path:update')")
     public Result<String> update(@RequestBody @Valid PatrolPathVO vo){
         PatrolPathService.update(vo);
         return Result.ok();
@@ -91,7 +91,7 @@ public class PatrolPathController {
 
     @DeleteMapping
     @Operation(summary = "删除")
-//    @PreAuthorize("hasAuthority('soft2242:path:delete')")
+    @PreAuthorize("hasAuthority('safe:path:delete')")
     public Result<String> delete(@RequestBody List<Long> idList){
         PatrolPathService.delete(idList);
         return Result.ok();

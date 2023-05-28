@@ -41,7 +41,7 @@ public class PatrolPointsVO implements Serializable {
 	private String pointName;
 
 
-	@Schema(description = "状态（0：正常，1：禁用）")
+	@Schema(description = "状态（1：正常，0：禁用）")
 	private Integer status;
 
 

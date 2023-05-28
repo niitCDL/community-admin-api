@@ -28,7 +28,7 @@ import java.util.List;
 * @since 1.0.0 2023-05-25
 */
 @RestController
-@RequestMapping("sys/point")
+@RequestMapping("safe/point")
 @Tag(name="巡更点")
 @AllArgsConstructor
 public class PatrolPointsController {
@@ -36,7 +36,7 @@ public class PatrolPointsController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-    @PreAuthorize("hasAuthority('sys:point:page')")
+    @PreAuthorize("hasAuthority('safe:point:page')")
     public Result<PageResult<PatrolPointsVO>> page(@ParameterObject @Valid PatrolPointsQuery query){
         PageResult<PatrolPointsVO> page = PatrolPointsService.page(query);
 
@@ -45,18 +45,17 @@ public class PatrolPointsController {
 
     @GetMapping("{id}")
     @Operation(summary = "详情信息")
-    @PreAuthorize("hasAuthority('sys:point:info')")
+    @PreAuthorize("hasAuthority('safe:point:info')")
     public Result<PatrolPointsVO> get(@PathVariable("id") Long id){
-        PatrolPointsEntity entity = PatrolPointsService.getById(id);
-
-        return Result.ok(PatrolPointsConvert.INSTANCE.convert(entity));
+        PatrolPointsVO vo = PatrolPointsService.getById(id);
+        return Result.ok(vo);
     }
 
 
 
     @PostMapping
     @Operation(summary = "添加")
-    @PreAuthorize("hasAuthority('sys:point:save')")
+    @PreAuthorize("hasAuthority('safe:point:save')")
     public Result<String> save(@RequestBody PatrolPointsVO vo){
         PatrolPointsService.save(vo);
         return Result.ok();
@@ -74,7 +73,7 @@ public class PatrolPointsController {
 
     @PutMapping
     @Operation(summary = "修改")
-    @PreAuthorize("hasAuthority('sys:point:update')")
+    @PreAuthorize("hasAuthority('safe:point:update')")
     public Result<String> update(@RequestBody @Valid PatrolPointsVO vo){
         PatrolPointsService.update(vo);
 
@@ -83,7 +82,7 @@ public class PatrolPointsController {
 
     @DeleteMapping
     @Operation(summary = "删除")
-    @PreAuthorize("hasAuthority('sys:point:delete')")
+    @PreAuthorize("hasAuthority('safe:point:delete')")
     public Result<String> delete(@RequestBody List<Long> idList){
         PatrolPointsService.delete(idList);
 
