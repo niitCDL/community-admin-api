@@ -109,4 +109,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         ExcelUtils.excelExport(OrderExcelVO.class,"order_export","sheet1",orderExcelVOS);
     }
 
+    @Override
+    public List<Order> findByHouseId(Long id) {
+        List<Order> list = list(Wrappers.lambdaQuery(Order.class).eq(Order::getHouseId, id));
+        return list;
+    }
+
 }

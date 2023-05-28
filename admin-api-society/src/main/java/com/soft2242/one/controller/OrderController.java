@@ -1,6 +1,9 @@
 package com.soft2242.one.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.OrderConvert;
@@ -113,5 +116,14 @@ public class OrderController {
         List<HouseVO> list = houseService.getList();
         return Result.ok(list);
     }
+
+    @GetMapping("money/{id}")
+    @Operation(summary = "根据房屋查询账单")
+    public Result<List<OrderVO>> getByHouseNum(@PathVariable("id") Long id) {
+        List<OrderVO> orderVOS = OrderConvert.INSTANCE.convertList(orderSevice.findByHouseId(id));
+//        根据房屋number查询账单
+        return Result.ok(orderVOS);
+    }
+
 
 }
