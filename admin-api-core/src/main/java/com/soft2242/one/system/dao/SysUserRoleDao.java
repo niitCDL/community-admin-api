@@ -1,6 +1,8 @@
 package com.soft2242.one.system.dao;
 
 import com.soft2242.one.base.mybatis.dao.BaseDao;
+import com.soft2242.one.system.entity.SysUserEntity;
+import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.entity.SysUserRoleEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -24,4 +26,10 @@ public interface SysUserRoleDao extends BaseDao<SysUserRoleEntity> {
      * @return 返回角色ID列表
      */
     List<Long> getRoleIdList(@Param("userId") Long userId);
+
+
+    /**
+     * 指定角色，获取该角色下的用户
+     */
+    List<SysUserInfoEntity> getUserListByRoleId(@Param("roleId") Long roleId);
 }

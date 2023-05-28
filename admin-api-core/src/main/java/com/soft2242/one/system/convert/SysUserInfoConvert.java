@@ -7,6 +7,8 @@ import com.soft2242.one.system.vo.SysUserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 
 /**
  * @author ao&dl
@@ -18,4 +20,6 @@ public interface SysUserInfoConvert {
     SysUserInfoVO convert(SysUserInfoEntity entity);
 
     SysUserVO convert(UserDetail user);
+
+    List<SysUserInfoVO> convertList(List<SysUserInfoEntity> entities);
 }

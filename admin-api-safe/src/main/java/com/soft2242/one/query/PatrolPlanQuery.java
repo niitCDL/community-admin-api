@@ -19,8 +19,11 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "巡更计划表查询")
 public class PatrolPlanQuery extends Query {
-    @Schema(description = "小区名称")
-    private String communityName;
+//    @Schema(description = "小区名称")
+//    private String communityName;
+
+    @Schema(description = "所属小区")
+    private Long communityId;
 
     @Schema(description = "巡更计划名")
     private String planName;

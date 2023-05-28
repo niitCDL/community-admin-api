@@ -6,5 +6,10 @@
     <select id="getRoleIdList" resultType="long">
         select role_id from sys_role_admin where role_id = #{userId} and deleted = 0
     </select>
+    <select id="getUserListByRoleId" resultType="com.soft2242.one.system.entity.SysUserInfoEntity">
+        SELECT t1.* FROM sys_admin_info t1,sys_role_admin t2
+        WHERE t1.ADMIN_ID=t2.admin_id
+        AND t2.role_id=#{roleId}
+    </select>
 
 </mapper>

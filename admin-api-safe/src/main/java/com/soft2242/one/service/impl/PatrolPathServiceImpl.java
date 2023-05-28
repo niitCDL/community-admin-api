@@ -16,9 +16,11 @@ import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,8 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, PatrolPathEntity> implements PatrolPathService {
+    @Autowired
+    private  CommunityServiceImpl serviceImpl;
 
     @Override
     public PageResult<PatrolPathVO> page(PatrolPathQuery query) {
@@ -103,4 +107,32 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
         removeByIds(idList);
     }
 
+
+    @Override
+    public List<PatrolPathVO> getPathListByCommId(Long commId){
+        Map<String,Object> map=new HashMap<>();
+        map.put("community_id",commId);
+        List<PatrolPathEntity> patrolPathEntities = baseMapper.selectByMap(map);
+        return PatrolPathConvert.INSTANCE.convertList(patrolPathEntities);
+    }
+
+    @Override
+    public List<ComAndPathVO> getCommAndPath() {
+
+        List<ComAndPathVO> lists=new ArrayList<>();
+
+        //先查询出所有的小区
+        List<CommunityVO> list = serviceImpl.getList();
+        //根据小区id查询出该小区的所有巡更路线
+        for (CommunityVO vo :list){
+            ComAndPathVO comAndPathVO=new ComAndPathVO();
+            comAndPathVO.setCommunityId(vo.getId());
+            comAndPathVO.setCommunityName(vo.getCommunityName());
+            List<PatrolPathVO> pathentitys = baseMapper.getPathListByCommunityId(vo.getId());
+            comAndPathVO.setPatrolPathVO(pathentitys);
+            lists.add(comAndPathVO);
+        }
+
+        return lists;
+    }
 }

@@ -19,6 +19,8 @@ public class DateUtils {
      */
     public final static String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
+    public final static String TIME_PATTERN = "HH:mm";
+
     public final static Date CURRENT_DATE = new Date();
 
     /**

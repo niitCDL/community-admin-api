@@ -18,11 +18,11 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "巡检项目查询")
 public class InspectionItemQuery extends Query {
-//    @Schema(description = "所属小区")
-//    private Long communityId;
+    @Schema(description = "所属小区")
+    private Long communityId;
 
-    @Schema(description = "所属小区名")
-    private String communityName;
+//    @Schema(description = "所属小区名")
+//    private String communityName;
 
     @Schema(description = "巡检项目名称")
     private String name;

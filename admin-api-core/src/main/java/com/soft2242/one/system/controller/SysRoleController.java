@@ -9,9 +9,7 @@ import com.soft2242.one.system.convert.SysRoleConvert;
 import com.soft2242.one.system.entity.SysRoleEntity;
 import com.soft2242.one.system.query.SysRoleQuery;
 import com.soft2242.one.system.service.*;
-import com.soft2242.one.system.vo.SysMenuVO;
-import com.soft2242.one.system.vo.SysRoleDataScopeVO;
-import com.soft2242.one.system.vo.SysRoleVO;
+import com.soft2242.one.system.vo.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -150,5 +148,13 @@ public class SysRoleController {
         sysUserRoleService.saveUserList(roleId, userIdList);
 
         return Result.ok();
+    }
+
+    @GetMapping("user/{id}")
+    @Operation(summary = "根据角色获取用户")
+    public Result<List<SysUserInfoVO>> getUserByRoleId(@PathVariable("id") Long id) {
+        List<SysUserInfoVO> userList = sysUserRoleService.getUserListByRoleId(id);
+
+        return Result.ok(userList);
     }
 }

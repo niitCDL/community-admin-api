@@ -2,7 +2,10 @@ package com.soft2242.one.system.service;
 
 
 import com.soft2242.one.base.mybatis.service.BaseService;
+import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.entity.SysUserRoleEntity;
+import com.soft2242.one.system.vo.SysUserInfoVO;
+import com.soft2242.one.system.vo.SysUserVO;
 
 import java.util.List;
 
@@ -57,4 +60,11 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @param userId 用户ID
      */
     List<Long> getRoleIdList(Long userId);
+
+    /**
+     * 指定角色，获取该角色下的用户
+     * @param roleId 角色id
+     * @return
+     */
+    List<SysUserInfoVO> getUserListByRoleId(Long roleId);
 }
