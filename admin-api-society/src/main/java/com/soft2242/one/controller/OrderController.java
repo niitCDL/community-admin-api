@@ -9,8 +9,10 @@ import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.OrderConvert;
 import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.OrderQuery;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.IHouseService;
 import com.soft2242.one.service.IOrderService;
+import com.soft2242.one.vo.CommunityVO;
 import com.soft2242.one.vo.HouseVO;
 import com.soft2242.one.vo.OrderVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,6 +42,9 @@ public class OrderController {
 
     private final IOrderService orderSevice;
     private final IHouseService houseService;
+
+    private final ICommunityService communityService;
+
 
 
     @GetMapping("page")
@@ -97,7 +102,6 @@ public class OrderController {
 
     @GetMapping("export")
     @Operation(summary = "批量导出订单")
-
     public void export() {
         orderSevice.export();
     }
@@ -114,6 +118,12 @@ public class OrderController {
     @Operation(summary = "获取房屋列表")
     public Result<List<HouseVO>> list() {
         List<HouseVO> list = houseService.getList();
+        return Result.ok(list);
+    }
+    @GetMapping("community")
+    @Operation(summary = "获取小区列表")
+    public Result<List<CommunityVO>> communityList() {
+        List<CommunityVO> list = communityService.getList();
         return Result.ok(list);
     }
 
