@@ -11,6 +11,7 @@ import com.soft2242.one.convert.OrderConvert;
 import com.soft2242.one.dao.OrderMapper;
 import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.OrderQuery;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.IOrderService;
 import com.soft2242.one.vo.OrderExcelVO;
 import com.soft2242.one.vo.OrderVO;
@@ -37,6 +38,8 @@ import java.util.List;
 public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implements IOrderService {
     @Autowired
     IHouseService houseService;
+    private final ICommunityService communityService;
+
 
     private LambdaQueryWrapper<Order> getWrapper(OrderQuery query) {
         LambdaQueryWrapper<Order> wrapper = Wrappers.lambdaQuery();
@@ -47,9 +50,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     public PageResult<OrderVO> page(OrderQuery query) {
         IPage<Order> page = baseMapper.selectPage(getPage(query), getWrapper(query));
         List<OrderVO> orderVOS = OrderConvert.INSTANCE.convertList(page.getRecords());
-//        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段
+//        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段和小区字段
         orderVOS.forEach(orderVO ->{
             orderVO.setHouseNumber( houseService.getById(orderVO.getHouseId()).getHouseNumber());
+            orderVO.setCommunityName( communityService.getById(orderVO.getComminityId()).getCommunityName());
         });
 
         return new PageResult<>(orderVOS,page.getTotal());
@@ -114,5 +118,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         List<Order> list = list(Wrappers.lambdaQuery(Order.class).eq(Order::getHouseId, id));
         return list;
     }
+
+
 
 }
