@@ -6,7 +6,9 @@ import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.OrderConvert;
 import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.OrderQuery;
+import com.soft2242.one.service.IHouseService;
 import com.soft2242.one.service.IOrderService;
+import com.soft2242.one.vo.HouseVO;
 import com.soft2242.one.vo.OrderVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,6 +36,8 @@ import java.util.List;
 public class OrderController {
 
     private final IOrderService orderSevice;
+    private final IHouseService houseService;
+
 
     @GetMapping("page")
     @Operation(summary = "分页查询")
@@ -67,7 +71,7 @@ public class OrderController {
         return Result.ok();
     }
 
-    @GetMapping("delete/{id}")
+    @PutMapping("delete/{id}")
     @Operation(summary = "删除订单")
     public Result<String> delete(@PathVariable @Valid Long id) {
         Order entity = orderSevice.getById(id);
@@ -102,6 +106,12 @@ public class OrderController {
     public Result<String> delete(@RequestBody List<Long> idList){
         orderSevice.delete(idList);
         return Result.ok();
+    }
+    @GetMapping("list")
+    @Operation(summary = "获取房屋列表")
+    public Result<List<HouseVO>> list() {
+        List<HouseVO> list = houseService.getList();
+        return Result.ok(list);
     }
 
 }
