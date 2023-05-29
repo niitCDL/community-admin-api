@@ -40,6 +40,7 @@ public class ActivityTypeServiceImpl extends BaseServiceImpl<ActivityTypeDao, Ac
         activityTypeVOS.forEach(a -> a.setCommunityName(communityService.getById(a.getCommunityId()).getCommunityName()));
         return new PageResult<>(activityTypeVOS, page.getTotal());
     }
+
     @Override
     public PageResult<ActivityTypeVO> page2(ActivityTypeQuery query) {
         IPage<ActivityType> page = baseMapper.selectPage(getPage(query), getWrapper2(query));
@@ -48,6 +49,7 @@ public class ActivityTypeServiceImpl extends BaseServiceImpl<ActivityTypeDao, Ac
         activityTypeVOS.forEach(a -> a.setCommunityName(communityService.getById(a.getCommunityId()).getCommunityName()));
         return new PageResult<>(activityTypeVOS, page.getTotal());
     }
+
     private LambdaQueryWrapper<ActivityType> getWrapper2(ActivityTypeQuery query) {
         LambdaQueryWrapper<ActivityType> wrapper = Wrappers.lambdaQuery();
 //        查询没有被删除的
@@ -88,18 +90,24 @@ public class ActivityTypeServiceImpl extends BaseServiceImpl<ActivityTypeDao, Ac
         ActivityType activityType = baseMapper.selectById(id);
         System.out.println(activityType);
         Integer status = activityType.getStatus();
-        if (status==1){
+        if (status == 1) {
             activityType.setStatus(0);
             System.out.println(activityType);
 
             baseMapper.updateById(activityType);
-        }else if (status==0){
+        } else if (status == 0) {
             activityType.setStatus(1);
             System.out.println(activityType);
 
             baseMapper.updateById(activityType);
         }
 
+    }
+
+    @Override
+    public List<ActivityTypeVO> getList() {
+        List<ActivityType> activityTypes = baseMapper.selectList(getWrapper(new ActivityTypeQuery()));
+        return ActivityTypeConvert.INSTANCE.convertList(activityTypes);
     }
 
 }

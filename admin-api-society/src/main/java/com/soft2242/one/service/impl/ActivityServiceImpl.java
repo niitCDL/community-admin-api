@@ -50,14 +50,12 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
     @Override
     public void save(ActivityVO vo) {
         Activity entity = ActivityConvert.INSTANCE.convert(vo);
-
         baseMapper.insert(entity);
     }
 
     @Override
     public void update(ActivityVO vo) {
         Activity entity = ActivityConvert.INSTANCE.convert(vo);
-
         updateById(entity);
     }
 
@@ -65,6 +63,28 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+    }
+
+    @Override
+    public void status(Integer id) {
+        Activity activity = baseMapper.selectById(id);
+        Integer status = activity.getStatus();
+        if (status == 1) {
+            activity.setStatus(0);
+            System.out.println(activity);
+
+            baseMapper.updateById(activity);
+        } else if (status == 0) {
+            activity.setStatus(1);
+            System.out.println(activity);
+            baseMapper.updateById(activity);
+        }
+    }
+
+    @Override
+    public List<ActivityVO> getList() {
+        List<Activity> activities = baseMapper.selectList(getWrapper(new ActivityQuery()));
+        return ActivityConvert.INSTANCE.convertList(activities);
     }
 
 }

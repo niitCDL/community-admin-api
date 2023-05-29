@@ -7,6 +7,7 @@ import com.soft2242.one.entity.ActivityType;
 import com.soft2242.one.query.ActivityTypeQuery;
 import com.soft2242.one.service.ActivityTypeService;
 import com.soft2242.one.vo.ActivityTypeVO;
+import com.soft2242.one.vo.ActivityVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -101,4 +102,12 @@ public class ActivityTypeController {
         activityTypeService.delete(idList);
         return Result.ok();
     }
+
+    @GetMapping("TypeList")
+    @Operation(summary = "活动列表")
+    public Result<List<ActivityTypeVO>> typeList() {
+        List<ActivityTypeVO> list = activityTypeService.getList();
+        return Result.ok(list);
+    }
+
 }

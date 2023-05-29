@@ -28,4 +28,6 @@ public interface ActivityTypeService extends BaseService<ActivityType> {
     void delete(List<Long> idList);
 
     void status(Integer id);
+
+    List<ActivityTypeVO> getList();
 }
