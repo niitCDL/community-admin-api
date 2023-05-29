@@ -169,8 +169,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     @Override
     public void importByExcel(MultipartFile file) {
         try {
+
             List<SysUserExcelVO> dataVoList = new ArrayList<>();
+            //excel文件中的数据会被导入到dataVoList中 class类型一定得是自定义的***ExcelVO.class
             customExcelUtils.importExcel(file, SysUserExcelVO.class,dataVoList);
+            //还需要将excelVO转换为对应的实体类进行插入
             List<SysUserEntity> sysUserEntities = SysUserConvert.INSTANCE.convertList2(dataVoList);
             for (SysUserEntity sysUserEntity : sysUserEntities) {
                 sysUserDao.insert(sysUserEntity);
