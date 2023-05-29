@@ -71,6 +71,11 @@
             <artifactId>admin-api-property</artifactId>
             <version>1.0.0-RELEASES</version>
         </dependency>
+        <dependency>
+            <groupId>com.soft2242.one</groupId>
+            <artifactId>admin-api-owner</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
 
         <dependency>
             <groupId>com.soft2242.one</groupId>

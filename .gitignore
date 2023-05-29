@@ -47,3 +47,4 @@ node_modules
 
 logs
 /logs
+/admin-api-owner/target/

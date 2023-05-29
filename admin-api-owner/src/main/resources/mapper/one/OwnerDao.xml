@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.OwnerDao">
+
+    <resultMap type="com.soft2242.one.entity.OwnerEntity" id="ownerMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="houseId" column="house_id"/>
+        <result property="ownerId" column="owner_id"/>
+        <result property="realName" column="real_name"/>
+        <result property="gender" column="gender"/>
+        <result property="phone" column="phone"/>
+        <result property="identityCard" column="identity_card"/>
+        <result property="eContacts" column="e_contacts"/>
+        <result property="identity" column="identity"/>
+        <result property="defaultAddress" column="default_address"/>
+        <result property="state" column="state"/>
+        <result property="deleted" column="deleted"/>
+        <result property="creator" column="creator"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updater" column="updater"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <select id="findOwnerRecordByOQ" resultType="int">
+        SELECT COUNT(*) FROM t_owner b WHERE  b.state=#{state} AND b.deleted=0 AND
+            b.identity=0 AND b.id IN(
+                SELECT id FROM t_house WHERE community_name LIKE CONCAT('%',#{communityName},'%'))
+    </select>
+    <select id="findOwnerOQ" resultType="com.soft2242.one.vo.OwnerVO">
+        SELECT b.id,c.avatar,c.username,
+               CONCAT(a.community_name,a.building_name,a.units,'单元',a.house_number) as houseName,
+               c.real_name,c.phone,b.identity_card,b.identity,b.update_time,b.state
+               FROM t_house a,t_owner b,t_user c WHERE  b.state=#{state} AND b.deleted=0 AND
+            b.identity=0 AND b.id IN(
+                SELECT id FROM t_house WHERE community_name LIKE CONCAT('%',#{communityName},'%'))
+            AND b.user_id = c.id and a.id=b.house_id
+            LIMIT #{start},#{limit}
+    </select>
+</mapper>

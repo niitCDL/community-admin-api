@@ -26,6 +26,7 @@
         <module>admin-api-safe</module>
         <module>admin-api-property</module>
         <module>admin-api-society</module>
+        <module>admin-api-owner</module>
     </modules>
 
     <properties>
