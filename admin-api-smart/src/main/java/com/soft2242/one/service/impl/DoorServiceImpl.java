@@ -10,6 +10,7 @@ import com.soft2242.one.dao.DoorDao;
 import com.soft2242.one.entity.DoorEntity;
 import com.soft2242.one.query.DoorQuery;
 import com.soft2242.one.service.DoorService;
+import com.soft2242.one.vo.DoorReviewVO;
 import com.soft2242.one.vo.DoorVO;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -35,14 +36,6 @@ public class DoorServiceImpl extends BaseServiceImpl<DoorDao, DoorEntity> implem
         return new PageResult<>(baseMapper.selectPageByQuery(query), page.getTotal());
     }
 
-    private LambdaQueryWrapper<DoorEntity> getWrapper(DoorQuery query){
-        LambdaQueryWrapper<DoorEntity> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(query.getDeviceId() != null, DoorEntity::getDeviceId, query.getDeviceId());
-        wrapper.like(StringUtils.isNotEmpty(query.getDoorName()), DoorEntity::getDoorName, query.getDoorName());
-        wrapper.eq(query.getCommunityId() != null, DoorEntity::getCommunityId, query.getCommunityId());
-        return wrapper;
-    }
-
     @Override
     public void save(DoorVO vo) {
         DoorEntity entity = DoorConvert.INSTANCE.convert(vo);
@@ -63,4 +56,26 @@ public class DoorServiceImpl extends BaseServiceImpl<DoorDao, DoorEntity> implem
         removeByIds(idList);
     }
 
+    @Override
+    public PageResult<DoorReviewVO> getDoorReviewPage(DoorQuery query) {
+        IPage<DoorEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+
+        return new PageResult<>(baseMapper.selectReviewByQuery(query), page.getTotal());
+    }
+
+    @Override
+    public void changeSetting(DoorReviewVO vo) {
+        DoorEntity entity = DoorConvert.INSTANCE.convert(vo);
+
+        updateById(entity);
+    }
+
+    private LambdaQueryWrapper<DoorEntity> getWrapper(DoorQuery query){
+        LambdaQueryWrapper<DoorEntity> wrapper = Wrappers.lambdaQuery();
+        wrapper.eq(query.getId() != null, DoorEntity::getId, query.getId());
+        wrapper.eq(query.getDeviceId() != null, DoorEntity::getDeviceId, query.getDeviceId());
+        wrapper.like(StringUtils.isNotEmpty(query.getDoorName()), DoorEntity::getDoorName, query.getDoorName());
+        wrapper.eq(query.getCommunityId() != null, DoorEntity::getCommunityId, query.getCommunityId());
+        return wrapper;
+    }
 }

@@ -36,22 +36,4 @@ public class DoorVO implements Serializable {
 
 	@Schema(description = "配置码")
 	private String sysCode;
-
-	@Schema(description = "允许欠费通行 0-允许 1-不允许")
-	private Integer allowOwed;
-
-	@Schema(description = "允许访客通行  0-允许 1-不允许")
-	private Integer allowVisit;
-
-	@Schema(description = "需要访客手机号 0-需要 1-不需要")
-	private Integer needTel;
-
-	@Schema(description = "需要访客身份证 0-需要 1-不需要")
-	private Integer needIdCard;
-
-	@Schema(description = "允许人脸识别 0-允许 1-不允许")
-	private Integer allowFace;
-
-	@Schema(description = "允许指纹识别  0-允许 1-不允许")
-	private Integer allowFinger;
 }

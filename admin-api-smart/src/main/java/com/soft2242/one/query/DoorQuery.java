@@ -15,6 +15,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "门禁管理查询")
 public class DoorQuery extends Query {
+    @Schema(description = "主键")
+    private Long id;
+
     @Schema(description = "设备主键")
     private Long deviceId;
 

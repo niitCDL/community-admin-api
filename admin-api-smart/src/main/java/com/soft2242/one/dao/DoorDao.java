@@ -3,6 +3,7 @@ package com.soft2242.one.dao;
 import com.soft2242.one.base.mybatis.dao.BaseDao;
 import com.soft2242.one.entity.DoorEntity;
 import com.soft2242.one.query.DoorQuery;
+import com.soft2242.one.vo.DoorReviewVO;
 import com.soft2242.one.vo.DoorVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,5 +18,7 @@ import java.util.List;
 @Mapper
 public interface DoorDao extends BaseDao<DoorEntity> {
 
-    List<DoorVO> selectPageByQuery(DoorQuery doorQuery);
+    List<DoorVO> selectPageByQuery(DoorQuery query);
+
+    List<DoorReviewVO> selectReviewByQuery(DoorQuery query);
 }
