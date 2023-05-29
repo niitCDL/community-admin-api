@@ -33,6 +33,18 @@ public class SysUserInfoVO implements Serializable {
     @Schema(description = "真实姓名")
     private String realName;
 
+    @Schema(description = "机构ID")
+    private Long orgId;
+
+    @Schema(description = "机构名称")
+    private String orgName;
+
+    @Schema(description = "角色ID")
+    private Long roleId;
+
+    @Schema(description = "角色名称")
+    private Long roleName;
+
     @Schema(description = "头像")
     private String avatar;
 
