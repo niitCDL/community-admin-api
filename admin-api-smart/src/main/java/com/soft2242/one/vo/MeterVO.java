@@ -1,13 +1,10 @@
 package com.soft2242.one.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.soft2242.one.base.common.utils.DateUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
 * 仪表表
@@ -62,23 +59,4 @@ public class MeterVO implements Serializable {
 
 	@Schema(description = "通电状态 0-合闸 1-关闸")
 	private Integer gateStatus;
-
-	@Schema(description = "删除标识（0：未删除 1：已删除）")
-	private Integer deleted;
-
-	@Schema(description = "创建时间")
-	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
-	private Date createTime;
-
-	@Schema(description = "创建人")
-	private Long creator;
-
-	@Schema(description = "更新时间")
-	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
-	private Date updateTime;
-
-	@Schema(description = "修改人")
-	private Long updater;
-
-
 }

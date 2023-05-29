@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.PassReviewDao">
+
+
+    <select id="selectPageByQuery" resultType="com.soft2242.one.vo.PassReviewVO" parameterType="com.soft2242.one.query.PassReviewQuery">
+        SELECT pr.id, pr.owner_id, tow.real_name as ownerName, pr.house_id, th.house_number, th.community_name, pr.face, pr.finger,
+        pr.status
+        FROM t_pass_review pr
+        LEFT JOIN t_owner tow on pr.owner_id = tow.id
+        LEFT JOIN t_house th on pr.house_id = th.id
+        WHERE pr.deleted = 0
+        <if test="ownerName != null and ownerName.trim() != ''">
+            AND tow.real_name like "%"${ownerName}"%"
+        </if>
+        <if test="communityId != null">
+            AND th.community_id = #{communityId}
+        </if>
+        <if test="status != null">
+            AND pr.status = #{status}
+        </if>
+        LIMIT ${page - 1}, ${limit}
+    </select>
+</mapper>
