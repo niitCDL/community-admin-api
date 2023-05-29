@@ -42,7 +42,8 @@ public class ComplaintServiceImpl extends BaseServiceImpl<ComplaintDao, Complain
         LambdaQueryWrapper<ComplaintEntity> wrapper = Wrappers.lambdaQuery();
         wrapper.in(ArrayUtils.isNotEmpty(query.getCommunityId()), ComplaintEntity::getCommunityId, query.getCommunityId());
         wrapper.eq(StringUtils.isNotEmpty(query.getType()), ComplaintEntity::getType, query.getType());
-        wrapper.between(ArrayUtils.isNotEmpty(query.getUpdateTime()), ComplaintEntity::getUpdateTime, ArrayUtils.isNotEmpty(query.getUpdateTime()) ? query.getUpdateTime()[0] : null, ArrayUtils.isNotEmpty(query.getUpdateTime()) ? query.getUpdateTime()[1] : null);
+        wrapper.eq(StringUtils.isNotEmpty(query.getState()), ComplaintEntity::getState, query.getState());
+        wrapper.between(ArrayUtils.isNotEmpty(query.getCreateTime()), ComplaintEntity::getCreateTime, ArrayUtils.isNotEmpty(query.getCreateTime()) ? query.getCreateTime()[0] : null, ArrayUtils.isNotEmpty(query.getCreateTime()) ? query.getCreateTime()[1] : null);
         return wrapper;
     }
 

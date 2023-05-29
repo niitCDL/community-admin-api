@@ -51,13 +51,15 @@ public class RepairController {
             vo.setUserName(entity.getRealName());
             vo.setCommunityName(community.getCommunityName());
             String[] employeeIds = vo.getEmployeeIds();
-            ArrayList<String> names = new ArrayList<String>();
-
-            for (String employeeId : employeeIds) {
-                entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
-                names.add(entity.getRealName());
+            if (employeeIds != null) {
+                ArrayList<String> names = new ArrayList<String>();
+                for (String employeeId : employeeIds) {
+                    entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
+                    names.add(entity.getRealName());
+                }
+                vo.setEmployeeNames(names.toArray(new String[names.size()]));
             }
-            vo.setEmployeeNames(names.toArray(new String[names.size()]));
+
         }
         return Result.ok(page);
     }

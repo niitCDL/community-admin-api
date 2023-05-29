@@ -20,6 +20,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,12 +36,30 @@ import java.util.List;
 @AllArgsConstructor
 public class ComplaintController {
     private final ComplaintService complaintService;
-
+    private final ICommunityService communityService;
+    private final SysUserService sysUserService;
     @GetMapping("page")
     @Operation(summary = "分页")
 //    @PreAuthorize("hasAuthority('soft2242:complaint:page')")
     public Result<PageResult<ComplaintVO>> page(@ParameterObject @Valid ComplaintQuery query){
         PageResult<ComplaintVO> page = complaintService.page(query);
+        List<ComplaintVO> list = page.getList();
+        for (ComplaintVO vo: list) {
+            SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
+            Community community = communityService.getById(vo.getCommunityId());
+            vo.setUserName(entity.getRealName());
+            vo.setCommunityName(community.getCommunityName());
+            String[] employeeIds = vo.getEmployeeIds();
+            if (employeeIds != null) {
+                ArrayList<String> names = new ArrayList<String>();
+                for (String employeeId : employeeIds) {
+                    entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
+                    names.add(entity.getRealName());
+                }
+                vo.setEmployeeNames(names.toArray(new String[names.size()]));
+            }
+
+        }
         return Result.ok(page);
     }
 
