@@ -17,7 +17,7 @@ public class MyMapper {
 
     @Named("convertToArray")
      public String[] convertToArray(String input) {
-        if (input == null) {
+        if (input == null || "".equals(input)) {
             return null;
         }
         return input.split(",");

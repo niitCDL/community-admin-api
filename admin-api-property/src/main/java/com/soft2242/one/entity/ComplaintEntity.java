@@ -39,7 +39,7 @@ public class ComplaintEntity  extends BaseEntity {
 	/**
 	* 投诉标题
 	*/
-	private String titile;
+	private String title;
 
 	/**
 	* 投诉内容
@@ -64,7 +64,7 @@ public class ComplaintEntity  extends BaseEntity {
 	/**
 	* 处理人id，逗号分隔
 	*/
-	private Integer employeeIds;
+	private String employeeIds;
 
 	/**
 	* 处理时间

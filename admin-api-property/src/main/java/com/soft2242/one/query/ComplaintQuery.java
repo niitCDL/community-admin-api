@@ -24,8 +24,15 @@ public class ComplaintQuery extends Query {
     @Schema(description = "投诉类型(0:物业服务，1:社区服务)")
     private String type;
 
-    @Schema(description = "更新时间")
+    @Schema(description = "处理状态（0：未处理，1：处理中，2：已处理，3：已评价）")
+    private String state;
+
+//    @Schema(description = "更新时间")
+//    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+//    private Date[] updateTime;
+
+    @Schema(description = "创建时间")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private Date[] updateTime;
+    private Date[] createTime;
 
 }
