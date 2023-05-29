@@ -2,7 +2,7 @@ package com.soft2242.one.service;
 
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.BaseService;
-import com.soft2242.one.vo.DoorReviewVO;
+import com.soft2242.one.vo.DoorSettingVO;
 import com.soft2242.one.vo.DoorVO;
 import com.soft2242.one.query.DoorQuery;
 import com.soft2242.one.entity.DoorEntity;
@@ -25,7 +25,7 @@ public interface DoorService extends BaseService<DoorEntity> {
 
     void delete(List<Long> idList);
 
-    PageResult<DoorReviewVO> getDoorReviewPage(DoorQuery query);
+    PageResult<DoorSettingVO> getDoorSettingPage(DoorQuery query);
 
-    void changeSetting(DoorReviewVO vo);
+    void changeSetting(DoorSettingVO vo);
 }

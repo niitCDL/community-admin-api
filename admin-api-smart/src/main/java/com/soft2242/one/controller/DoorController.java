@@ -74,4 +74,11 @@ public class DoorController {
 
         return Result.ok();
     }
+
+    @GetMapping("list")
+    @Operation(summary = "删除")
+    public Result<List<DoorEntity>> all(){
+
+        return Result.ok(doorService.list());
+    }
 }

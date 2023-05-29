@@ -13,7 +13,7 @@ import java.io.Serializable;
 */
 @Data
 @Schema(description = "门禁管理")
-public class DoorReviewVO implements Serializable {
+public class DoorSettingVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Schema(description = "自增主键")

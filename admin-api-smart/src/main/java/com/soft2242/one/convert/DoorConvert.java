@@ -1,7 +1,7 @@
 package com.soft2242.one.convert;
 
 import com.soft2242.one.entity.DoorEntity;
-import com.soft2242.one.vo.DoorReviewVO;
+import com.soft2242.one.vo.DoorSettingVO;
 import com.soft2242.one.vo.DoorVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -20,7 +20,7 @@ public interface DoorConvert {
 
     DoorEntity convert(DoorVO vo);
 
-    DoorEntity convert(DoorReviewVO vo);
+    DoorEntity convert(DoorSettingVO vo);
 
     DoorVO convert(DoorEntity entity);
 

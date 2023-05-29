@@ -10,7 +10,7 @@ import com.soft2242.one.dao.DoorDao;
 import com.soft2242.one.entity.DoorEntity;
 import com.soft2242.one.query.DoorQuery;
 import com.soft2242.one.service.DoorService;
-import com.soft2242.one.vo.DoorReviewVO;
+import com.soft2242.one.vo.DoorSettingVO;
 import com.soft2242.one.vo.DoorVO;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -57,14 +57,14 @@ public class DoorServiceImpl extends BaseServiceImpl<DoorDao, DoorEntity> implem
     }
 
     @Override
-    public PageResult<DoorReviewVO> getDoorReviewPage(DoorQuery query) {
+    public PageResult<DoorSettingVO> getDoorSettingPage(DoorQuery query) {
         IPage<DoorEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
 
-        return new PageResult<>(baseMapper.selectReviewByQuery(query), page.getTotal());
+        return new PageResult<>(baseMapper.selectSettingByQuery(query), page.getTotal());
     }
 
     @Override
-    public void changeSetting(DoorReviewVO vo) {
+    public void changeSetting(DoorSettingVO vo) {
         DoorEntity entity = DoorConvert.INSTANCE.convert(vo);
 
         updateById(entity);
