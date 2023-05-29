@@ -1,6 +1,7 @@
 package com.soft2242.one.service.impl;
 
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -43,6 +44,20 @@ public class OwnerServiceImpl extends BaseServiceImpl<OwnerDao, OwnerEntity> imp
     @Override
     public OwnerVO findOwnerInfo(Long id) {
         return baseMapper.findOwnerInfo(id);
+    }
+
+    @Override
+    public void approvedApply(Long id) {
+        LambdaUpdateWrapper<OwnerEntity> wrapper= Wrappers.lambdaUpdate();
+        wrapper.set(OwnerEntity::getState,1).eq(OwnerEntity::getId,id);
+        baseMapper.update(new OwnerEntity(),wrapper);
+    }
+
+    @Override
+    public void refuseApply(Long id) {
+        LambdaUpdateWrapper<OwnerEntity> wrapper= Wrappers.lambdaUpdate();
+        wrapper.set(OwnerEntity::getState,2).eq(OwnerEntity::getId,id);
+        baseMapper.update(new OwnerEntity(),wrapper);
     }
 
     private LambdaQueryWrapper<OwnerEntity> getWrapper(OwnerQuery query){

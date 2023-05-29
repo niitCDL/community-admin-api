@@ -1,7 +1,10 @@
 package com.soft2242.one.controller;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
+import com.soft2242.one.entity.House;
+import com.soft2242.one.service.IHouseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -46,7 +49,18 @@ public class OwnerController {
         OwnerVO list = ownerService.findOwnerInfo(id);
         return Result.ok(list);
     }
-
+    @PostMapping("approvedApply")
+    @Operation(summary = "审核通过业主申请")
+    public Result<String> approvedApply(Long id){
+        ownerService.approvedApply(id);
+        return Result.ok();
+    }
+    @PostMapping("refuseApply")
+    @Operation(summary = "审核拒绝业主申请")
+    public Result<String> refuseApply(Long id){
+        ownerService.refuseApply(id);
+        return Result.ok();
+    }
     @PostMapping
     @Operation(summary = "保存")
 //    @PreAuthorize("hasAuthority('one:owner:save')")

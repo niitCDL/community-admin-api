@@ -60,7 +60,7 @@ public class OwnerEntity extends BaseEntity {
 	/**
 	* 紧急联系人信息(json)
 	*/
-	private Object eContacts;
+	private String eContacts;
 
 	/**
 	* 身份标识(0:业主 1:家属 2:租户)
