@@ -42,8 +42,9 @@ public class OwnerController {
     @Operation(summary = "信息")
 //    @PreAuthorize("hasAuthority('one:owner:info')")
     public Result<OwnerVO> get(@PathVariable("id") Long id){
-        OwnerEntity entity = ownerService.getById(id);
-        return Result.ok(OwnerConvert.INSTANCE.convert(entity));
+
+        OwnerVO list = ownerService.findOwnerInfo(id);
+        return Result.ok(list);
     }
 
     @PostMapping

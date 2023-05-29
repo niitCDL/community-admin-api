@@ -40,6 +40,11 @@ public class OwnerServiceImpl extends BaseServiceImpl<OwnerDao, OwnerEntity> imp
         return new PageResult<>(baseMapper.findOwnerOQ(query), baseMapper.findOwnerRecordByOQ(query));
     }
 
+    @Override
+    public OwnerVO findOwnerInfo(Long id) {
+        return baseMapper.findOwnerInfo(id);
+    }
+
     private LambdaQueryWrapper<OwnerEntity> getWrapper(OwnerQuery query){
         LambdaQueryWrapper<OwnerEntity> wrapper = Wrappers.lambdaQuery();
         return wrapper;

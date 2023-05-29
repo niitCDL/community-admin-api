@@ -19,5 +19,5 @@ import java.util.List;
 public interface OwnerDao extends BaseDao<OwnerEntity> {
     int findOwnerRecordByOQ(OwnerQuery ownerQuery);
     List<OwnerVO> findOwnerOQ(OwnerQuery ownerQuery);
-
+    OwnerVO findOwnerInfo(Long id);
 }

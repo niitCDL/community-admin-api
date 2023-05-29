@@ -18,6 +18,7 @@ import java.util.List;
 public interface OwnerService extends BaseService<OwnerEntity> {
 
     PageResult<OwnerVO> page(OwnerQuery query);
+    OwnerVO findOwnerInfo(Long id);
 
     void save(OwnerVO vo);
 
