@@ -61,6 +61,14 @@ public class SysRoleOperationLogVO implements Serializable {
 	@Schema(description = "操作对象名称")
 	private String operationObjectName;
 
+	@MyExcelProperty("操作者名称")
+	@Schema(description = "操作者名称")
+	private String operatorName;
+
+	@MyExcelProperty("修改者名称")
+	@Schema(description = "修改者名称")
+	private String updaterName;
+
 	@MyExcelProperty("原因")
 	@Schema(description = "原因")
 	private String reason;
