@@ -1,8 +1,10 @@
 package com.soft2242.one.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 
+import com.soft2242.one.entity.OwnerEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
 * 业主表
@@ -37,7 +41,14 @@ public class OwnerController {
         PageResult<OwnerVO> page = ownerService.page(query);
         return Result.ok(page);
     }
-
+    @PostMapping("list")
+    @Operation(summary = "业主信息获取")
+    public Result<List<OwnerEntity>> list(){
+        QueryWrapper<OwnerEntity> wrapper = new QueryWrapper<>();
+        wrapper.select("DISTINCT identity_card,real_name");
+        List<OwnerEntity> list = ownerService.list(wrapper).stream().filter(owner -> !Objects.equals(owner.getIdentityCard(), "")).collect(Collectors.toList());
+        return Result.ok(list);
+    }
     @GetMapping("{id}")
     @Operation(summary = "信息")
 //    @PreAuthorize("hasAuthority('one:owner:info')")

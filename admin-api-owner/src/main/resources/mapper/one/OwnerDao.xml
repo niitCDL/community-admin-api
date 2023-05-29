@@ -25,7 +25,13 @@
     <select id="findOwnerRecordByOQ" resultType="int">
         SELECT COUNT(*) FROM t_owner b WHERE  b.state=#{state} AND b.deleted=0 AND
             b.identity=0 AND b.id IN(
-                SELECT id FROM t_house WHERE community_name LIKE CONCAT('%',#{communityName},'%'))
+                SELECT id FROM t_house
+        <where>
+            <if test="communityName!=null and communityName!=''">
+                community_name LIKE CONCAT('%',#{communityName},'%')
+            </if>
+        </where>
+        )
     </select>
     <select id="findOwnerOQ" resultType="com.soft2242.one.vo.OwnerVO">
         SELECT b.id,c.avatar,c.username,
