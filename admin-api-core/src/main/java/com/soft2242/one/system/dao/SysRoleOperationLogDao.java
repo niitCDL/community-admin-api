@@ -17,7 +17,7 @@ import org.apache.ibatis.annotations.Select;
 */
 @Mapper
 public interface SysRoleOperationLogDao extends BaseDao<SysRoleOperationLogEntity> {
-    String querySql = "select a.* , (b.name)operationObjectName from sys_role_operation_log a LEFT JOIN sys_role b ON a.operation_object = b.id";
+    String querySql = "SELECT a.*,( b.NAME ) operationObjectName,(c.USERNAME) operatorName,(d.USERNAME) updaterName FROM sys_role_operation_log a LEFT JOIN sys_role b ON a.operation_object = b.id LEFT JOIN sys_admin c on a.creator = c.id LEFT JOIN sys_admin d ON a.updater = d.id";
     String wrapperSql = "select * from ("+querySql+")AS q ${ew.customSqlSegment}";
 
     @Select(wrapperSql)
