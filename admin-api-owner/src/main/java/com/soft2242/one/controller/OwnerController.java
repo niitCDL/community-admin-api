@@ -1,20 +1,17 @@
 package com.soft2242.one.controller;
 
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
-import com.soft2242.one.entity.House;
-import com.soft2242.one.service.IHouseService;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import com.soft2242.one.convert.OwnerConvert;
-import com.soft2242.one.entity.OwnerEntity;
+
 import com.soft2242.one.service.OwnerService;
 import com.soft2242.one.query.OwnerQuery;
 import com.soft2242.one.vo.OwnerVO;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
