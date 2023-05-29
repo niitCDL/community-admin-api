@@ -7,6 +7,7 @@ import com.soft2242.one.entity.ActivityType;
 import com.soft2242.one.query.ActivityTypeQuery;
 import com.soft2242.one.service.ActivityTypeService;
 import com.soft2242.one.vo.ActivityTypeVO;
+import com.soft2242.one.vo.ActivityVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -35,6 +36,14 @@ public class ActivityTypeController {
 //    @PreAuthorize("hasAuthority('soft2242:type:page')")
     public Result<PageResult<ActivityTypeVO>> page(@ParameterObject @Valid ActivityTypeQuery query) {
         PageResult<ActivityTypeVO> page = activityTypeService.page(query);
+
+        return Result.ok(page);
+    }
+    @GetMapping("page2")
+    @Operation(summary = "分页查询未被删除")
+//    @PreAuthorize("hasAuthority('soft2242:type:page')")
+    public Result<PageResult<ActivityTypeVO>> page2(@ParameterObject @Valid ActivityTypeQuery query) {
+        PageResult<ActivityTypeVO> page = activityTypeService.page2(query);
 
         return Result.ok(page);
     }
@@ -77,11 +86,28 @@ public class ActivityTypeController {
         return Result.ok();
     }
 
+    @PutMapping("status/{id}")
+    @Operation(summary = "修改状态")
+//    @PreAuthorize("hasAuthority('soft2242:type:update')")
+    public Result<String> status(@PathVariable Integer id) {
+        activityTypeService.status(id);
+        return Result.ok();
+    }
+
+
     @DeleteMapping
     @Operation(summary = "批量删除")
 //    @PreAuthorize("hasAuthority('soft2242:type:delete')")
-    public Result<String> delete(@RequestBody List<Long> idList){
+    public Result<String> delete(@RequestBody List<Long> idList) {
         activityTypeService.delete(idList);
         return Result.ok();
     }
+
+    @GetMapping("TypeList")
+    @Operation(summary = "活动列表")
+    public Result<List<ActivityTypeVO>> typeList() {
+        List<ActivityTypeVO> list = activityTypeService.getList();
+        return Result.ok(list);
+    }
+
 }

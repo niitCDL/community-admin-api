@@ -13,7 +13,7 @@ public class VisitorVO implements Serializable {
     private static final long serialVersionUID = 1L;
     @Schema(description = "id")
 
-    private Integer id;
+    private Long id;
 
     /**
      * 绑定业主id

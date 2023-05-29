@@ -31,4 +31,5 @@ public interface IVisitorInvitationService extends BaseService<VisitorInvitation
 
     List<VisitorInvitation> getAll2(Long userId);
 
+    List<VisitorInvitationVO> getInvitationList();
 }
