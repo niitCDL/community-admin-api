@@ -19,6 +19,8 @@ public interface OwnerService extends BaseService<OwnerEntity> {
 
     PageResult<OwnerVO> page(OwnerQuery query);
     OwnerVO findOwnerInfo(Long id);
+    void approvedApply(Long id);
+    void refuseApply(Long id);
 
     void save(OwnerVO vo);
 

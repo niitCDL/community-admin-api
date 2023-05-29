@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft2242.one.dao.ParkDao">
+
+    <select id="getList" resultType="com.soft2242.one.vo.ParkVO">
+        SELECT t2.community_name as communityName , t1.*
+        FROM t_community t2,t_park t1  WHERE t2.id=t1.community_id
+        AND t1.deleted = 0
+        <if test="parkName!=null and parkName.trim() != ''">
+            AND t1.park_name LIKE CONCAT('%',#{parkName},'%')
+        </if>
+        <if test="communityName!=null and communityName.trim() != ''">
+            AND t2.community_name LIKE CONCAT('%',#{communityName},'%')
+        </if>
+    </select>
+
+</mapper>

@@ -2,16 +2,16 @@ package com.soft2242.one.controller;
 
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
-import com.soft2242.one.convert.OwnerConvert;
-import com.soft2242.one.entity.OwnerEntity;
+
 import com.soft2242.one.service.OwnerService;
 import com.soft2242.one.query.OwnerQuery;
 import com.soft2242.one.vo.OwnerVO;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
@@ -46,7 +46,18 @@ public class OwnerController {
         OwnerVO list = ownerService.findOwnerInfo(id);
         return Result.ok(list);
     }
-
+    @PostMapping("approvedApply")
+    @Operation(summary = "审核通过业主申请")
+    public Result<String> approvedApply(Long id){
+        ownerService.approvedApply(id);
+        return Result.ok();
+    }
+    @PostMapping("refuseApply")
+    @Operation(summary = "审核拒绝业主申请")
+    public Result<String> refuseApply(Long id){
+        ownerService.refuseApply(id);
+        return Result.ok();
+    }
     @PostMapping
     @Operation(summary = "保存")
 //    @PreAuthorize("hasAuthority('one:owner:save')")
