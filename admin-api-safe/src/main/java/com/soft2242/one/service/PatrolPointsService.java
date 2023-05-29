@@ -5,6 +5,7 @@ import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.entity.PatrolPointsEntity;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.vo.CommunityVO;
+import com.soft2242.one.vo.PatrolPathVO;
 import com.soft2242.one.vo.PatrolPointsVO;
 
 
@@ -32,6 +33,8 @@ public interface PatrolPointsService extends BaseService<PatrolPointsEntity> {
     void update(PatrolPointsVO vo);
 
     void delete(List<Long> idList);
+
+    List<PatrolPointsVO> getByIds(List<Long> Ids);
 
 
 }

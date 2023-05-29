@@ -11,4 +11,8 @@ import java.util.List;
 public interface PointsPathDao extends BaseDao<PointsPathEntity> {
 
     List<Long> getPointIdList(@Param("pathId") Long pathId);
+
+
+
+
 }

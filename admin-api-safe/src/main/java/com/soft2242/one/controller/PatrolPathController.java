@@ -7,6 +7,7 @@ import com.soft2242.one.entity.PatrolPathEntity;
 import com.soft2242.one.query.PatrolPathQuery;
 import com.soft2242.one.service.InspectionItemPathService;
 import com.soft2242.one.service.PatrolPathService;
+import com.soft2242.one.service.PatrolPointsService;
 import com.soft2242.one.service.PointsPathService;
 import com.soft2242.one.vo.ComAndPathVO;
 import com.soft2242.one.vo.InspectionItemVO;
@@ -35,7 +36,7 @@ import java.util.List;
 public class PatrolPathController {
     private final PatrolPathService PatrolPathService;
     private final PointsPathService pointsPathService;
-
+private  final PatrolPointsService pointsService;
     private final InspectionItemPathService inspectionItemPathService;
 
     @GetMapping("page")
@@ -51,8 +52,11 @@ public class PatrolPathController {
     @Operation(summary = "信息")
     @PreAuthorize("hasAuthority('safe:path:info')")
     public Result<PatrolPathVO> get(@PathVariable("id") Long id) {
-        PatrolPathEntity entity = PatrolPathService.getById(id);
-        return Result.ok(PatrolPathConvert.INSTANCE.convert(entity));
+        System.out.println("+++++++++++++++++++++++++++++++++"+id);
+        PatrolPathVO vo = PatrolPathService.getPathById(id);
+        System.out.println("+++++++++++++++++++++++++++++++++"+vo);
+        return Result.ok(vo);
+
     }
 
 
@@ -95,6 +99,13 @@ public class PatrolPathController {
     public Result<String> update(@RequestBody @Valid PatrolPathVO vo) {
         PatrolPathService.update(vo);
         return Result.ok();
+    }
+
+    @GetMapping({"point/{elementIds}"})
+    @Operation(summary = "根据ids获取所有的巡更点")
+    public  Result<List<PatrolPointsVO>> getByIds(@PathVariable("elementIds") List<Long> elementIds){
+        List<PatrolPointsVO> patrolPointsVOS = pointsService.getByIds(elementIds);
+        return Result.ok(patrolPointsVOS);
     }
 
     @DeleteMapping

@@ -19,6 +19,8 @@ public interface PatrolPathService extends BaseService<PatrolPathEntity> {
     PageResult<PatrolPathVO> page(PatrolPathQuery query);
 
     void save(PatrolPathVO vo);
+
+    PatrolPathVO getPathById(Long id);
     List<CommunityVO> searchCommunity();
     List<PatrolPointsVO> searchPoints(Long communityId);
     List<InspectionItemVO> searchItems(Long communityId);

@@ -1,5 +1,6 @@
 package com.soft2242.one.service.impl;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
@@ -12,6 +13,7 @@ import com.soft2242.one.entity.PatrolPointsEntity;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.service.PatrolPointsService;
 import com.soft2242.one.vo.CommunityVO;
+import com.soft2242.one.vo.PatrolPathVO;
 import com.soft2242.one.vo.PatrolPointsVO;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -98,6 +100,13 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+    }
+
+    @Override
+    public List<PatrolPointsVO> getByIds(List<Long> Ids) {
+        List<PatrolPointsEntity> patrolPointsEntities = patrolPointsDao.selectBatchIds(Ids);
+        List<PatrolPointsVO> patrolPointsVOS = PatrolPointsConvert.INSTANCE.convertList(patrolPointsEntities);
+        return patrolPointsVOS;
     }
 
 }
