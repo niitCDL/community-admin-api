@@ -12,6 +12,7 @@ import com.soft2242.one.entity.ActivityType;
 
 import com.soft2242.one.query.ActivityTypeQuery;
 import com.soft2242.one.service.ActivityTypeService;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.vo.ActivityTypeVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,16 +29,37 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ActivityTypeServiceImpl extends BaseServiceImpl<ActivityTypeDao, ActivityType> implements ActivityTypeService {
+    private final ICommunityService communityService;
+
 
     @Override
     public PageResult<ActivityTypeVO> page(ActivityTypeQuery query) {
         IPage<ActivityType> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
-        return new PageResult<>(ActivityTypeConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        List<ActivityTypeVO> activityTypeVOS = ActivityTypeConvert.INSTANCE.convertList(page.getRecords());
+//        配置小区名字
+        activityTypeVOS.forEach(a -> a.setCommunityName(communityService.getById(a.getCommunityId()).getCommunityName()));
+        return new PageResult<>(activityTypeVOS, page.getTotal());
+    }
+    @Override
+    public PageResult<ActivityTypeVO> page2(ActivityTypeQuery query) {
+        IPage<ActivityType> page = baseMapper.selectPage(getPage(query), getWrapper2(query));
+        List<ActivityTypeVO> activityTypeVOS = ActivityTypeConvert.INSTANCE.convertList(page.getRecords());
+//        配置小区名字
+        activityTypeVOS.forEach(a -> a.setCommunityName(communityService.getById(a.getCommunityId()).getCommunityName()));
+        return new PageResult<>(activityTypeVOS, page.getTotal());
+    }
+    private LambdaQueryWrapper<ActivityType> getWrapper2(ActivityTypeQuery query) {
+        LambdaQueryWrapper<ActivityType> wrapper = Wrappers.lambdaQuery();
+//        查询没有被删除的
+//        eq(ActivityType::getStatus, 0)
+        wrapper.eq(ActivityType::getDeleted, 0);
+        return wrapper;
     }
 
     private LambdaQueryWrapper<ActivityType> getWrapper(ActivityTypeQuery query) {
+//        无条件查询
         LambdaQueryWrapper<ActivityType> wrapper = Wrappers.lambdaQuery();
+
         return wrapper;
     }
 
@@ -59,6 +81,25 @@ public class ActivityTypeServiceImpl extends BaseServiceImpl<ActivityTypeDao, Ac
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+    }
+
+    @Override
+    public void status(Integer id) {
+        ActivityType activityType = baseMapper.selectById(id);
+        System.out.println(activityType);
+        Integer status = activityType.getStatus();
+        if (status==1){
+            activityType.setStatus(0);
+            System.out.println(activityType);
+
+            baseMapper.updateById(activityType);
+        }else if (status==0){
+            activityType.setStatus(1);
+            System.out.println(activityType);
+
+            baseMapper.updateById(activityType);
+        }
+
     }
 
 }

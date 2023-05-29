@@ -75,5 +75,9 @@ public class ActivityVO implements Serializable {
 	@Schema(description = "更新时间")
 	private LocalDateTime updateTime;
 
+	@Schema(description = "小区名字")
+	private String communityName;
+	@Schema(description = "活动类别")
+	private String activityType;
 
 }

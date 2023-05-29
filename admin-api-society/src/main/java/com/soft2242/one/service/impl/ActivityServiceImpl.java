@@ -10,6 +10,8 @@ import com.soft2242.one.dao.ActivityDao;
 import com.soft2242.one.entity.Activity;
 import com.soft2242.one.query.ActivityQuery;
 import com.soft2242.one.service.ActivityService;
+import com.soft2242.one.service.ActivityTypeService;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.vo.ActivityVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,15 +28,21 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> implements ActivityService {
+    private final ICommunityService communityService;
+    private final ActivityTypeService activityTypeService;
 
     @Override
     public PageResult<ActivityVO> page(ActivityQuery query) {
         IPage<Activity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
-        return new PageResult<>(ActivityConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        List<ActivityVO> activityVOS = ActivityConvert.INSTANCE.convertList(page.getRecords());
+        activityVOS.forEach(o -> {
+            o.setCommunityName(communityService.getById(o.getCommunityId()).getCommunityName());
+            o.setActivityType(activityTypeService.getById(o.getTypeId()).getName());
+        });
+        return new PageResult<>(activityVOS, page.getTotal());
     }
 
-    private LambdaQueryWrapper<Activity> getWrapper(ActivityQuery query){
+    private LambdaQueryWrapper<Activity> getWrapper(ActivityQuery query) {
         LambdaQueryWrapper<Activity> wrapper = Wrappers.lambdaQuery();
         return wrapper;
     }

@@ -38,6 +38,14 @@ public class ActivityTypeController {
 
         return Result.ok(page);
     }
+    @GetMapping("page2")
+    @Operation(summary = "分页查询未被删除")
+//    @PreAuthorize("hasAuthority('soft2242:type:page')")
+    public Result<PageResult<ActivityTypeVO>> page2(@ParameterObject @Valid ActivityTypeQuery query) {
+        PageResult<ActivityTypeVO> page = activityTypeService.page2(query);
+
+        return Result.ok(page);
+    }
 
     @GetMapping("{id}")
     @Operation(summary = "查询信息")
@@ -77,10 +85,19 @@ public class ActivityTypeController {
         return Result.ok();
     }
 
+    @PutMapping("status/{id}")
+    @Operation(summary = "修改状态")
+//    @PreAuthorize("hasAuthority('soft2242:type:update')")
+    public Result<String> status(@PathVariable Integer id) {
+        activityTypeService.status(id);
+        return Result.ok();
+    }
+
+
     @DeleteMapping
     @Operation(summary = "批量删除")
 //    @PreAuthorize("hasAuthority('soft2242:type:delete')")
-    public Result<String> delete(@RequestBody List<Long> idList){
+    public Result<String> delete(@RequestBody List<Long> idList) {
         activityTypeService.delete(idList);
         return Result.ok();
     }
