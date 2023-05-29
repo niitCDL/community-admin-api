@@ -8,6 +8,7 @@ import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.ComplaintConvert;
 import com.soft2242.one.dao.ComplaintDao;
 import com.soft2242.one.entity.ComplaintEntity;
+import com.soft2242.one.entity.RepairEntity;
 import com.soft2242.one.query.ComplaintQuery;
 import com.soft2242.one.service.ComplaintService;
 import com.soft2242.one.vo.ComplaintVO;
@@ -39,7 +40,7 @@ public class ComplaintServiceImpl extends BaseServiceImpl<ComplaintDao, Complain
 
     private LambdaQueryWrapper<ComplaintEntity> getWrapper(ComplaintQuery query){
         LambdaQueryWrapper<ComplaintEntity> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(StringUtils.isNotEmpty(query.getCommunityId()), ComplaintEntity::getCommunityId, query.getCommunityId());
+        wrapper.in(ArrayUtils.isNotEmpty(query.getCommunityId()), ComplaintEntity::getCommunityId, query.getCommunityId());
         wrapper.eq(StringUtils.isNotEmpty(query.getType()), ComplaintEntity::getType, query.getType());
         wrapper.between(ArrayUtils.isNotEmpty(query.getUpdateTime()), ComplaintEntity::getUpdateTime, ArrayUtils.isNotEmpty(query.getUpdateTime()) ? query.getUpdateTime()[0] : null, ArrayUtils.isNotEmpty(query.getUpdateTime()) ? query.getUpdateTime()[1] : null);
         return wrapper;

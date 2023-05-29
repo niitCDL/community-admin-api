@@ -3,10 +3,15 @@ package com.soft2242.one.controller;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.ComplaintConvert;
+import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.ComplaintEntity;
 import com.soft2242.one.query.ComplaintQuery;
 import com.soft2242.one.service.ComplaintService;
+import com.soft2242.one.service.ICommunityService;
+import com.soft2242.one.system.entity.SysUserInfoEntity;
+import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.vo.ComplaintVO;
+import com.soft2242.one.vo.NoticeVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -35,7 +40,6 @@ public class ComplaintController {
 //    @PreAuthorize("hasAuthority('soft2242:complaint:page')")
     public Result<PageResult<ComplaintVO>> page(@ParameterObject @Valid ComplaintQuery query){
         PageResult<ComplaintVO> page = complaintService.page(query);
-
         return Result.ok(page);
     }
 

@@ -3,9 +3,14 @@ package com.soft2242.one.controller;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.RepairConvert;
+import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.RepairEntity;
 import com.soft2242.one.query.RepairQuery;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.RepairService;
+import com.soft2242.one.system.entity.SysUserInfoEntity;
+import com.soft2242.one.system.service.SysUserService;
+import com.soft2242.one.vo.ComplaintVO;
 import com.soft2242.one.vo.RepairVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +20,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,13 +36,29 @@ import java.util.List;
 @AllArgsConstructor
 public class RepairController {
     private final RepairService repairService;
-
+    private final SysUserService sysUserService;
+    private final ICommunityService communityService;
     @GetMapping("page")
     @Operation(summary = "分页")
 //    @PreAuthorize("hasAuthority('soft2242:repair:page')")
     public Result<PageResult<RepairVO>> page(@ParameterObject @Valid RepairQuery query){
         PageResult<RepairVO> page = repairService.page(query);
+        List<RepairVO> list = page.getList();
 
+        for (RepairVO vo: list) {
+            SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
+            Community community = communityService.getById(vo.getCommunityId());
+            vo.setUserName(entity.getRealName());
+            vo.setCommunityName(community.getCommunityName());
+            String[] employeeIds = vo.getEmployeeIds();
+            ArrayList<String> names = new ArrayList<String>();
+
+            for (String employeeId : employeeIds) {
+                entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
+                names.add(entity.getRealName());
+            }
+            vo.setEmployeeNames(names.toArray(new String[names.size()]));
+        }
         return Result.ok(page);
     }
 

@@ -23,9 +23,10 @@ public class ComplaintVO implements Serializable {
 
 	@Schema(description = "社区id")
 	private Long communityId;
-
+	private String communityName;
 	@Schema(description = "投诉人id")
 	private Long userId;
+	private String userName;
 
 	@Schema(description = "投诉类型(0:物业服务，1:社区服务)")
 	private Integer type;
