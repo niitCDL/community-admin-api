@@ -3,18 +3,38 @@
 
 <mapper namespace="com.soft2242.one.dao.PatrolPointsDao">
 
+<!--    <select id="getPointsList" resultType="com.soft2242.one.vo.PatrolPointsVO">-->
+<!--        select a.* ,b.community_name,c.building_name,c.units from t_patrol_points a-->
+<!--        JOIN t_community b on a.community_id=b.id-->
+<!--        JOIN t_building c on a.community_id=c.community_id and a.building_id=c.id-->
+<!--        WHERE  a.deleted=0-->
+<!--        <if test="communityId!=null">-->
+<!--            AND b.id =#{communityId}-->
+<!--        </if>-->
+<!--    -->
+<!--     -->
+<!--    -->
+<!--     -->
+<!--    </select>-->
+    
     <select id="getPointsList" resultType="com.soft2242.one.vo.PatrolPointsVO">
         select a.* ,b.community_name,c.building_name,c.units from t_patrol_points a
         JOIN t_community b on a.community_id=b.id
         JOIN t_building c on a.community_id=c.community_id and a.building_id=c.id
         WHERE  a.deleted=0
-        <if test="communityId!=null">
-            AND b.id =#{communityId}
+        
+        <if test="communityIds!=null">
+            AND b.id in
+                <foreach item="item" collection="communityIds" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
         </if>
+      
+       
     
-     
     
-     
+    
+    
     </select>
 	<select id="getById" resultType="com.soft2242.one.vo.PatrolPointsVO">
         select a.* ,b.community_name,c.building_name,c.units from t_patrol_points a
@@ -25,6 +45,10 @@
             AND a.id =#{id}
         </if>
 
+    </select>
+    <select id="getByCommuntiyId" resultType="com.soft2242.one.entity.PatrolPointsEntity">
+        select id,point_name from  t_patrol_points where community_id=#{communtiyId}
+        
     </select>
 
 

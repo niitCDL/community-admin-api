@@ -51,9 +51,16 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
 //        return wrapper;
 //    }
 
+//    private Map<String,Object> getParams(PatrolPointsQuery query){
+//        Map<String,Object> parmas=new HashMap<>();
+//        parmas.put("communityId",query.getCommunityId());
+//        return parmas;
+//    }
+
+
     private Map<String,Object> getParams(PatrolPointsQuery query){
         Map<String,Object> parmas=new HashMap<>();
-        parmas.put("communityId",query.getCommunityId());
+        parmas.put("communityIds",query.getCommunityIds());
         return parmas;
     }
 

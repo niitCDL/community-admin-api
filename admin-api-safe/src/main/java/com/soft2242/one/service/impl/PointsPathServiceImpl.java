@@ -38,6 +38,7 @@ public class PointsPathServiceImpl extends BaseServiceImpl<PointsPathDao, Points
      */
     @Override
     public void saveOrUpdate(List<Long> pointIds, Long pathId) {
+        System.out.println("-------------id-----------"+pathId);
         // 数据库菜单ID列表
         List<Long> dbPointList = getPointIdList(pathId);
         // 需要新增的菜单ID

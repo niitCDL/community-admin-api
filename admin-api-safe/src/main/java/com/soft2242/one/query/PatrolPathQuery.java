@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+
 /**
 * 巡更路线表查询
 *
@@ -15,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "巡更路线表查询")
 public class PatrolPathQuery extends Query {
-    @Schema(description = "所属小区")
-    private Long communityId;
+    @Schema(description = "所属小区id")
+    private List<Long> communityIds;
 
 }

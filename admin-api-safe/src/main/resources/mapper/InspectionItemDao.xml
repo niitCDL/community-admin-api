@@ -11,4 +11,9 @@
             AND t1.name LIKE CONCAT('%',#{name},'%')
         </if>
     </select>
+    <select id="getByCommunityId" resultType="com.soft2242.one.entity.InspectionItemEntity">
+        select id,name from t_inspection_item  where community_id=#{communtiyId}
+    </select>
+
+
 </mapper>

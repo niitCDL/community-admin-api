@@ -10,7 +10,9 @@ import com.soft2242.one.dao.*;
 import com.soft2242.one.entity.*;
 import com.soft2242.one.query.PatrolPathQuery;
 import com.soft2242.one.query.PatrolPointsQuery;
+import com.soft2242.one.service.InspectionItemPathService;
 import com.soft2242.one.service.PatrolPathService;
+import com.soft2242.one.service.PointsPathService;
 import com.soft2242.one.vo.*;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
@@ -34,8 +36,13 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, PatrolPathEntity> implements PatrolPathService {
+    private PointsPathService pointsPathService;
+    private InspectionItemPathService inspectionItemPathService;
     @Autowired
     private  CommunityServiceImpl serviceImpl;
+
+
+
 
     @Override
     public PageResult<PatrolPathVO> page(PatrolPathQuery query) {
@@ -43,13 +50,16 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
         IPage<PatrolPathEntity> page = getPage(query);
         params.put("page",page);
         List<PatrolPathVO> pathList = baseMapper.getPathList(params);
+        System.out.println("s--------------------------------"+pathList);
         return new PageResult<>(pathList, page.getTotal());
+
+
     }
 
 
     private Map<String,Object> getParams(PatrolPathQuery query){
         Map<String,Object> parmas=new HashMap<>();
-        parmas.put("communityId",query.getCommunityId());
+        parmas.put("communityIds",query.getCommunityIds());
         return parmas;
     }
 //    private LambdaQueryWrapper<PatrolPathEntity> getWrapper(PatrolPathQuery query){
@@ -63,8 +73,13 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
     @Override
     public void save(PatrolPathVO vo) {
         PatrolPathEntity entity = PatrolPathConvert.INSTANCE.convert(vo);
-
         baseMapper.insert(entity);
+        if (entity.getType()==0){
+            pointsPathService.saveOrUpdate(vo.getElementIds(),entity.getId());
+        }if (vo.getType()==1){
+            inspectionItemPathService.saveOrUpdate(vo.getElementIds(),entity.getId());
+        }
+
     }
 
     @Resource
@@ -79,8 +94,8 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
     @Resource
     PatrolPointsDao patrolPointsDao;
     @Override
-    public List<PatrolPointsVO> searchPoints() {
-        List<PatrolPointsEntity> patrolPointsEntities = patrolPointsDao.selectList(null);
+    public List<PatrolPointsVO> searchPoints(Long communityId ) {
+        List<PatrolPointsEntity> patrolPointsEntities = patrolPointsDao.getByCommuntiyId(communityId);
         List<PatrolPointsVO> patrolPointsVOS = PatrolPointsConvert.INSTANCE.convertList(patrolPointsEntities);
         return patrolPointsVOS;
     }
@@ -89,8 +104,8 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
     InspectionItemDao inspectionItemDao;
 
     @Override
-    public List<InspectionItemVO> searchItems() {
-        List<InspectionItemEntity> inspectionItemEntities = inspectionItemDao.selectList(null);
+    public List<InspectionItemVO> searchItems(Long communityId) {
+        List<InspectionItemEntity> inspectionItemEntities = inspectionItemDao.getByCommunityId(communityId);
         List<InspectionItemVO> inspectionItemVOS = InspectionItemEntityConvert.INSTANCE.convertList(inspectionItemEntities);
         return inspectionItemVOS;
     }

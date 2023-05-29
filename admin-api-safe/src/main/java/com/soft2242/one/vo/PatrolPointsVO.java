@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
 * 分页巡更点表
@@ -23,6 +24,9 @@ public class PatrolPointsVO implements Serializable {
 
 	@Schema(description = "所属小区id（t_communtiy")
 	private Long communityId;
+
+	@Schema(description = "所属小区ids")
+	private List<Long> communityIds;
 
 	@Schema(description = "所属小区名称")
 	private  String communityName;

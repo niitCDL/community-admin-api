@@ -23,5 +23,6 @@ public interface PatrolPointsDao extends BaseDao<PatrolPointsEntity> {
 
     PatrolPointsVO getById(Long id);
 
+   List<PatrolPointsEntity> getByCommuntiyId(Long communtiyId);
 
 }
