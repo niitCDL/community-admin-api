@@ -21,14 +21,4 @@ import java.util.Map;
 public interface BuildingDao extends BaseDao<Building> {
     List<BuildingVO> getList(Map<String,Object> params);
 
-    /**
-     * 根据用户名查找用户
-     *
-     * @param buildingName 用户名
-     * @return SysUserEntity
-     */
-    default Building getByBuildingName(String buildingName){
-        return this.selectOne(new QueryWrapper<Building>().eq("buildingName", buildingName));
-    }
-
 }

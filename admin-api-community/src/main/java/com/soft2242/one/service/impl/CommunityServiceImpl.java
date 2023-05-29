@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.constant.Constant;
+import com.soft2242.one.base.common.myexcel.CustomExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
+import com.soft2242.one.convert.BuildingConvert;
 import com.soft2242.one.convert.CommunityConvert;
 import com.soft2242.one.dao.CommunityDao;
 import com.soft2242.one.entity.Building;
@@ -14,12 +16,16 @@ import com.soft2242.one.entity.Community;
 import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.query.CommunityQuery;
 import com.soft2242.one.service.ICommunityService;
+import com.soft2242.one.system.convert.SysUserConvert;
+import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.vo.BuildingVO;
 import com.soft2242.one.vo.CommunityVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +43,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class CommunityServiceImpl extends BaseServiceImpl<CommunityDao, Community> implements ICommunityService {
 
+    private final CustomExcelUtils customExcelUtils;
     @Override
     public PageResult<CommunityVO> page(CommunityQuery query) {
         Map<String,Object> params = getParams(query);
@@ -83,6 +90,30 @@ public class CommunityServiceImpl extends BaseServiceImpl<CommunityDao, Communit
         removeByIds(ids);
     }
 
+    @Override
+    public void export() {
+        List<CommunityVO> communityVOList = CommunityConvert.INSTANCE.convertList(baseMapper.selectList(null));
+        try {
+            customExcelUtils.export(communityVOList);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void importByExcel(MultipartFile file) {
+        try {
+            List<CommunityVO> dataVoList = new ArrayList<>();
+            customExcelUtils.importExcel(file, CommunityVO.class,dataVoList);
+            System.out.println("导入成功！！！！");
+            List<Community> communities = CommunityConvert.INSTANCE.convertListEntity(dataVoList);
+            for (Community community : communities) {
+                baseMapper.insert(community);
+            }
+            System.out.println("导入成功");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     /**
      * 查询条件构造
      *

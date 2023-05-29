@@ -44,7 +44,7 @@ public class Building extends BaseEntity implements Serializable {
     private String buildingName;
 
     /**
-     * 所在单元
+     * 层数
      */
     private Integer units;
 

@@ -1,6 +1,8 @@
 package com.soft2242.one.convert;
 
+import com.soft2242.one.entity.Building;
 import com.soft2242.one.entity.Community;
+import com.soft2242.one.vo.BuildingVO;
 import com.soft2242.one.vo.CommunityVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -21,4 +23,5 @@ public interface CommunityConvert {
     Community convert(CommunityVO vo);
 
     List<CommunityVO> convertList(List<Community> list);
+    List<Community> convertListEntity(List<CommunityVO> list);
 }

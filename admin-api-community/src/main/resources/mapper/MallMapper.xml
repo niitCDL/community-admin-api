@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.soft2242.one.mapper.MallMapper">
-
+<mapper namespace="com.soft2242.one.dao.MallDao">
+        <select id="getList" resultType="com.soft2242.one.vo.MallVO">
+            SELECT t1.community_name,t4.* , t5.real_name
+            FROM t_mall t4
+            LEFT JOIN t_community t1 ON t1.id=t4.community_id
+            LEFT JOIN t_user t5 ON t5.id=t4.user_id
+            WHERE t4.deleted = 0
+            <if test="communityName!=null and communityName.trim() != ''">
+                AND t1.community_name LIKE CONCAT('%',#{communityName},'%')
+            </if>
+            <if test="realName!=null and realName.trim() != ''">
+                AND t5.real_name LIKE CONCAT('%',#{realName},'%')
+            </if>
+            <if test="mallNumber!=null and mallNumber.trim() != ''">
+                AND t4.mall_number LIKE CONCAT('%',#{mallNumber},'%')
+            </if>
+        </select>
 </mapper>
