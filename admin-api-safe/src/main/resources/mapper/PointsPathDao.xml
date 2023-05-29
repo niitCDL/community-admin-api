@@ -7,4 +7,5 @@
         WHERE path_id=#{pathId}
           AND deleted=0
     </select>
+  
 </mapper>

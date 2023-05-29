@@ -29,9 +29,11 @@ public class PatrolPathVO implements Serializable {
 
 	@Schema(description = "所属小区id")
 	private Long communityId;
-	@Schema(description = "巡更点ids")
+	@Schema(description = "元素ids")
 	private  List<Long> elementIds;
 
+	@Schema(description = "元素names")
+	private  List<String> names;
 
 	@Schema(description = "所属小区名称")
 	private  String communityName;
@@ -41,7 +43,7 @@ public class PatrolPathVO implements Serializable {
 	@Schema(description = "定位距离(不能离开指定位置多少米)")
 	private BigDecimal locationLength;
 
-	@Schema(description = "状态（0：正常，1：禁用）")
+	@Schema(description = "状态（1：正常，0：禁用）")
 	private Integer status;
 
 	@Schema(description = "线路类型(0：巡更点类型，1：巡检项目类型)")

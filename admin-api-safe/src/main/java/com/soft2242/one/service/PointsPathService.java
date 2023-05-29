@@ -40,4 +40,6 @@ public interface PointsPathService extends BaseService<PointsPathEntity> {
      */
     void deleteByPathId(Long pathId);
 
+
+
 }
