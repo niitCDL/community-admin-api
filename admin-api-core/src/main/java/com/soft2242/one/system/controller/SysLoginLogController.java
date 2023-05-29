@@ -16,9 +16,8 @@ public class SysLoginLogController {
 
     private final SysLoginLogService sysLoginLogService;
     @GetMapping("export")
-    @Operation(summary = "导出用户")
+    @Operation(summary = "导出登录日志")
     public void export() {
-
         sysLoginLogService.export();
     }
 
