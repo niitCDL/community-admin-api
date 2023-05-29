@@ -3,7 +3,7 @@
 
 <mapper namespace="com.soft2242.one.dao.CarportDao">
     <select id="getList" resultType="com.soft2242.one.vo.CarportVO">
-        SELECT t1.* , t2.real_name ,t3.licence ,t4.park_name
+        SELECT t1.* , t2.real_name , t2.phone,t3.licence ,t4.park_name
         FROM t_carport t1
         LEFT JOIN t_owner t2 ON t2.id = t1.owner_id
         LEFT JOIN t_car t3 ON t3.id = t1.car_id

@@ -5,58 +5,49 @@ import com.soft2242.one.base.common.utils.DateUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @ClassName CarportVO
+ * @ClassName CarVO
  * @Description TODO
  * @Author Dr.king
- * @Date 2023/5/29 15:06
+ * @Date 2023/5/29 19:09
  */
 @Data
-@Schema(description = "车位表")
-public class CarportVO implements Serializable {
-    @Serial
+@Schema(description = "车辆表")
+public class CarVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(description = "自增主键")
     private Long id;
 
-    @Schema(description = "车辆id")
-    private Long carId;
+    @Schema(description = "用户id")
+    private Long userId;
+    @Schema(description = "用户名")
+    private String realName;
+    @Schema(description = "用户电话")
+    private String phone;
 
     @Schema(description = "车牌号")
     private String licence;
 
-    @Schema(description = "业主id")
-    private Long ownerId;
+    @Schema(description = "车辆品牌")
+    private String brand;
 
-    @Schema(description = "业主姓名")
-    private String realName;
-    @Schema(description = "业主电话")
-    private String phone;
+    @Schema(description = "车辆型号")
+    private String specification;
 
-    @Schema(description = "停车场id")
-    private Long parkId;
+    @Schema(description = "车辆颜色")
+    private String color;
 
-    @Schema(description = "停车场名称")
-    private String parkName;
-
-    @Schema(description = "车位名称")
-    private String carportName;
-
-    @Schema(description = "车位状态(0：闲置 1：已租 2：已售)")
-    private Integer status;
-
-    @Schema(description = "租赁(购买)开始时间")
+    @Schema(description = "保险截止日期")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date startTime;
+    private Date deadline;
 
-    @Schema(description = "租赁(购买)结束时间")
+    @Schema(description = "年审日期")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private Date endTime;
+    private Date annualTime;
 
     @Schema(description = "删除标识（0：未删除 1：已删除）")
     private Integer deleted;

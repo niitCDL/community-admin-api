@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.CarDao">
+    <select id="getList" resultType="com.soft2242.one.vo.CarVO">
+        SELECT t1.* , t2.real_name , t2.phone
+        FROM t_user t2,t_car t1  WHERE t2.id=t1.user_id
+        AND t1.deleted = 0
+        <if test="realName!=null and realName.trim() != ''">
+            AND t2.real_name LIKE CONCAT('%',#{realName},'%')
+        </if>
+        <if test="licence!=null and licence.trim() != ''">
+            AND t1.licence LIKE CONCAT('%',#{licence},'%')
+        </if>
+        <if test="brand!=null and brand.trim() != ''">
+            AND t1.brand LIKE CONCAT('%',#{brand},'%')
+        </if>
+
+    </select>
+</mapper>
