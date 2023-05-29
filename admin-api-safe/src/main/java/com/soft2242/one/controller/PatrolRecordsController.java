@@ -25,7 +25,7 @@ import java.util.List;
 * @since 1.0.0 2023-05-25
 */
 @RestController
-@RequestMapping("soft2242/records")
+@RequestMapping("safe/record")
 @Tag(name="巡更记录")
 @AllArgsConstructor
 public class PatrolRecordsController {

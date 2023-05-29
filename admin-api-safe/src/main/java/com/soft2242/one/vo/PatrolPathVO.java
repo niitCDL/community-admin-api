@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
 * 巡更路线表
@@ -23,12 +24,17 @@ public class PatrolPathVO implements Serializable {
 	@Schema(description = "自增主键")
 	private Long id;
 
+	@Schema(description = "所属小区id数组")
+	private List<Long> communityIds;
+
 	@Schema(description = "所属小区id")
 	private Long communityId;
+	@Schema(description = "巡更点ids")
+	private  List<Long> elementIds;
+
 
 	@Schema(description = "所属小区名称")
-	private  String communtiyName;
-
+	private  String communityName;
 	@Schema(description = "巡更路线名")
 	private String wayName;
 

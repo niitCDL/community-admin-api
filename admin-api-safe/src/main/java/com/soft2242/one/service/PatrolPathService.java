@@ -20,8 +20,8 @@ public interface PatrolPathService extends BaseService<PatrolPathEntity> {
 
     void save(PatrolPathVO vo);
     List<CommunityVO> searchCommunity();
-    List<PatrolPointsVO> searchPoints();
-    List<InspectionItemVO> searchItems();
+    List<PatrolPointsVO> searchPoints(Long communityId);
+    List<InspectionItemVO> searchItems(Long communityId);
     public List<PatrolPathVO> getPathListByCommId(Long commId);
 
     public List<ComAndPathVO> getCommAndPath();

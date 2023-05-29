@@ -3,7 +3,7 @@
 <mapper namespace="com.soft2242.one.dao.PointsPathDao">
 
     <select id="getPointIdList" resultType="java.lang.Long">
-        SELECT point_id FROM t_project_path
+        SELECT point_id FROM t_points_path
         WHERE path_id=#{pathId}
           AND deleted=0
     </select>
