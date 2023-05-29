@@ -1,6 +1,8 @@
 package com.soft2242.one.convert;
 
+import com.soft2242.one.entity.Building;
 import com.soft2242.one.entity.House;
+import com.soft2242.one.vo.BuildingVO;
 import com.soft2242.one.vo.HouseVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -21,4 +23,5 @@ public interface HouseConvert {
     House convert(HouseVO vo);
 
     List<HouseVO> convertList(List<House> list);
+    List<House> convertListEntity(List<HouseVO> list);
 }

@@ -31,7 +31,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sys/community")
-@Tag(name = "社区管理")
+@Tag(name = "小区管理")
 @AllArgsConstructor
 public class CommunityController {
     private final ICommunityService communityService;
@@ -39,7 +39,7 @@ public class CommunityController {
 
 
     @GetMapping("page")
-    @Operation(summary = "社区分页")
+    @Operation(summary = "小区分页")
     @PreAuthorize("hasAuthority('sys:community:page')")
     public Result<PageResult<CommunityVO>> page(@ParameterObject @Valid CommunityQuery query) {
         PageResult<CommunityVO> page = communityService.page(query);
@@ -47,14 +47,14 @@ public class CommunityController {
     }
 
     @GetMapping("list")
-    @Operation(summary = "社区列表")
+    @Operation(summary = "小区列表")
     public Result<List<CommunityVO>> list() {
         List<CommunityVO> list = communityService.getList();
         return Result.ok(list);
     }
 
     @GetMapping("{id}")
-    @Operation(summary = "社区信息")
+    @Operation(summary = "小区信息")
     @PreAuthorize("hasAuthority('sys:community:info')")
     public Result<CommunityVO> get(@PathVariable("id") Long id) {
         Community entity = communityService.getById(id);
@@ -62,7 +62,7 @@ public class CommunityController {
     }
 
     @PostMapping
-    @Operation(summary = "新增社区")
+    @Operation(summary = "新增小区")
     //@PreAuthorize("hasAuthority('sys:community:save')")
     public Result<String> save(@RequestBody CommunityVO vo) {
         communityService.save(vo);
@@ -70,7 +70,7 @@ public class CommunityController {
     }
 
     @PutMapping
-    @Operation(summary = "修改社区")
+    @Operation(summary = "修改小区")
     //@PreAuthorize("hasAuthority('sys:community:update')")
     public Result<String> update(@RequestBody @Valid CommunityVO vo) {
         communityService.update(vo);
@@ -78,7 +78,7 @@ public class CommunityController {
     }
 
     @DeleteMapping("/delete")
-    @Operation(summary = "批量删除社区")
+    @Operation(summary = "批量删除小区")
     //@PreAuthorize("hasAuthority('sys:community:delete')")
     public Result<String> delete(@RequestBody(required = false) List<Long> ids) {
         communityService.delete(ids);
@@ -100,6 +100,22 @@ public class CommunityController {
         vo.setName(file.getOriginalFilename());
         vo.setPlatform(storageService.properties.getConfig().getType().name());
         return Result.ok(vo);
+    }
+    @GetMapping("export")
+    @Operation(summary = "导出小区")
+    //@PreAuthorize("hasAuthority('sys:building:export')")
+    public void export(){
+        communityService.export();
+    }
+
+    @PostMapping("import")
+    @Operation(summary = "导入小区")
+    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return Result.error("请选择需要上传的文件");
+        }
+        communityService.importByExcel(file);
+        return Result.ok();
     }
 
 }

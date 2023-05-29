@@ -5,6 +5,7 @@ import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.entity.Community;
 import com.soft2242.one.query.CommunityQuery;
 import com.soft2242.one.vo.CommunityVO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -52,4 +53,6 @@ public interface ICommunityService extends BaseService<Community> {
      * @param ids ids
      */
     void delete(List<Long> ids);
+    void export();
+    void importByExcel(MultipartFile file);
 }

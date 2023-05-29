@@ -22,6 +22,6 @@ public interface BuildingConvert {
     Building convert(BuildingVO vo);
 
     List<BuildingVO> convertList(List<Building> list);
-    List<BatchBuildingVO> convert2List(List<Building> list);
-    List<Building> convertListEntity(List<BatchBuildingVO> list);
+
+    List<Building> convertListEntity(List<BuildingVO> list);
 }
