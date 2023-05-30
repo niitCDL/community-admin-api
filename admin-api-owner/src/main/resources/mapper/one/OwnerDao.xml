@@ -24,7 +24,7 @@
     </resultMap>
     <select id="findOwnerRecordByOQ" resultType="int">
         SELECT COUNT(*) FROM t_owner b WHERE  b.state=#{state} AND b.deleted=0 AND
-            b.identity=0 AND b.id IN(
+            b.identity=0 AND b.house_id IN(
                 SELECT id FROM t_house
         <where>
             <if test="communityName!=null and communityName!=''">
@@ -38,7 +38,7 @@
                CONCAT(a.community_name,a.building_name,a.units,'单元',a.house_number) as houseName,
                c.real_name,c.phone,b.identity_card,b.identity,b.update_time,b.state
                FROM t_house a,t_owner b,t_user c WHERE  b.state=#{state} AND b.deleted=0 AND
-            b.identity=0 AND b.id IN(
+            b.identity=0 AND b.house_id IN(
                 SELECT id FROM t_house
         <where>
             <if test="communityName!=null and communityName!=''">
