@@ -15,6 +15,8 @@ import com.soft2242.one.vo.VisitorVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * </p>
  *
@@ -45,6 +47,13 @@ public class VisitorServiceImpl extends BaseServiceImpl<VisitorMapper, Visitor> 
     @Override
     public void update(VisitorVO vo) {
         updateById(VisitorConvert.INSTANCE.convert(vo));
+    }
+
+    @Override
+    public List<VisitorVO> getListById(Long id) {
+        List<Visitor> visitors = baseMapper.selectList(getWrapper(new VisitorQuery()).eq(Visitor::getId, id));
+        return VisitorConvert.INSTANCE.convertList(visitors);
+
     }
 
 

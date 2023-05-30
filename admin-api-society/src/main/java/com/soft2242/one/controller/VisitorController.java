@@ -57,7 +57,7 @@ public class VisitorController {
 
 
     /**
-     * 更具用户id查询所有访客邀请记录
+     * 根据用户id查询所有访客邀请记录，业主表太乱了。。。先用户表的id
      * @param userId
      * @return
      */
@@ -68,8 +68,6 @@ public class VisitorController {
         return Result.ok(page);
     }
 
-
-
 //    @GetMapping("history2/{userId}")
 //    @Operation(summary = "查询访客邀请记录2")
 //    public Result<PageResult<VisitorInvitationVO>> history2(@PathVariable("userId") Long userId) {
@@ -78,12 +76,12 @@ public class VisitorController {
 //        return Result.ok(page);
 //    }
 
-
     @GetMapping("{id}")
-    @Operation(summary = "访客查询")
-    public Result<VisitorVO> get(@PathVariable("id") Long id) {
-        Visitor entity = visitorService.getById(id);
-        return Result.ok(VisitorConvert.INSTANCE.convert(entity));
+    @Operation(summary = "查询访客开门记录")
+    public Result<List<VisitorVO>> get(@PathVariable("id") Long id) {
+//        Visitor entity = visitorService.getById(id);
+        List<VisitorVO> list = visitorService.getListById(id);
+        return Result.ok(list);
     }
 
     @PostMapping("addVisitor")

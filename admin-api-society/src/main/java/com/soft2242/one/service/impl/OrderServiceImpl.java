@@ -3,8 +3,8 @@ package com.soft2242.one.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.fasterxml.jackson.databind.deser.std.FromStringDeserializer;
 import com.soft2242.one.base.common.excel.ExcelFinishCallBack;
+import com.soft2242.one.base.common.utils.DateUtils;
 import com.soft2242.one.base.common.utils.ExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
@@ -22,13 +22,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.soft2242.one.service.IHouseService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
@@ -42,7 +47,7 @@ import java.util.List;
 @AllArgsConstructor
 
 public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implements IOrderService {
-//    @Autowired
+    //    @Autowired
     IHouseService houseService;
     private final ICommunityService communityService;
 
@@ -52,6 +57,12 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         return wrapper;
     }
 
+    //    时间格式转换
+    private String changeForm(LocalDateTime create, LocalDateTime end) {
+        return create.toString().substring(0, 10) +"~"+ end.toString().substring(0, 10);
+    }
+
+
     @Override
     public PageResult<OrderVO> page(OrderQuery query) {
         IPage<Order> page = baseMapper.selectPage(getPage(query), getWrapper(query));
@@ -59,12 +70,35 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
 //        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段和小区字段
         orderVOS.forEach(orderVO -> {
             House house = houseService.getById(orderVO.getHouseId());
-            orderVO.setHouseNumber(house.getHouseNumber());
-            orderVO.setCommunityName(communityService.getById(house.getCommunityId()).getCommunityName());
+            if (house != null) {
+                orderVO.setHouseNumber(house.getHouseNumber());
+                orderVO.setCommunityName(communityService.getById(house.getCommunityId()).getCommunityName());
+            }
         });
 
         return new PageResult<>(orderVOS, page.getTotal());
     }
+
+    @Override
+    public PageResult<OrderVO> recordPage(OrderQuery query) {
+        LambdaQueryWrapper<Order> wrapper = Wrappers.lambdaQuery();
+//        根据订单类型抄表水电费订单
+        wrapper.eq(Order::getOrderType, 3).or().eq(Order::getOrderType, 4);
+        IPage<Order> page = baseMapper.selectPage(getPage(query), wrapper);
+//        获取vos
+        List<OrderVO> orderVOS = OrderConvert.INSTANCE.convertList(page.getRecords());
+//        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段和小区
+        orderVOS.forEach(orderVO -> {
+            House house = houseService.getById(orderVO.getHouseId());
+            if (house != null) {
+                orderVO.setHouseNumber(house.getHouseNumber());
+                orderVO.setCommunityName(communityService.getById(house.getCommunityId()).getCommunityName());
+                orderVO.setOTime(changeForm(orderVO.getCreateTime(), orderVO.getEndTime()));
+            }
+        });
+        return new PageResult<>(orderVOS, page.getTotal());
+    }
+
 
     @Override
     public void save(OrderVO vo) {
@@ -119,6 +153,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         System.out.println(orderExcelVOS);
         ExcelUtils.excelExport(OrderExcelVO.class, "order_export", "sheet1", orderExcelVOS);
     }
+
     @Override
     @SneakyThrows
     public void export2() {
@@ -128,6 +163,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         System.out.println(orderExcelVOS);
         ExcelUtils.excelExport(OrderRecordVO.class, "orderRecord_export", "sheet1", orderExcelVOS);
     }
+
     @Override
     public List<Order> findByHouseId(Long id) {
         List<Order> list = list(Wrappers.lambdaQuery(Order.class).eq(Order::getHouseId, id));
