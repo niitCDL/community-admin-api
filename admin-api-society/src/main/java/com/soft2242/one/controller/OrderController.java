@@ -39,7 +39,6 @@ public class OrderController {
 
     private final IOrderService orderSevice;
     private final IHouseService houseService;
-
     private final ICommunityService communityService;
 
 

@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,11 +36,18 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
     public PageResult<ActivityVO> page(ActivityQuery query) {
         IPage<Activity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
         List<ActivityVO> activityVOS = ActivityConvert.INSTANCE.convertList(page.getRecords());
-        activityVOS.forEach(o -> {
-            o.setCommunityName(communityService.getById(o.getCommunityId()).getCommunityName());
-            o.setActivityType(activityTypeService.getById(o.getTypeId()).getName());
-        });
-        return new PageResult<>(activityVOS, page.getTotal());
+        PageResult<ActivityVO> result;
+        try {
+            activityVOS.forEach(o -> {
+                o.setCommunityName(communityService.getById(o.getCommunityId()).getCommunityName());
+                o.setActivityType(activityTypeService.getById(o.getTypeId()).getName());
+            });
+            result = new PageResult<>(activityVOS, page.getTotal());
+        } catch (Exception e) {
+            result = new PageResult<>(new ArrayList<>(), page.getTotal());
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     private LambdaQueryWrapper<Activity> getWrapper(ActivityQuery query) {
@@ -72,7 +80,6 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
         if (status == 1) {
             activity.setStatus(0);
             System.out.println(activity);
-
             baseMapper.updateById(activity);
         } else if (status == 0) {
             activity.setStatus(1);
