@@ -29,7 +29,7 @@ public class AuthenticationEvents {
         UserDetail user = (UserDetail) event.getAuthentication().getPrincipal();
 
         //记录系统登录日志
-        sysLoginLogService.record();
+        sysLoginLogService.record(user);
 
         //记录用户最后登录时间
         sysUserService.recordLastLoginTime(DateUtils.format(DateUtils.CURRENT_DATE,DateUtils.DATE_TIME_PATTERN),user.getId());

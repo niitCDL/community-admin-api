@@ -28,10 +28,10 @@ public interface InspectionItemPathService extends BaseService<InspectionItemPat
 
 
     /**
-     * 根据巡检项目id，删除巡检项目和路线之间的关系
-     * @param inspectionItemId 巡检项目id
+     * 根据巡检项目id列表，删除巡检项目和路线之间的关系
+     * @param inspectionItemIdList 巡检项目id列表
      */
-    void deleteByInspectionItemId(Long inspectionItemId);
+    void deleteByInspectionItemId(List<Long> inspectionItemIdList);
 
     /**
      * 根据路线id,删除巡检项目和路线之间的关系

@@ -52,6 +52,7 @@ public class SysUserController {
             Result.error("密码不能为空");
         }
 
+
         // 密码加密
         vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 
@@ -79,8 +80,8 @@ public class SysUserController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-    public Result<PageResult<SysUserVO>> page(@ParameterObject @Valid SysUserQuery query) {
-        PageResult<SysUserVO> page = sysUserService.page(query);
+    public Result<PageResult<SysUserInfoVO>> page(@ParameterObject @Valid SysUserQuery query) {
+        PageResult<SysUserInfoVO> page = sysUserService.page(query);
         return Result.ok(page);
     }
     @GetMapping("list")

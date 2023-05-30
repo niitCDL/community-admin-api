@@ -27,6 +27,7 @@
         <module>admin-api-property</module>
         <module>admin-api-society</module>
         <module>admin-api-owner</module>
+        <module>admin-api-park</module>
     </modules>
 
     <properties>

@@ -102,11 +102,6 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
         removeByIds(idList);
     }
 
-    @Override
-    public List<PatrolPointsVO> getByIds(List<Long> Ids) {
-        List<PatrolPointsEntity> patrolPointsEntities = patrolPointsDao.selectBatchIds(Ids);
-        List<PatrolPointsVO> patrolPointsVOS = PatrolPointsConvert.INSTANCE.convertList(patrolPointsEntities);
-        return patrolPointsVOS;
-    }
+
 
 }
