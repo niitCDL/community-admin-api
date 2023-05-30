@@ -18,6 +18,8 @@ public interface PatrolRecordsService extends BaseService<PatrolRecordsEntity> {
 
     PageResult<PatrolRecordsVO> page(PatrolRecordsQuery query);
 
+    List<PatrolRecordsVO> searchByIdList(List<Long> ids);
+
     void save(PatrolRecordsVO vo);
 
     void update(PatrolRecordsVO vo);
