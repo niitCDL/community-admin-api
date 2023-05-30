@@ -46,30 +46,39 @@ public class VisitorInvitationServiceImpl extends BaseServiceImpl<VisitorInvitat
     }
 
     private List<VisitorInvitationVO> addInfo(List<VisitorInvitationVO> vos) {
-        try {
-            vos.forEach(o -> {
+
+        vos.forEach(o -> {
+            try {
                 o.setHouseNumber(houseService.getById(o.getHouseId()).getHouseNumber());
-    //            开门次数
+            } catch (Exception e) {
+                throw new ServerException("不存在房屋id！" + e.getMessage());
+            }
+            //            开门次数
+            try {
                 o.setCount(visitorService.getById(o.getVisitorId()).getCount());
-    //            插入有效时间
-                Duration duration = Duration.between(o.getCreateTime(), o.getEndTime());
-                o.setValidTime(String.valueOf((duration.toMinutes() / 60)) + "小时");
-    //            插入社区名称
-    //            获取社区id
+            } catch (Exception e) {
+                throw new ServerException("不存在访客！" + e.getMessage());
+            }
+            //            插入有效时间
+            Duration duration = Duration.between(o.getCreateTime(), o.getEndTime());
+            o.setValidTime(String.valueOf((duration.toMinutes() / 60)) + "小时");
+            //            插入社区名称
+            //            获取社区id
+            try {
                 Long communityId = houseService.getById(o.getHouseId()).getCommunityId();
                 o.setCommunityName(communityService.getById(communityId).getCommunityName());
-    //            根据adminId获取授权人
-                SysUserInfoEntity user = sysUserService.getUserInfoByAdminId(o.getUserId());
-                if (user ==null)
-                    new ServerException("业务处理出现异常！");
-                else {
-                    o.setOwner(user.getRealName());
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ServerException("业务处理出现异常！"+e.getMessage());
-        }
+            } catch (Exception e) {
+                throw new ServerException("不存在房屋或者该社区！" + e.getMessage());
+            }
+            //            根据adminId获取授权人
+            SysUserInfoEntity user = sysUserService.getUserInfoByAdminId(o.getUserId());
+            if (user == null)
+                new ServerException("不存在该用户！");
+            else {
+                o.setOwner(user.getRealName());
+            }
+        });
+
         return vos;
     }
 

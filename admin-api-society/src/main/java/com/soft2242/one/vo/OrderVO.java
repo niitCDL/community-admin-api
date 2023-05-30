@@ -128,6 +128,8 @@ public class OrderVO implements Serializable {
     @Schema(description = "订单时间段")
     private String OTime;
 
+    @Schema(description = "订单计算金额")
+    private Double OrderMoney;
 
 
 }
