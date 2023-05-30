@@ -21,4 +21,6 @@ import java.util.Map;
 public interface BuildingDao extends BaseDao<Building> {
     List<BuildingVO> getList(Map<String,Object> params);
 
+    List<BuildingVO> getByCommuntiyId(Long communityId);
+
 }

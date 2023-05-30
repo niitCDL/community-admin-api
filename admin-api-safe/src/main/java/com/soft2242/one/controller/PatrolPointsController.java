@@ -8,6 +8,7 @@ import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.PatrolPointsEntity;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.service.PatrolPointsService;
+import com.soft2242.one.vo.BuildingVO;
 import com.soft2242.one.vo.CommunityVO;
 import com.soft2242.one.vo.PatrolPointsVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -68,6 +69,12 @@ public class PatrolPointsController {
     public Result<List<CommunityVO>> searchCommunity(){
         List<CommunityVO> communityVOS = PatrolPointsService.searchCommunity();
         return Result.ok(communityVOS);
+    }
+    @GetMapping("buildings/{communityId}")
+    @Operation(summary = "根据communtiyId查询所有的楼宇信息")
+    public  Result<List<BuildingVO>> searchBuildingsByCommuntiyId(@PathVariable("communityId") Long communityId){
+        List<BuildingVO> buildingVOS = PatrolPointsService.getByCommuntiyId(communityId);
+        return Result.ok(buildingVOS);
     }
 
 

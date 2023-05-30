@@ -33,10 +33,11 @@ public class PatrolRecordsController {
 
     @GetMapping("page")
     @Operation(summary = "分页")
-//    @PreAuthorize("hasAuthority('soft2242:records:page')")
+    @PreAuthorize("hasAuthority('safe:point:record:page')")
     public Result<PageResult<PatrolRecordsVO>> page(@ParameterObject @Valid PatrolRecordsQuery query){
+        System.out.println(query.toString());
         PageResult<PatrolRecordsVO> page = tPatrolRecordsService.page(query);
-
+        System.out.println("=========================="+page);
         return Result.ok(page);
     }
 

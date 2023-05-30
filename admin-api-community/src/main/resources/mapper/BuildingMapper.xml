@@ -24,5 +24,8 @@
             AND t2.units LIKE CONCAT('%',#{units},'%')
         </if>
     </select>
+    <select id="getByCommuntiyId" resultType="com.soft2242.one.vo.BuildingVO">
+        select * from t_building where community_id=#{communityId}
+    </select>
 
 </mapper>

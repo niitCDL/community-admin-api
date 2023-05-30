@@ -34,6 +34,8 @@ public class PatrolRecordsVO implements Serializable {
     @Schema(description = "巡更人id")
     private Long inspectorId;
 
+
+
     @Schema(description = "巡更人姓名")
     private String REALNAME;
 

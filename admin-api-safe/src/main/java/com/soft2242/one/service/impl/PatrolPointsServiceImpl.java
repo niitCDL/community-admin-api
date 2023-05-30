@@ -6,12 +6,15 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.CommunityConvert;
 import com.soft2242.one.convert.PatrolPointsConvert;
+import com.soft2242.one.dao.BuildingDao;
 import com.soft2242.one.dao.CommunityDao;
 import com.soft2242.one.dao.PatrolPointsDao;
 import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.PatrolPointsEntity;
+import com.soft2242.one.query.CommunityQuery;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.service.PatrolPointsService;
+import com.soft2242.one.vo.BuildingVO;
 import com.soft2242.one.vo.CommunityVO;
 import com.soft2242.one.vo.PatrolPathVO;
 import com.soft2242.one.vo.PatrolPointsVO;
@@ -100,6 +103,14 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+    }
+BuildingDao buildingDao;
+    @Override
+    public List<BuildingVO> getByCommuntiyId(Long CommuntiyId) {
+
+        List<BuildingVO> buildingVOS = buildingDao.getByCommuntiyId(CommuntiyId);
+        return  buildingVOS;
+
     }
 
 
