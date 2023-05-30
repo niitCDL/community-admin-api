@@ -96,7 +96,7 @@ public class PlanTask {
                     record.setInspectorId(entity.getInspectorId());
                     record.setPointId(pointid);
                     record.setPhotoRequirement(entity.getPhotoRequirement());
-                    record.setStatus(1);
+                    record.setStatus(0);
                     return record;
                 }).collect(Collectors.toList());
                 recordsService.saveBatch(recordsEntities);
@@ -110,7 +110,7 @@ public class PlanTask {
                     record.setInspectorId(entity.getInspectorId());
                     record.setPointId(pointid);
                     record.setPhotoRequirement(entity.getPhotoRequirement());
-                    record.setStatus(1);
+                    record.setStatus(0);
                     return record;
                 }).collect(Collectors.toList());
                 recordsService.saveBatch(recordsEntities);
