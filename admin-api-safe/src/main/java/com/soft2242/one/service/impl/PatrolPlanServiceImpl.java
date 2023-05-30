@@ -52,13 +52,6 @@ public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, Patrol
         return new PageResult<>(planList, page.getTotal());
     }
 
-//    private LambdaQueryWrapper<PatrolPlanEntity> getWrapper(PatrolPlanQuery query){
-//        LambdaQueryWrapper<PatrolPlanEntity> wrapper = Wrappers.lambdaQuery();
-//        wrapper.like(StringUtils.isNotEmpty(query.getCommunityName()), PatrolPlanEntity::getCommunityName, query.getCommunityName());
-//        wrapper.like(StringUtils.isNotEmpty(query.getPlanName()), PatrolPlanEntity::getPlanName, query.getPlanName());
-//        return wrapper;
-//    }
-
     private Map<String,Object> getParams(PatrolPlanQuery query){
         Map<String,Object> parmas=new HashMap<>();
         parmas.put("communityId",query.getCommunityId());
@@ -78,8 +71,10 @@ public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, Patrol
     public void checkPlan(PatrolPlanEntity entity){
         Date date=new Date();
         //当新增计划成功时，判断当前计划是否此时需要执行
-        if(entity.getPlanStart().getTime()<date.getTime()){
-            //如果周期是每天，需要立即添加巡更记录
+        if(entity.getStatus()==1){
+
+            if(entity.getPlanStart().getTime()<date.getTime()){
+                //如果周期是每天，需要立即添加巡更记录
 //            if(entity.getPlanCycle()==0){
                 //先查找此计划线路的所有巡检点
                 PatrolPathVO path = pathService.getPathById(entity.getPathId());
@@ -114,6 +109,7 @@ public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, Patrol
                     recordsService.saveBatch(recordsEntities);
                 }
 
+            }
         }
     }
     @Override
@@ -121,6 +117,8 @@ public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, Patrol
         PatrolPlanEntity entity = PatrolPlanConvert.INSTANCE.convert(vo);
         updateById(entity);
     }
+
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -131,6 +129,11 @@ public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, Patrol
     @Override
     public void deleteByCommunityId(Long communityId) {
         remove(new LambdaQueryWrapper<PatrolPlanEntity>().eq(PatrolPlanEntity::getCommunityId,communityId));
+    }
+
+    @Override
+    public List<PatrolPlanEntity> getPlanList(String Date) {
+        return baseMapper.getFitPlan(Date);
     }
 
 }
