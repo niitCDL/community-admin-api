@@ -48,6 +48,7 @@ public class ComplaintVO implements Serializable {
 
 	@Schema(description = "处理人id，逗号分隔")
 	private String[] employeeIds = null;
+	private String employees = null;
 
 	private String[] employeeNames;
 	@Schema(description = "处理时间")
