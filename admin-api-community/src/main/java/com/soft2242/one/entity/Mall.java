@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -25,6 +26,7 @@ import java.util.Date;
 @TableName("t_mall")
 public class Mall implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -66,12 +68,12 @@ public class Mall implements Serializable {
     /**
      * 商铺状态(0：未售出 1：已售出)
      */
-    private Byte mallStatus;
+    private Integer mallStatus;
 
     /**
      * 删除标识（0：未删除 1：已删除）
      */
-    private Byte deleted;
+    private Integer deleted;
 
     /**
      * 创建者
