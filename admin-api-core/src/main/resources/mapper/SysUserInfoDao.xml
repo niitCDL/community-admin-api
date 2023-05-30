@@ -19,12 +19,14 @@
     </select>
 
 
-    <select id="getList" resultType="com.soft2242.one.system.vo.SysUserVO">
-        select t1.id,t1.username,t2.real_name,t2.gender,t1.phone,t2.email,t1.create_time,t1.account_status
-        from sys_admin t1,sys_admin_info t2
+    <select id="getList" resultType="com.soft2242.one.system.vo.SysUserInfoVO">
+        select t1.id,t1.username,t2.real_name,t2.gender,t1.phone,t2.email,t1.create_time,t1.account_status,t3.name as orgName
+        from sys_admin t1,sys_admin_info t2,sys_department t3,sys_admin_department t4
         where
         t1.id = t2.admin_id and
-        t1.deleted = 0 and t2.deleted = 0
+        t1.id = t4.admin_id and
+        t3.id = t4.department_id and
+        t1.deleted = 0 and t2.deleted = 0 and t3.deleted = 0 and t4.deleted = 0
         <if test="username != null and username.trim() != ''">
             and t1.username = #{username}
         </if>
@@ -34,5 +36,21 @@
         <if test="gender != null">
             and t2.gender = #{gender}
         </if>
+    </select>
+
+    <select id="getList2" resultType="com.soft2242.one.system.vo.SysUserVO">
+        select t1.id,
+               t1.username,
+               t2.real_name,
+               t2.gender,
+               t1.phone,
+               t2.email,
+               t1.create_time,
+               t1.account_status
+        from sys_admin t1,
+             sys_admin_info t2
+        where t1.id = t2.admin_id
+          and t1.deleted = 0
+          and t2.deleted = 0
     </select>
 </mapper>
