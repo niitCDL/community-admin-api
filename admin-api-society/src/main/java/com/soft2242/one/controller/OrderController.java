@@ -52,6 +52,15 @@ public class OrderController {
         return Result.ok(page);
     }
 
+    @GetMapping("recordPage")
+    @Operation(summary = "分页抄表")
+    public Result<PageResult<OrderVO>> recordPage(@ParameterObject @Valid OrderQuery query) {
+//        VO进行多表查询插入连表字段：插入房屋表的房屋编号和小区字段
+        PageResult<OrderVO> page = orderSevice.recordPage(query);
+        return Result.ok(page);
+    }
+
+
 
     @GetMapping("{id}")
     @Operation(summary = "账单查询")

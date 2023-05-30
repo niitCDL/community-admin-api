@@ -24,6 +24,8 @@ import java.util.List;
 
 public interface IOrderService extends BaseService<Order> {
     PageResult<OrderVO> page(OrderQuery query);
+//    分页抄表
+    PageResult<OrderVO> recordPage(OrderQuery query);
 
     void save(OrderVO vo);
 
