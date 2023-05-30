@@ -34,4 +34,6 @@ public interface PatrolPathService extends BaseService<PatrolPathEntity> {
 
 
 
+
+
 }
