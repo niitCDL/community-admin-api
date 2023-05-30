@@ -13,6 +13,7 @@ import com.soft2242.one.entity.InspectionItemEntity;
 import com.soft2242.one.query.InspectionItemQuery;
 import com.soft2242.one.query.PatrolPlanQuery;
 import com.soft2242.one.service.ICommunityService;
+import com.soft2242.one.service.InspectionItemPathService;
 import com.soft2242.one.service.InspectionItemService;
 import com.soft2242.one.vo.InspectionItemVO;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class InspectionItemServiceImpl extends BaseServiceImpl<InspectionItemDao, InspectionItemEntity> implements InspectionItemService {
     private  final ICommunityService communityService;
+    private  final InspectionItemPathService inspectionItemPathService;
 
     @Override
     public PageResult<InspectionItemVO> page(InspectionItemQuery query) {
@@ -91,6 +93,8 @@ public class InspectionItemServiceImpl extends BaseServiceImpl<InspectionItemDao
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+        //同时删除巡检项目和线路的关联
+        inspectionItemPathService.deleteByInspectionItemId(idList);
     }
 
     /**
