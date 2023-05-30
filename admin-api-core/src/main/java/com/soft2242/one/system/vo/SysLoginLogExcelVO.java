@@ -1,5 +1,6 @@
 package com.soft2242.one.system.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.soft2242.one.base.common.myexcel.MyExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -7,6 +8,9 @@ import lombok.Data;
 @Data
 @Schema(description = "登录日志")
 public class SysLoginLogExcelVO {
+
+    @MyExcelProperty("序号")
+    private Long id;
 
     @MyExcelProperty("登录时间")
     private String loginTime;
@@ -24,4 +28,10 @@ public class SysLoginLogExcelVO {
     private String loginIp;
     @MyExcelProperty("登录地址")
     private String address;
+
+    @MyExcelProperty("登录人ID")
+    private Long creator;
+
+    @MyExcelProperty("登录人名称")
+    private String creatorName;
 }

@@ -1,16 +1,22 @@
 package com.soft2242.one.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.soft2242.one.base.common.myexcel.CustomExcelUtils;
-import com.soft2242.one.base.common.utils.AddressUtils;
-import com.soft2242.one.base.common.utils.DateUtils;
-import com.soft2242.one.base.common.utils.HttpContextUtils;
-import com.soft2242.one.base.common.utils.IpUtils;
+import com.soft2242.one.base.common.utils.*;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
+import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.system.convert.SysLoginLogConvert;
 import com.soft2242.one.system.dao.SysLoginLogDao;
 import com.soft2242.one.system.dao.SysUserInfoDao;
 import com.soft2242.one.system.entity.SysLoginLogEntity;
+import com.soft2242.one.system.entity.SysRoleEntity;
+import com.soft2242.one.system.entity.SysRoleOperationLogEntity;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
+import com.soft2242.one.system.query.SysLoginLogQuery;
+import com.soft2242.one.system.query.SysRoleOperationLogQuery;
 import com.soft2242.one.system.service.SysLoginLogService;
 import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.system.vo.SysLoginLogExcelVO;
@@ -31,7 +37,7 @@ public class SysLoginLogServiceImpl extends BaseServiceImpl<SysLoginLogDao, SysL
     /**
      * 记录用户日志
      */
-    public void record() {
+    public void record(UserDetail user) {
 
         try {
             HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
@@ -64,7 +70,8 @@ public class SysLoginLogServiceImpl extends BaseServiceImpl<SysLoginLogDao, SysL
             sysLoginLogEntity.setDeviceMac(deviceMac);
             sysLoginLogEntity.setLoginTime(currentDate);
             sysLoginLogEntity.setCreateTime(currentDate);
-
+            sysLoginLogEntity.setCreator(user.getId());
+            sysLoginLogEntity.setCreatorName(user.getUsername());
             baseMapper.insert(sysLoginLogEntity);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -79,6 +86,18 @@ public class SysLoginLogServiceImpl extends BaseServiceImpl<SysLoginLogDao, SysL
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public PageResult<SysLoginLogExcelVO> page(SysLoginLogQuery query) {
+        IPage<SysLoginLogEntity> page = baseMapper.getCusPage(getPage(query), getWrapper(query));
+        return new PageResult<>(SysLoginLogConvert.INSTANCE.convertList(page.getRecords()),page.getTotal());
+    }
+
+    private LambdaQueryWrapper<SysLoginLogEntity> getWrapper(SysLoginLogQuery query){
+        LambdaQueryWrapper<SysLoginLogEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(StrUtil.isNotBlank(query.getCreatorName()), SysLoginLogEntity::getCreatorName, query.getCreatorName());
+        return wrapper;
     }
 
 }
