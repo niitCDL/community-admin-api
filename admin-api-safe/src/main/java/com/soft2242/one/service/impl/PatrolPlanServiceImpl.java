@@ -8,18 +8,23 @@ import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.PatrolPlanConvert;
 import com.soft2242.one.dao.PatrolPlanDao;
 import com.soft2242.one.entity.PatrolPlanEntity;
+import com.soft2242.one.entity.PatrolRecordsEntity;
 import com.soft2242.one.query.PatrolPlanQuery;
-import com.soft2242.one.service.PatrolPlanService;
+import com.soft2242.one.service.*;
+import com.soft2242.one.vo.PatrolPathVO;
 import com.soft2242.one.vo.PatrolPlanVO;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 巡更计划表
@@ -30,7 +35,10 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, PatrolPlanEntity> implements PatrolPlanService {
-
+    private PatrolPathService pathService;
+    private PointsPathService pointsPathService;
+    private InspectionItemPathService inspectionItemPathService;
+    private PatrolRecordsService recordsService;
     @Override
     public PageResult<PatrolPlanVO> page(PatrolPlanQuery query) {
 //        IPage<PatrolPlanEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
@@ -61,7 +69,52 @@ public class PatrolPlanServiceImpl extends BaseServiceImpl<PatrolPlanDao, Patrol
     @Override
     public void save(PatrolPlanVO vo) {
         PatrolPlanEntity entity = PatrolPlanConvert.INSTANCE.convert(vo);
+        //在新添加计划时，默认上次执行时间时当前时间
+        entity.setLastTime(entity.getPlanStart());
         baseMapper.insert(entity);
+        checkPlan(entity);
+    }
+
+    public void checkPlan(PatrolPlanEntity entity){
+        Date date=new Date();
+        //当新增计划成功时，判断当前计划是否此时需要执行
+        if(entity.getPlanStart().getTime()<date.getTime()){
+            //如果周期是每天，需要立即添加巡更记录
+//            if(entity.getPlanCycle()==0){
+                //先查找此计划线路的所有巡检点
+                PatrolPathVO path = pathService.getPathById(entity.getPathId());
+                //判断当前的线路是什么类型
+                if(path.getType()==0){//巡更点类型
+                    //找出此线路的所有点
+                    List<Long> pointIdList = pointsPathService.getPointIdList(path.getId());
+                    List<PatrolRecordsEntity> recordsEntities=pointIdList.stream().map(pointid->{
+                        PatrolRecordsEntity record=new PatrolRecordsEntity();
+                        record.setPathId(path.getId());
+                        record.setPlanId(entity.getId());
+                        record.setInspectorId(entity.getInspectorId());
+                        record.setPointId(pointid);
+                        record.setPhotoRequirement(entity.getPhotoRequirement());
+                        record.setStatus(1);
+                        return record;
+                    }).collect(Collectors.toList());
+                    recordsService.saveBatch(recordsEntities);
+                }else {
+                    //巡检项目类型
+                    List<Long> inspectionItemIdList = inspectionItemPathService.getInspectionItemIdList(entity.getPathId());
+                    List<PatrolRecordsEntity> recordsEntities=inspectionItemIdList.stream().map(pointid->{
+                        PatrolRecordsEntity record=new PatrolRecordsEntity();
+                        record.setPathId(path.getId());
+                        record.setPlanId(entity.getId());
+                        record.setInspectorId(entity.getInspectorId());
+                        record.setPointId(pointid);
+                        record.setPhotoRequirement(entity.getPhotoRequirement());
+                        record.setStatus(1);
+                        return record;
+                    }).collect(Collectors.toList());
+                    recordsService.saveBatch(recordsEntities);
+                }
+
+        }
     }
     @Override
     public void update(PatrolPlanVO vo) {

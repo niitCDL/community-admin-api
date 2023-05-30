@@ -42,6 +42,9 @@ public class PatrolPlanVO implements Serializable {
 	@Schema(description = "线路名称")
 	private String wayName;
 
+	@Schema(description = "计划开始日期")
+	private Date planStart;
+
 	@Schema(description = "拍照要求（0不要求拍照，1要求拍照）")
 	private Integer photoRequirement;
 

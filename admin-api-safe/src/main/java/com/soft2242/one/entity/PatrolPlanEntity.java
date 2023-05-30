@@ -50,6 +50,17 @@ public class PatrolPlanEntity extends BaseEntity {
 	private Integer planCycle;
 
 	/**
+	 *  计划开始日期
+	 */
+	private Date planStart;
+
+	/**
+	 * 上次执行时间
+	 */
+	private Date lastTime;
+
+
+	/**
 	* 计划开始时间
 	*/
 	private String startTime;
