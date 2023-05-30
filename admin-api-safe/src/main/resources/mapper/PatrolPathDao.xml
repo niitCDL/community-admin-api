@@ -17,6 +17,7 @@
 	</select>
 	<select id="getPathListByCommunityId" resultType="com.soft2242.one.vo.PatrolPathVO">
 		SELECT * FROM t_patrol_path WHERE t_patrol_path.community_id=#{communityId}
+		AND t_patrol_path.deleted=0
 	</select>
 
 

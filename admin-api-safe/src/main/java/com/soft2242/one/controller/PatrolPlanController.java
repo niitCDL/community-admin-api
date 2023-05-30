@@ -1,5 +1,6 @@
 package com.soft2242.one.controller;
 
+import com.soft2242.one.base.common.utils.DateUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.PatrolPlanConvert;
@@ -15,6 +16,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -73,4 +76,10 @@ public class PatrolPlanController {
 
         return Result.ok();
     }
+
+//    @GetMapping("/test")
+//    public List<PatrolPlanEntity> get(){
+//        String format = DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN);
+//        return patrolPlanService.getPlanList(format);
+//    }
 }

@@ -5,6 +5,8 @@ import com.soft2242.one.base.mybatis.dao.BaseDao;
 import com.soft2242.one.entity.PatrolPlanEntity;
 import com.soft2242.one.vo.PatrolPlanVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -22,4 +24,12 @@ public interface PatrolPlanDao extends BaseDao<PatrolPlanEntity> {
      *return List<SysUserEntity>
      * */
     List<PatrolPlanVO> getPlanList(Map<String,Object> params);
+
+    /**
+     * 获取开始日期打到条件的计划
+     * @param Date
+     * @return
+     */
+    @Select("SELECT * from t_patrol_plan WHERE plan_start < #{date} AND status = 1 AND deleted = 0")
+    List<PatrolPlanEntity> getFitPlan(@Param("date") String Date);
 }
