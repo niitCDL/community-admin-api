@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -59,13 +60,15 @@ public class OwnerController {
     }
     @PostMapping("approvedApply")
     @Operation(summary = "审核通过业主申请")
-    public Result<String> approvedApply(Long id){
+    public Result<String> approvedApply(@RequestBody Map<String, Long> body){
+        Long id = body.get("id");
         ownerService.approvedApply(id);
         return Result.ok();
     }
     @PostMapping("refuseApply")
     @Operation(summary = "审核拒绝业主申请")
-    public Result<String> refuseApply(Long id){
+    public Result<String> refuseApply(@RequestBody Map<String, Long> body){
+        Long id = body.get("id");
         ownerService.refuseApply(id);
         return Result.ok();
     }
