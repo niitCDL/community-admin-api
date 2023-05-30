@@ -22,9 +22,14 @@ public interface SysUserInfoDao extends BaseDao<SysUserInfoEntity> {
 
     SysUserInfoEntity getByAdminId(Long id);
 
+    SysUserInfoVO getUserInfo(Long id);
     void recordLastLoginTime(@Param("lastLoginTime")String date, @Param("id")Long id);
 
     List<SysUserInfoVO> getList(Map<String, Object> params);
 
     List<SysUserVO> getList2();
+
+    List<Long> getPostIdList(@Param("adminId") Long adminId);
+
+    Long getDepartmentByAdminId(@Param("adminId") Long adminId);
 }

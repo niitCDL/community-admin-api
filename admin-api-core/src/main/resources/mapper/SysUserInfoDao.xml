@@ -20,7 +20,7 @@
 
 
     <select id="getList" resultType="com.soft2242.one.system.vo.SysUserInfoVO">
-        select t1.id,t1.username,t2.real_name,t2.gender,t1.phone,t2.email,t1.create_time,t1.account_status,t3.name as orgName
+        select t2.admin_id,t1.id,t1.username,t2.real_name,t2.gender,t1.phone,t2.email,t1.create_time,t1.account_status,t3.name as orgName
         from sys_admin t1,sys_admin_info t2,sys_department t3,sys_admin_department t4
         where
         t1.id = t2.admin_id and
@@ -52,5 +52,18 @@
         where t1.id = t2.admin_id
           and t1.deleted = 0
           and t2.deleted = 0
+    </select>
+    <select id="getUserInfo" resultType="com.soft2242.one.system.vo.SysUserInfoVO">
+        select *
+        from sys_admin t1,
+             sys_admin_info t2
+        where t1.id = t2.admin_id
+          and t1.id = #{id}
+    </select>
+    <select id="getPostIdList" resultType="java.lang.Long">
+        select post_id from sys_admin_post where admin_id = #{adminId} and deleted = 0
+    </select>
+    <select id="getDepartmentByAdminId" resultType="java.lang.Long">
+        select department_id from sys_admin_department where admin_id = ${adminId} and deleted = 0
     </select>
 </mapper>
