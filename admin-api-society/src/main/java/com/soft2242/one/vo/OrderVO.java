@@ -125,5 +125,9 @@ public class OrderVO implements Serializable {
     @Schema(description = "小区名字")
     private String communityName;
 
+    @Schema(description = "订单时间段")
+    private String OTime;
+
+
 
 }

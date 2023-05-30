@@ -27,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.soft2242.one.service.IHouseService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -56,11 +58,8 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     }
 
     //    时间格式转换
-    private LocalDateTime changeForm(LocalDateTime date) {
-        String format = date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        Date parse = DateUtils.parse(format, DateUtils.DATE_PATTERN);
-//        转成LocalDateTime
-        return parse.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+    private String changeForm(LocalDateTime create, LocalDateTime end) {
+        return create.toString().substring(0, 10) +"~"+ end.toString().substring(0, 10);
     }
 
 
@@ -71,7 +70,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
 //        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段和小区字段
         orderVOS.forEach(orderVO -> {
             House house = houseService.getById(orderVO.getHouseId());
-            if (house!= null){
+            if (house != null) {
                 orderVO.setHouseNumber(house.getHouseNumber());
                 orderVO.setCommunityName(communityService.getById(house.getCommunityId()).getCommunityName());
             }
@@ -91,13 +90,13 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
 //        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段和小区
         orderVOS.forEach(orderVO -> {
             House house = houseService.getById(orderVO.getHouseId());
-            orderVO.setHouseNumber(house.getHouseNumber());
-            orderVO.setCommunityName(communityService.getById(house.getCommunityId()).getCommunityName());
-            orderVO.setCreateTime(changeForm(orderVO.getCreateTime()));
-            orderVO.setEndTime(changeForm(orderVO.getEndTime()));
+            if (house != null) {
+                orderVO.setHouseNumber(house.getHouseNumber());
+                orderVO.setCommunityName(communityService.getById(house.getCommunityId()).getCommunityName());
+                orderVO.setOTime(changeForm(orderVO.getCreateTime(), orderVO.getEndTime()));
+            }
         });
         return new PageResult<>(orderVOS, page.getTotal());
-
     }
 
 
