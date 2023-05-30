@@ -26,5 +26,9 @@ public class SysLoginLogEntity {
     private String address;
     private Integer deleted;
     private String createTime;
+    private Long creator;
+
+    @TableField(exist = false)
+    private String creatorName;
 
 }
