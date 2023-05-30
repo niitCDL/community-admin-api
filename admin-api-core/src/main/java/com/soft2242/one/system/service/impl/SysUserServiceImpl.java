@@ -18,6 +18,7 @@ import com.soft2242.one.system.enums.UserGenderEnum;
 import com.soft2242.one.system.enums.UserOnlineEnum;
 import com.soft2242.one.system.enums.UserStatusEnum;
 import com.soft2242.one.system.query.SysUserQuery;
+import com.soft2242.one.system.service.SysRoleService;
 import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
@@ -54,6 +55,15 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
 
     public SysUserInfoEntity getUserInfoByAdminId(Long id) {
         return sysUserInfoDao.getByAdminId(id);
+    }
+
+    public SysUserInfoVO getUserInfo(Long id){
+
+        SysUserInfoVO userInfo = sysUserInfoDao.getUserInfo(id);
+        userInfo.setOrgId(sysUserInfoDao.getDepartmentByAdminId(userInfo.getAdminId()));
+        userInfo.setRoleIdList(sysUserRoleDao.getRoleIdList(userInfo.getAdminId()));
+        userInfo.setPostIdList(sysUserInfoDao.getPostIdList(userInfo.getAdminId()));
+        return userInfo;
     }
 
     @Override

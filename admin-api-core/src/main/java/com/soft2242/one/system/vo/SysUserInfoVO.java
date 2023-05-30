@@ -93,5 +93,4 @@ public class SysUserInfoVO implements Serializable {
     @JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
     private Date lastLoginTime;
 
-
 }

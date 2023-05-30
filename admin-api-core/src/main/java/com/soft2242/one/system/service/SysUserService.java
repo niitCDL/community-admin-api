@@ -15,6 +15,7 @@ import java.util.List;
 public interface SysUserService extends BaseService<SysUserInfoEntity> {
     SysUserInfoEntity getUserInfoByAdminId(Long id);
 
+    SysUserInfoVO getUserInfo(Long id);
     void save(SysUserInfoVO user);
 
     void recordLastLoginTime(@Param("lastLoginTime")String date, @Param("id")Long id);

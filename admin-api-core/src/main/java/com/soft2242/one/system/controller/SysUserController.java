@@ -37,9 +37,7 @@ public class SysUserController {
     @GetMapping("{id}")
     @Operation(summary = "信息")
     public Result<SysUserInfoVO> get(@PathVariable("id") Long id) {
-        SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(id);
-
-        SysUserInfoVO vo = SysUserInfoConvert.INSTANCE.convert(entity);
+        SysUserInfoVO vo = sysUserService.getUserInfo(id);
 
         return Result.ok(vo);
     }
