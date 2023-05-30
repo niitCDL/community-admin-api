@@ -8,6 +8,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Schema(description = "用户详细信息")
@@ -40,16 +41,16 @@ public class SysUserInfoVO implements Serializable {
     private String orgName;
 
     @Schema(description = "角色ID")
-    private Long roleId;
-
-    @Schema(description = "角色名称")
-    private Long roleName;
+    private List<Long> roleIdList;
 
     @Schema(description = "头像")
     private String avatar;
 
     @Schema(description = "职务ID")
-    private Long postId;
+    private List<Long> postIdList;
+
+    @Schema(description = "用户状态")
+    private Integer accountStatus;
 
     @Schema(description = "性别 0：保密   1：男   2：女", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer gender;
