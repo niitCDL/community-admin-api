@@ -36,6 +36,8 @@ public class OwnerVO implements Serializable {
 	private String realName;
 	@Schema(description = "出生日期")
 	private String birthday;
+	@Schema(description = "户口(0:城市户口1:农村户口)")
+	private Integer accountType;
 	@Schema(description = "民族")
 	private String nation;
 	@Schema(description = "婚姻状态")

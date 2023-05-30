@@ -46,7 +46,7 @@ public class OwnerController {
     @Operation(summary = "业主信息获取")
     public Result<List<OwnerEntity>> list(){
         QueryWrapper<OwnerEntity> wrapper = new QueryWrapper<>();
-        wrapper.select("DISTINCT identity_card,real_name");
+        wrapper.select("DISTINCT identity_card,real_name,id");
         List<OwnerEntity> list = ownerService.list(wrapper).stream().filter(owner -> !Objects.equals(owner.getIdentityCard(), "")).collect(Collectors.toList());
         return Result.ok(list);
     }

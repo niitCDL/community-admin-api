@@ -43,7 +43,7 @@ public class UserController {
     @Operation(summary = "用户信息获取")
     public Result<List<UserEntity>> list(){
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
-        wrapper.lambda().select(UserEntity::getRealName,UserEntity::getPhone);
+        wrapper.lambda().select(UserEntity::getRealName,UserEntity::getPhone,UserEntity::getId);
         List<UserEntity> list = userService.list(wrapper);
         return Result.ok(list);
     }
