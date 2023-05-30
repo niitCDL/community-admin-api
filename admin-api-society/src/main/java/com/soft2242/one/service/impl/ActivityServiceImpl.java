@@ -32,9 +32,19 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
     private final ICommunityService communityService;
     private final ActivityTypeService activityTypeService;
 
+    //    修改查询条件： 根据活动时间，活动名称
     @Override
     public PageResult<ActivityVO> page(ActivityQuery query) {
-        IPage<Activity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+        LambdaQueryWrapper<Activity> wrapper = getWrapper(query);
+        System.out.println(query);
+//        根据活动名查询
+        if (!(query.getActivityName() ==null && query.getActivityName().isBlank() && query.getActivityName().isEmpty()))
+            wrapper.eq(Activity::getActivityName, query.getActivityName());
+//        时间是否为空
+//        if (query.getCreateTime()== null && query.getEndTime() == null)
+//            wrapper.or().between(Activity::get,query.getCreateTime(),query.getEndTime());
+
+        IPage<Activity> page = baseMapper.selectPage(getPage(query), wrapper);
         List<ActivityVO> activityVOS = ActivityConvert.INSTANCE.convertList(page.getRecords());
         PageResult<ActivityVO> result;
         try {

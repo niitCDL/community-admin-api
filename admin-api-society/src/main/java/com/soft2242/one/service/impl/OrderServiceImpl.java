@@ -117,13 +117,11 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         ExcelUtils.readAnalysis(file, OrderExcelVO.class, new ExcelFinishCallBack<>() {
             @Override
             public void doAfterAllAnalysed(List<OrderExcelVO> result) {
-                System.out.println(result);
                 saveUser(result);
             }
 
             @Override
             public void doSaveBatch(List<OrderExcelVO> result) {
-                System.out.println(result);
                 saveUser(result);
             }
 
@@ -139,11 +137,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     @Override
     @SneakyThrows
     public void export() {
+
         List<Order> list = list(Wrappers.lambdaQuery(Order.class).eq(Order::getStatus, 0));
 
-        System.out.println(list);
         List<OrderExcelVO> orderExcelVOS = OrderConvert.INSTANCE.convertList2(list);
-        System.out.println(orderExcelVOS);
         ExcelUtils.excelExport(OrderExcelVO.class, "order_export", "sheet1", orderExcelVOS);
     }
 

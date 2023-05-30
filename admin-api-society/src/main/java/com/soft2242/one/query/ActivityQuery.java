@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.time.LocalDateTime;
+
 
 /**
 * 社区活动查询
@@ -16,4 +18,13 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "社区活动查询")
 public class ActivityQuery extends Query {
+    @Schema(description = "创建时间")
+    private LocalDateTime createTime;
+
+    @Schema(description = "活动截至时间")
+    private LocalDateTime endTime;
+
+    @Schema(description = "活动名称")
+    private String activityName;
+
 }
