@@ -3,9 +3,13 @@ package com.soft2242.one.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.fhs.trans.service.impl.TransService;
 import com.soft2242.one.base.common.constant.Constant;
+import com.soft2242.one.base.common.excel.ExcelFinishCallBack;
 import com.soft2242.one.base.common.exception.ServerException;
 import com.soft2242.one.base.common.myexcel.CustomExcelUtils;
+import com.soft2242.one.base.common.utils.DateUtils;
+import com.soft2242.one.base.common.utils.ExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.base.security.cache.TokenStoreCache;
@@ -52,6 +56,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     private final TokenStoreCache tokenStoreCache;
 
     private final CustomExcelUtils customExcelUtils;
+
+    private final TransService transService;
 
     public SysUserInfoEntity getUserInfoByAdminId(Long id) {
         return sysUserInfoDao.getByAdminId(id);
@@ -205,30 +211,34 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
 
     @Override
     public void export() {
-        List<SysUserExcelVO> userEntities = SysUserConvert.INSTANCE.convertList(sysUserDao.selectList(null));
-        try {
-            customExcelUtils.export(userEntities);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        List<SysUserExcelVO> userExcelVOS = SysUserConvert.INSTANCE.convertList(sysUserDao.selectList(null));
+        transService.transBatch(userExcelVOS);
+        ExcelUtils.excelExport(SysUserExcelVO.class,"system_admin_excel" + DateUtils.format(new Date()), null, userExcelVOS);
     }
 
     @Override
     public void importByExcel(MultipartFile file) {
-        try {
 
-            List<SysUserExcelVO> dataVoList = new ArrayList<>();
-            //excel文件中的数据会被导入到dataVoList中 class类型一定得是自定义的***ExcelVO.class
-            customExcelUtils.importExcel(file, SysUserExcelVO.class, dataVoList);
-            //还需要将excelVO转换为对应的实体类进行插入
-            List<SysUserEntity> sysUserEntities = SysUserConvert.INSTANCE.convertList2(dataVoList);
-            for (SysUserEntity sysUserEntity : sysUserEntities) {
-                sysUserDao.insert(sysUserEntity);
+        ExcelUtils.readAnalysis(file, SysUserExcelVO.class, new ExcelFinishCallBack<SysUserExcelVO>() {
+            @Override
+            public void doAfterAllAnalysed(List<SysUserExcelVO> result) {
+                saveUser(result);
             }
-            System.out.println("导入成功");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+            @Override
+            public void doSaveBatch(List<SysUserExcelVO> result) {
+                saveUser(result);
+            }
+
+            private void saveUser(List<SysUserExcelVO> result) {
+                ExcelUtils.parseDict(result);
+                List<SysUserEntity> sysUserEntities = SysUserConvert.INSTANCE.convertList2(result);
+                for (SysUserEntity sysUserEntity : sysUserEntities) {
+                    sysUserDao.insert(sysUserEntity);
+                }
+                System.out.println("导入成功");
+            }
+        });
     }
 
 
