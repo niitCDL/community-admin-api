@@ -19,7 +19,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface SysLoginLogDao extends BaseDao<SysLoginLogEntity> {
 
-    String querySql = "SELECT a.*,( b.username ) creatorName FROM t_system_operation_log a LEFT JOIN sys_admin b ON a.creator = b.id ";
+    String querySql = "SELECT a.* FROM t_system_operation_log a";
     String wrapperSql = "select * from ("+querySql+")AS q ${ew.customSqlSegment}";
 
     @Select(wrapperSql)

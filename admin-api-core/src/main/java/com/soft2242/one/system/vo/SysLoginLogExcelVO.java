@@ -9,6 +9,9 @@ import lombok.Data;
 @Schema(description = "登录日志")
 public class SysLoginLogExcelVO {
 
+    @MyExcelProperty("序号")
+    private Long id;
+
     @MyExcelProperty("登录时间")
     private String loginTime;
     @MyExcelProperty("终端类型")
@@ -30,6 +33,5 @@ public class SysLoginLogExcelVO {
     private Long creator;
 
     @MyExcelProperty("登录人名称")
-    @TableField(exist = false)
     private String creatorName;
 }

@@ -1,5 +1,6 @@
 package com.soft2242.one.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -11,6 +12,7 @@ import com.soft2242.one.system.convert.SysLoginLogConvert;
 import com.soft2242.one.system.dao.SysLoginLogDao;
 import com.soft2242.one.system.dao.SysUserInfoDao;
 import com.soft2242.one.system.entity.SysLoginLogEntity;
+import com.soft2242.one.system.entity.SysRoleEntity;
 import com.soft2242.one.system.entity.SysRoleOperationLogEntity;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.query.SysLoginLogQuery;
@@ -69,6 +71,7 @@ public class SysLoginLogServiceImpl extends BaseServiceImpl<SysLoginLogDao, SysL
             sysLoginLogEntity.setLoginTime(currentDate);
             sysLoginLogEntity.setCreateTime(currentDate);
             sysLoginLogEntity.setCreator(user.getId());
+            sysLoginLogEntity.setCreatorName(user.getUsername());
             baseMapper.insert(sysLoginLogEntity);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -91,8 +94,9 @@ public class SysLoginLogServiceImpl extends BaseServiceImpl<SysLoginLogDao, SysL
         return new PageResult<>(SysLoginLogConvert.INSTANCE.convertList(page.getRecords()),page.getTotal());
     }
 
-    private LambdaQueryWrapper<SysRoleOperationLogEntity> getWrapper(SysLoginLogQuery query){
-        LambdaQueryWrapper<SysRoleOperationLogEntity> wrapper = Wrappers.lambdaQuery();
+    private LambdaQueryWrapper<SysLoginLogEntity> getWrapper(SysLoginLogQuery query){
+        LambdaQueryWrapper<SysLoginLogEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.like(StrUtil.isNotBlank(query.getCreatorName()), SysLoginLogEntity::getCreatorName, query.getCreatorName());
         return wrapper;
     }
 

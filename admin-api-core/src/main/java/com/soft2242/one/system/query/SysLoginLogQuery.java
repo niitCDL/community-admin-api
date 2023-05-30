@@ -16,4 +16,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "登录日志记录表查询")
 public class SysLoginLogQuery extends Query {
+
+    @Schema(description = "用户名")
+    private String creatorName;
 }
