@@ -25,5 +25,55 @@
         <result property="creator" column="creator"/>
         <result property="updater" column="updater"/>
     </resultMap>
+    <select id="getList" resultType="com.soft2242.one.vo.RepairVO">
+        SELECT
+        t1.*,
+        t1.employee_ids AS employees,
+        t2.community_name,
+        CASE
+            WHEN t1.user_type = 1 THEN t4.real_name
+            WHEN t1.user_type = 0 THEN t5.real_name
+        END AS userName
+        FROM
+        t_repair t1
+        JOIN t_community t2 ON t2.id = t1.community_id
+        LEFT JOIN sys_admin t3 ON t1.user_id = t3.id AND t1.user_type = 1 AND t3.deleted = 0
+        LEFT JOIN sys_admin_info t4 ON t4.admin_id = t3.id AND t4.deleted = 0
+        LEFT JOIN t_user t5 ON t1.user_id = t5.id AND t1.user_type = 0 AND t5.deleted = 0
+        WHERE
+        t1.deleted = 0
+        AND t2.deleted = 0
+        <if test="title != null and title.trim() != ''">
+            and t1.title like CONCAT('%',#{title},'%')
+        </if>
+        <if test="noticeId != null and noticeId.trim() != ''">
+            and t1.id = #{noticeId}
+        </if>
+        <if test="state != null and state.trim() != ''">
+            and t1.state = #{state}
+        </if>
+        <if test="communityId != null and communityId.length != 0">
+            and t1.community_id  in (#{communityId})
+        </if>
+    </select>
+
+<!--
+and t5.deleted = 0
+join t_user t5 on  t1.user_id  = t5.id and  t1.user_type = 0
+and t1.user_type = 1
+
+        select distinct t1.*,t1.employee_ids employees,
+        t2.community_name,
+        real_name userName
+        from t_repair t1
+        join t_community t2 on t2.id = t1.community_id
+        join sys_admin t3 on t1.user_id = t3.id
+        join sys_admin_info t4 on t4.admin_id = t3.id
+
+        where t1.deleted = 0
+        and t2.deleted = 0
+        and t3.deleted = 0
+        and t4.deleted = 0
+-->
 
 </mapper>

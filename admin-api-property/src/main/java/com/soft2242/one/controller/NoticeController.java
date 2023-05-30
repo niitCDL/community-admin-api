@@ -11,6 +11,7 @@ import com.soft2242.one.convert.NoticeQueryConvert;
 import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.NoticeEntity;
 import com.soft2242.one.entity.NoticeReaderEntity;
+import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.query.NoticeQuery;
 import com.soft2242.one.query.NoticeReaderQuery;
 import com.soft2242.one.service.ICommunityService;
@@ -30,7 +31,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
 import java.sql.Wrapper;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author : xuelong
@@ -53,16 +56,13 @@ public class NoticeController {
 //    @PreAuthorize("hasAuthority('sys:user:page')")
     public Result<PageResult<NoticeVO>> page(@ParameterObject @Valid NoticeQuery query) {
         PageResult<NoticeVO> page = noticeService.page(query);
-
-        List<NoticeVO> list = page.getList();
-        for (NoticeVO vo: list) {
-            SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(vo.getAdminId());
-            Community community = communityService.getById(vo.getCommunityId());
-            vo.setUserName(entity.getRealName());
-            vo.setCommunityName(community.getCommunityName());
-        }
-
         return Result.ok(page);
+    }
+
+    private Map<String, Object> getParams(NoticeQuery query) {
+        Map<String, Object> params = new HashMap<>();
+
+        return params;
     }
 
     @GetMapping("{id}")

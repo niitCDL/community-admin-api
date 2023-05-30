@@ -49,7 +49,9 @@ public class RepairVO implements Serializable {
 	private Integer state;
 
 	@Schema(description = "处理人id，逗号分隔")
+	//这里存着登录用户的信息
 	private String[] employeeIds = null;
+	private String employees = null;
 	//处理人姓名
 	private String[] employeeNames;
 

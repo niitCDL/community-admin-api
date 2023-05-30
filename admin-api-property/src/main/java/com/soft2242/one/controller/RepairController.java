@@ -10,6 +10,7 @@ import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.service.RepairService;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.service.SysUserService;
+import com.soft2242.one.utils.MyUtils;
 import com.soft2242.one.vo.ComplaintVO;
 import com.soft2242.one.vo.RepairVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -44,17 +45,15 @@ public class RepairController {
     public Result<PageResult<RepairVO>> page(@ParameterObject @Valid RepairQuery query){
         PageResult<RepairVO> page = repairService.page(query);
         List<RepairVO> list = page.getList();
-
         for (RepairVO vo: list) {
-            SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
-            Community community = communityService.getById(vo.getCommunityId());
-            vo.setUserName(entity.getRealName());
-            vo.setCommunityName(community.getCommunityName());
+            String employees = vo.getEmployees();
+            vo.setEmployeeIds(MyUtils.convertToArray(employees));
             String[] employeeIds = vo.getEmployeeIds();
             if (employeeIds != null) {
                 ArrayList<String> names = new ArrayList<String>();
                 for (String employeeId : employeeIds) {
-                    entity = sysUserService.getUserInfoByAdminId(vo.getUserId());
+                    //登录用户的信息来获取
+                    SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(Long.valueOf(employeeId));
                     names.add(entity.getRealName());
                 }
                 vo.setEmployeeNames(names.toArray(new String[names.size()]));
