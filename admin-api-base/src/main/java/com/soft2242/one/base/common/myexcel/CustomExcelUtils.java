@@ -135,6 +135,7 @@ public class CustomExcelUtils {
                 cellIndex = 0;
                 obj = clazz.getConstructor(null).newInstance();
                 for (int j = 0; j < declaredFields.length; j++) {
+                    System.out.println(cellIndex);
                     HSSFCell cell = row.getCell(cellIndex);
                     cell.setCellType(CellType.STRING);
                     Field field = declaredFields[j];
