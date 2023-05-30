@@ -27,4 +27,6 @@ public interface InspectionItemService extends BaseService<InspectionItemEntity>
     void delete(List<Long> idList);
 
     void deleteByCommunityId(Long communityId);
+
+
 }

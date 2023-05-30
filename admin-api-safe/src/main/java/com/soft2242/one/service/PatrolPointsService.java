@@ -34,7 +34,7 @@ public interface PatrolPointsService extends BaseService<PatrolPointsEntity> {
 
     void delete(List<Long> idList);
 
-    List<PatrolPointsVO> getByIds(List<Long> Ids);
+
 
 
 }

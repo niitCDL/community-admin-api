@@ -35,15 +35,12 @@ import java.util.List;
 @AllArgsConstructor
 public class PatrolPathController {
     private final PatrolPathService PatrolPathService;
-    private final PointsPathService pointsPathService;
-private  final PatrolPointsService pointsService;
-    private final InspectionItemPathService inspectionItemPathService;
 
     @GetMapping("page")
     @Operation(summary = "分页")
     @PreAuthorize("hasAuthority('safe:path:page')")
     public Result<PageResult<PatrolPathVO>> page(@ParameterObject @Valid PatrolPathQuery query) {
-        System.out.println("eeeeeeeeeeeeeeeeeeeeeeee"+query);
+//        System.out.println("eeeeeeeeeeeeeeeeeeeeeeee"+query);
         PageResult<PatrolPathVO> page = PatrolPathService.page(query);
         return Result.ok(page);
     }
@@ -52,9 +49,9 @@ private  final PatrolPointsService pointsService;
     @Operation(summary = "信息")
     @PreAuthorize("hasAuthority('safe:path:info')")
     public Result<PatrolPathVO> get(@PathVariable("id") Long id) {
-        System.out.println("+++++++++++++++++++++++++++++++++"+id);
+//        System.out.println("+++++++++++++++++++++++++++++++++"+id);
         PatrolPathVO vo = PatrolPathService.getPathById(id);
-        System.out.println("+++++++++++++++++++++++++++++++++"+vo);
+//        System.out.println("+++++++++++++++++++++++++++++++++"+vo);
         return Result.ok(vo);
 
     }
@@ -64,7 +61,7 @@ private  final PatrolPointsService pointsService;
     @Operation(summary = "保存")
     @PreAuthorize("hasAuthority('safe:path:save')")
     public Result<String> save(@RequestBody PatrolPathVO vo) {
-        System.out.println("你好斤斤计较急急急急急急急急急急急急急急急"+vo);
+//        System.out.println("你好斤斤计较急急急急急急急急急急急急急急急"+vo);
         PatrolPathService.save(vo);
 //        pointsPathService.saveOrUpdate(vo.getPointIds(), vo.getId());
         return Result.ok();
@@ -97,16 +94,11 @@ private  final PatrolPointsService pointsService;
     @Operation(summary = "修改")
     @PreAuthorize("hasAuthority('safe:path:update')")
     public Result<String> update(@RequestBody @Valid PatrolPathVO vo) {
+        System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+vo);
         PatrolPathService.update(vo);
         return Result.ok();
     }
 
-    @GetMapping({"point/{elementIds}"})
-    @Operation(summary = "根据ids获取所有的巡更点")
-    public  Result<List<PatrolPointsVO>> getByIds(@PathVariable("elementIds") List<Long> elementIds){
-        List<PatrolPointsVO> patrolPointsVOS = pointsService.getByIds(elementIds);
-        return Result.ok(patrolPointsVOS);
-    }
 
     @DeleteMapping
     @Operation(summary = "删除")

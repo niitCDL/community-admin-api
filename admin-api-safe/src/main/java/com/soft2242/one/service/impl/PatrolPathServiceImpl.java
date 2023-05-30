@@ -7,10 +7,7 @@ import com.soft2242.one.convert.CommunityConvert;
 import com.soft2242.one.convert.InspectionItemEntityConvert;
 import com.soft2242.one.convert.PatrolPathConvert;
 import com.soft2242.one.convert.PatrolPointsConvert;
-import com.soft2242.one.dao.CommunityDao;
-import com.soft2242.one.dao.InspectionItemDao;
-import com.soft2242.one.dao.PatrolPathDao;
-import com.soft2242.one.dao.PatrolPointsDao;
+import com.soft2242.one.dao.*;
 import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.InspectionItemEntity;
 import com.soft2242.one.entity.PatrolPathEntity;
@@ -42,7 +39,7 @@ import java.util.Map;
 public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, PatrolPathEntity> implements PatrolPathService {
     private PointsPathService pointsPathService;
     private InspectionItemPathService inspectionItemPathService;
-
+    private PointsPathDao pointsPathDao;
     private PatrolPathDao patrolPathDao;
     private InspectionItemDao inspectionItemDao;
 
@@ -146,16 +143,28 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
         return inspectionItemVOS;
     }
 
+
     @Override
     public void update(PatrolPathVO vo) {
         PatrolPathEntity entity = PatrolPathConvert.INSTANCE.convert(vo);
         updateById(entity);
+         if (entity.getType()==0){
+             pointsPathService.saveOrUpdate(vo.getElementIds(),entity.getId());
+         }
+         if (entity.getType()==1){
+             inspectionItemPathService.saveOrUpdate(vo.getElementIds(),entity.getId());
+         }
+
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
-        removeByIds(idList);
+
+
+
+
     }
 
 
@@ -186,4 +195,9 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
 
         return lists;
     }
+
+
+
+
+
 }

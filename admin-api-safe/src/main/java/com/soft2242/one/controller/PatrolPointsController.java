@@ -53,6 +53,8 @@ public class PatrolPointsController {
 
 
 
+
+
     @PostMapping
     @Operation(summary = "添加")
     @PreAuthorize("hasAuthority('safe:point:save')")
