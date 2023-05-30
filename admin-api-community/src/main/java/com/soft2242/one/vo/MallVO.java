@@ -2,6 +2,7 @@ package com.soft2242.one.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fhs.core.trans.vo.TransPojo;
 import com.soft2242.one.base.common.myexcel.MyExcelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -9,6 +10,7 @@ import lombok.Data;
 
 import javax.xml.transform.sax.SAXResult;
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,7 +21,7 @@ import java.util.Date;
  */
 @Data
 @Schema(description = "商铺")
-public class MallVO {
+public class MallVO implements Serializable, TransPojo {
     @Serial
     private static final long serialVersionUID = 1L;
     @Schema(description = "id")
@@ -49,10 +51,10 @@ public class MallVO {
     @Schema(description = "商铺类型", requiredMode = Schema.RequiredMode.REQUIRED)
     @MyExcelProperty("商铺类型")
     private String mallType;
-    @Schema(description = "商铺状态(0：未售出 1：已售出)", requiredMode = Schema.RequiredMode.REQUIRED)
-    @MyExcelProperty("商铺状态(0：未售出 1：已售出)")
-    private Integer mallStatus;
     @Schema(description = "创建时间", requiredMode = Schema.RequiredMode.REQUIRED)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date createTime;
+    @Schema(description = "商铺状态(0：未售出 1：已售出)", requiredMode = Schema.RequiredMode.REQUIRED)
+    @MyExcelProperty("商铺状态(0：未售出 1：已售出)")
+    private Integer mallStatus;
 }

@@ -39,8 +39,7 @@ import java.util.Map;
 public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, PatrolPathEntity> implements PatrolPathService {
     private PointsPathService pointsPathService;
     private InspectionItemPathService inspectionItemPathService;
-    private PointsPathDao pointsPathDao;
-    private PatrolPathDao patrolPathDao;
+
     private InspectionItemDao inspectionItemDao;
 
     @Autowired
@@ -162,9 +161,17 @@ public class PatrolPathServiceImpl extends BaseServiceImpl<PatrolPathDao, Patrol
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
 
+        List<PatrolPathEntity> patrolPathEntities = baseMapper.selectBatchIds(idList);
+        for (int i = 0; i <patrolPathEntities.size() ; i++) {
+            if (patrolPathEntities.get(i).getType()==0){
+                pointsPathService.deleteByPathId(patrolPathEntities.get(i).getId());
+            }
+            if (patrolPathEntities.get(i).getType()==1){
+                inspectionItemPathService.deleteByPathId(patrolPathEntities.get(i).getId());
+            }
+        }
 
-
-
+        removeByIds(idList);
     }
 
 

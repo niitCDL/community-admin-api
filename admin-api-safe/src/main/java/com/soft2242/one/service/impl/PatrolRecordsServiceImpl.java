@@ -9,6 +9,7 @@ import com.soft2242.one.convert.PatrolRecordsConvert;
 import com.soft2242.one.dao.PatrolRecordsDao;
 import com.soft2242.one.entity.PatrolPointsEntity;
 import com.soft2242.one.entity.PatrolRecordsEntity;
+import com.soft2242.one.query.PatrolPathQuery;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.query.PatrolRecordsQuery;
 import com.soft2242.one.service.PatrolRecordsService;
@@ -42,6 +43,10 @@ public class PatrolRecordsServiceImpl extends BaseServiceImpl<PatrolRecordsDao, 
         List<PatrolRecordsVO> recordsVOS = baseMapper.searchList(params);
         return new PageResult<>(recordsVOS, page.getTotal());
 
+    }
+    @Override
+    public List<PatrolRecordsVO> searchByIdList(List<Long> ids) {
+        return null;
     }
 
     private Map<String,Object> getParams(PatrolRecordsQuery query){

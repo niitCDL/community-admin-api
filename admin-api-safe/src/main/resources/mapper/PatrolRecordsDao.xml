@@ -5,12 +5,15 @@
 
  
 	<select id="searchList" resultType="com.soft2242.one.vo.PatrolRecordsVO">
-     SELECT a.*,b.REAL_NAME,c.PHONE FROM t_patrol_records  a
-     JOIN sys_admin_info b on a.inspector_id=b.ID
-     JOIN sys_admin c on b.ADMIN_ID=c.ID
-        <if test="pointId!=null">
-            AND a.point_id =#{pointId}
-        </if>
+        SELECT a.*,b.REAL_NAME,c.PHONE from t_patrol_records a
+        JOIN sys_admin_info b on b.ADMIN_ID=a.inspector_id
+        JOIN sys_admin c on c.ID=b.ADMIN_ID
+       
+            AND a.point_id =#{id}
+    
+        
+
+
     </select>
 
 </mapper>

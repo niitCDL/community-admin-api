@@ -1,6 +1,7 @@
 package com.soft2242.one.base.common.myexcel;
 
 import com.soft2242.one.base.common.utils.HttpContextUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -8,6 +9,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -94,9 +97,10 @@ public class CustomExcelUtils {
         //文件输出流
         try {
             HttpServletResponse response = HttpContextUtils.getHttpServletResponse();
+            response.addHeader(HttpHeaders.CONTENT_TYPE,MediaType.APPLICATION_OCTET_STREAM_VALUE);
+            response.addHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename*=" + fileName);
             response.setCharacterEncoding("utf-8");
-            response.setContentType("application/octet-stream");
-            response.setHeader("Content-disposition", "attachment;filename*=" + fileName);
+
             BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream());
             workbook.write(bos);
             bos.flush();
@@ -135,6 +139,7 @@ public class CustomExcelUtils {
                 cellIndex = 0;
                 obj = clazz.getConstructor(null).newInstance();
                 for (int j = 0; j < declaredFields.length; j++) {
+                    System.out.println(cellIndex);
                     HSSFCell cell = row.getCell(cellIndex);
                     cell.setCellType(CellType.STRING);
                     Field field = declaredFields[j];

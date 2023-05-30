@@ -14,6 +14,9 @@
         SELECT t2.id ,t2.community_id ,t1.community_name as communityName , t2.building_name ,t2.units,t2.used_area,t2.content,t2.create_time
         FROM t_building t2,t_community t1  WHERE t1.id=t2.community_id
         AND t2.deleted = 0
+        <if test="buildingId!=null and buildingId.trim() != ''">
+            AND t2.building_id = #{buildingId}
+        </if>
         <if test="buildingName!=null and buildingName.trim() != ''">
             AND t2.building_name LIKE CONCAT('%',#{buildingName},'%')
         </if>
@@ -23,6 +26,9 @@
         <if test="units!=null and units.trim() != ''">
             AND t2.units LIKE CONCAT('%',#{units},'%')
         </if>
+    </select>
+    <select id="getByCommuntiyId" resultType="com.soft2242.one.vo.BuildingVO">
+        select * from t_building where community_id=#{communityId}
     </select>
 
 </mapper>

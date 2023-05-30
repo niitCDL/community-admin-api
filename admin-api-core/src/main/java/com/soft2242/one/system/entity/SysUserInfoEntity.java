@@ -1,5 +1,6 @@
 package com.soft2242.one.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.soft2242.one.base.mybatis.entity.BaseEntity;
 import lombok.Data;
@@ -11,7 +12,6 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_admin_info")
 public class SysUserInfoEntity extends BaseEntity {
-
     private Long adminId;
     private String realName;
     private String avatar;
@@ -28,6 +28,4 @@ public class SysUserInfoEntity extends BaseEntity {
     private String remark;
     private Integer sort;
     private Date lastLoginTime;
-
-
 }
