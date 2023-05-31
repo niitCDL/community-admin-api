@@ -27,6 +27,11 @@ public class DoorEntity extends BaseEntity {
 	private String doorName;
 
 	/**
+	 * 门禁图片
+	 */
+	private String doorImg;
+
+	/**
 	* 所属小区
 	*/
 	private Long communityId;

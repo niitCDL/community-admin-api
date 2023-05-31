@@ -26,7 +26,7 @@
     <select id="selectPageByQuery" resultType="com.soft2242.one.vo.MeterVO"
             parameterType="com.soft2242.one.query.MeterQuery">
         SELECT tm.id, tm.device_id, td.device_name, tm.meter_name, tm.community_id, tc.community_name, tm.meter_type,
-        tm.price, tm.start_num, tm.now_num, tm.max, tm.total_use, tm.online_status, tm.gate_status,
+        tm.price, tm.start_num, tm.now_num, tm.max, tm.total_use, tm.online_status, tm.gate_status
         FROM t_meter tm
         LEFT JOIN t_device td on tm.device_id = td.id
         LEFT JOIN t_community tc on tm.community_id = tc.id

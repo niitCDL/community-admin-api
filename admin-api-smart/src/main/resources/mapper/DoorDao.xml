@@ -5,6 +5,7 @@
 
     <select id="selectPageByQuery" resultType="com.soft2242.one.vo.DoorVO" parameterType="com.soft2242.one.query.DoorQuery">
         SELECT door.id, door.device_id, td.device_name, door.community_id, tc.community_name, door.door_name,
+        door.door_img,
         door.sys_code
         FROM t_door door
         LEFT JOIN t_device td on door.device_id = td.id
