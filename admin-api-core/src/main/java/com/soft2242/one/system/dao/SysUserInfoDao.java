@@ -22,6 +22,8 @@ public interface SysUserInfoDao extends BaseDao<SysUserInfoEntity> {
 
     SysUserInfoEntity getByAdminId(Long id);
 
+    List<SysUserInfoEntity> getByNotInAdminId(Long id);
+
     SysUserInfoVO getUserInfo(Long id);
     void recordLastLoginTime(@Param("lastLoginTime")String date, @Param("id")Long id);
 

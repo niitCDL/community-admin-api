@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.soft2242.one.base.common.utils.DateUtils;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.checkerframework.checker.units.qual.C;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -15,6 +16,9 @@ import java.util.List;
 public class SysUserInfoVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @Schema(description = "用户ID")
+    private Long id;
 
     @Schema(description = "adminId 管理员ID")
     private Long adminId;

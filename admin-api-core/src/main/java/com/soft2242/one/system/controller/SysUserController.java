@@ -6,7 +6,6 @@ import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.base.security.user.SecurityUser;
 import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.system.convert.SysUserInfoConvert;
-import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.query.SysUserQuery;
 import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.system.vo.SysUserInfoVO;
@@ -69,7 +68,7 @@ public class SysUserController {
         return Result.ok(user);
     }
 
-    @PutMapping
+    @PutMapping("changeStatus")
     @Operation(summary = "修改用户状态")
     public Result changeAccountStatus(Long id,Integer accountStatus) {
         sysUserService.changeAccountStatus(id,accountStatus);
@@ -135,6 +134,14 @@ public class SysUserController {
             return Result.error("请选择需要上传的文件");
         }
         sysUserService.importByExcel(file);
+        return Result.ok();
+    }
+
+    @PutMapping
+    @Operation(summary = "修改用户信息")
+    public Result<String> update(@RequestBody SysUserInfoVO sysUserInfoVO){
+        sysUserService.updateByVo(sysUserInfoVO);
+
         return Result.ok();
     }
 
