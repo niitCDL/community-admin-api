@@ -247,6 +247,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         params.put("username", query.getUsername());
         params.put("phone", query.getPhone());
         params.put("gender", query.getGender());
+
+        params.put(Constant.DATA_SCOPE, getDataScope("t4", "department_id"));
         return params;
     }
 

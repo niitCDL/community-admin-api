@@ -49,7 +49,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
      * MyBatis-Plus 数据权限
      */
     protected void dataScopeWrapper(LambdaQueryWrapper<T> queryWrapper) {
-        DataScope dataScope = getDataScope("sys_admin_department", "department_id");
+        DataScope dataScope = getDataScope(null, null);
         if (dataScope != null) {
             queryWrapper.apply(dataScope.getSqlFilter());
         }
