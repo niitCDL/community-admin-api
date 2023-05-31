@@ -23,4 +23,6 @@ public interface SysDepartmentService extends BaseService<SysDepartmentEntity> {
     void update(SysDepartmentVO vo);
 
     void delete(Long id);
+
+    List<Long> getSubOrgIdList(Long id);
 }
