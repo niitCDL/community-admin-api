@@ -1,5 +1,6 @@
 package com.soft2242.one.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.soft2242.one.base.mybatis.entity.BaseEntity;
 import lombok.Data;
@@ -40,4 +41,7 @@ public class SysUserEntity extends BaseEntity {
      * token
      */
     private String token;
+
+    @TableField(exist = false)
+    private Long orgId;
 }

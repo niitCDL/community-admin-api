@@ -17,11 +17,10 @@ import java.util.Map;
 @Mapper
 public interface SysUserDao extends BaseDao<SysUserEntity> {
 
-    default SysUserEntity getByUsername(String username) {
-        return this.selectOne(new QueryWrapper<SysUserEntity>().eq("username", username));
-    }
+
     Long getMaxId();
 
     String getTokenById(@Param("id") Long id);
 
+    SysUserEntity getByUsername(@Param("username") String username);
 }

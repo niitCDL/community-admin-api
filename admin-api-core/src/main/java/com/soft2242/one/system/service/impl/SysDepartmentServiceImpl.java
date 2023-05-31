@@ -21,6 +21,7 @@ import com.soft2242.one.system.service.SysDepartmentService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,31 @@ public class SysDepartmentServiceImpl extends BaseServiceImpl<SysDepartmentDao, 
         SysDepartmentEntity entity = SysDepartmentConvert.INSTANCE.convert(vo);
 
         updateById(entity);
+    }
+
+    @Override
+    public List<Long> getSubOrgIdList(Long id) {
+        // 所有机构的id、pid列表
+        List<SysDepartmentEntity> orgList = baseMapper.getIdAndPidList();
+
+        // 递归查询所有子机构ID列表
+        List<Long> subIdList = new ArrayList<>();
+        getTree(id, orgList, subIdList);
+
+        // 本机构也添加进去
+        subIdList.add(id);
+
+        return subIdList;
+    }
+
+    private void getTree(Long id, List<SysDepartmentEntity> orgList, List<Long> subIdList) {
+        for (SysDepartmentEntity org : orgList) {
+            if (org.getPid().equals(id)) {
+                getTree(org.getId(), orgList, subIdList);
+
+                subIdList.add(org.getId());
+            }
+        }
     }
 
     @Override
