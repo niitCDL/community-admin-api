@@ -28,6 +28,8 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
     @Override
     public void beforeQuery(Executor executor, MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
         DataScope scope = getDataScope(parameter);
+        System.out.println(1);
+        System.out.println(parameter);
         // 不进行数据过滤
         if (scope == null || StrUtil.isBlank(scope.getSqlFilter())) {
             return;
@@ -35,6 +37,7 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
 
         // 拼接新SQL
         String buildSql = getSelect(boundSql.getSql(), scope);
+        System.out.println(buildSql);
         // 重写SQL
         PluginUtils.mpBoundSql(boundSql).sql(buildSql);
     }
@@ -59,6 +62,7 @@ public class DataScopeInnerInterceptor implements InnerInterceptor {
     }
 
     private String getSelect(String buildSql, DataScope scope) {
+        System.out.println(scope.getSqlFilter());
         try {
             Select select = (Select) CCJSqlParserUtil.parse(buildSql);
             PlainSelect plainSelect = (PlainSelect) select.getSelectBody();

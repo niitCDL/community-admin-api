@@ -4,7 +4,7 @@
 <mapper namespace="com.soft2242.one.system.dao.SysRoleMenuDao">
 
 	<select id="getMenuIdList" resultType="long">
-		select authority_id from sys_role_menu where role_id = #{roleId} and deleted = 0
+		select menu_id from sys_role_menu where role_id = #{roleId} and deleted = 0
 	</select>
 
 </mapper>
