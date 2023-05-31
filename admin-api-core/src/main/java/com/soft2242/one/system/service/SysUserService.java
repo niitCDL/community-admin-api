@@ -36,4 +36,6 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void export();
 
     void importByExcel(MultipartFile file);
+
+    void updateByVo(SysUserInfoVO sysUserInfoVO);
 }

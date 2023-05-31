@@ -31,4 +31,8 @@
         from sys_admin
         where id = #{id}
     </select>
+    <select id="getByUsername" resultType="com.soft2242.one.system.entity.SysUserEntity">
+        select t1.*,(t2.department_id) orgId from sys_Admin t1 left join sys_admin_department t2 ON t1.id = t2.admin_id
+        where t1.username = #{username}
+    </select>
 </mapper>

@@ -7,27 +7,24 @@ import com.fhs.trans.service.impl.TransService;
 import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.excel.ExcelFinishCallBack;
 import com.soft2242.one.base.common.exception.ServerException;
-import com.soft2242.one.base.common.myexcel.CustomExcelUtils;
 import com.soft2242.one.base.common.utils.DateUtils;
 import com.soft2242.one.base.common.utils.ExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.base.security.cache.TokenStoreCache;
-import com.soft2242.one.base.security.user.SecurityUser;
 import com.soft2242.one.system.convert.SysUserConvert;
 import com.soft2242.one.system.dao.*;
 import com.soft2242.one.system.entity.*;
 import com.soft2242.one.system.enums.SuperAdminEnum;
-import com.soft2242.one.system.enums.UserGenderEnum;
 import com.soft2242.one.system.enums.UserOnlineEnum;
 import com.soft2242.one.system.enums.UserStatusEnum;
 import com.soft2242.one.system.query.SysUserQuery;
-import com.soft2242.one.system.service.SysRoleService;
 import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,16 +51,15 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     private SysAdminDepartmentDao sysAdminDepartmentDao;
 
     private final TokenStoreCache tokenStoreCache;
-
-    private final CustomExcelUtils customExcelUtils;
-
     private final TransService transService;
+
+    private final PasswordEncoder passwordEncoder;
 
     public SysUserInfoEntity getUserInfoByAdminId(Long id) {
         return sysUserInfoDao.getByAdminId(id);
     }
 
-    public SysUserInfoVO getUserInfo(Long id){
+    public SysUserInfoVO getUserInfo(Long id) {
 
         SysUserInfoVO userInfo = sysUserInfoDao.getUserInfo(id);
         userInfo.setOrgId(sysUserInfoDao.getDepartmentByAdminId(userInfo.getAdminId()));
@@ -72,10 +68,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         return userInfo;
     }
 
+
     @Override
     @Transactional
     public void save(SysUserInfoVO user) {
-
 
         SysUserEntity byUsernameEntity = sysUserDao.getByUsername(user.getUsername());
         if (byUsernameEntity != null) {
@@ -106,7 +102,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         sysUserInfoEntity.setAdminId(sysUserEntity.getId());
         sysUserInfoEntity.setRealName(user.getRealName());
         sysUserInfoEntity.setEmail(user.getEmail());
-        sysUserInfoEntity.setAvatar("hangzhou.aliyuncs.com/avatar/me.png");
+        sysUserInfoEntity.setAvatar("https://flobby.oss-cn-shenzhen.aliyuncs.com/avatar1/bg_yidenglu.png");
         sysUserInfoEntity.setSort(0);
         sysUserInfoEntity.setGender(user.getGender());
         sysUserInfoDao.insert(sysUserInfoEntity);
@@ -192,9 +188,13 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     }
 
     @Override
+    @Transactional
     public void delete(List<Long> idList) {
         for (Long id : idList) {
             sysUserInfoDao.delete(new QueryWrapper<SysUserInfoEntity>().eq("admin_id", id));
+            sysUserRoleDao.delete(new QueryWrapper<SysUserRoleEntity>().eq("admin_id", id));
+            sysAdminPostDao.delete(new QueryWrapper<SysAdminPostEntity>().eq("admin_id", id));
+            sysAdminDepartmentDao.delete(new QueryWrapper<SysAdminDepartmentEntity>().eq("admin_id", id));
         }
         sysUserDao.deleteBatchIds(idList);
     }
@@ -213,7 +213,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     public void export() {
         List<SysUserExcelVO> userExcelVOS = SysUserConvert.INSTANCE.convertList(sysUserDao.selectList(null));
         transService.transBatch(userExcelVOS);
-        ExcelUtils.excelExport(SysUserExcelVO.class,"system_admin_excel" + DateUtils.format(new Date()), null, userExcelVOS);
+        ExcelUtils.excelExport(SysUserExcelVO.class, "system_admin_excel" + DateUtils.format(new Date()), null, userExcelVOS);
     }
 
     @Override
@@ -241,12 +241,82 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         });
     }
 
+    @Override
+    @Transactional
+    public void updateByVo(SysUserInfoVO sysUserInfoVO) {
+
+        List<SysUserEntity> userEntities = sysUserDao.selectList(new QueryWrapper<SysUserEntity>().notIn("id", sysUserInfoVO.getAdminId()));
+        for (SysUserEntity userEntity : userEntities) {
+            if (userEntity.getUsername() != null && userEntity.getUsername().equals(sysUserInfoVO.getUsername())) {
+                throw new ServerException("该用户名已被占用,请重新更换！");
+            }
+            if (userEntity.getPhone() != null && userEntity.getPhone().equals(sysUserInfoVO.getPhone())) {
+                throw new ServerException("手机号已被绑定,请重新更换!");
+            }
+        }
+        List<SysUserInfoEntity> sysUserInfoEntities = sysUserInfoDao.getByNotInAdminId(sysUserInfoVO.getAdminId());
+        for (SysUserInfoEntity sysUserInfoEntity : sysUserInfoEntities) {
+            if (sysUserInfoEntity.getEmail() != null && sysUserInfoEntity.getEmail().equals(sysUserInfoVO.getEmail())) {
+                throw new ServerException("该邮箱已被绑定,请重新更换!");
+            }
+        }
+
+
+        //修改用户表
+        SysUserEntity sysUserEntity = new SysUserEntity();
+        sysUserEntity.setId(sysUserInfoVO.getAdminId());
+        sysUserEntity.setUsername(sysUserInfoVO.getUsername());
+        sysUserEntity.setPassword(passwordEncoder.encode(sysUserInfoVO.getPassword()));
+        sysUserEntity.setPhone(sysUserInfoVO.getPhone());
+        sysUserDao.updateById(sysUserEntity);
+        changeAccountStatus(sysUserEntity.getId(), sysUserInfoVO.getAccountStatus());
+
+        //修改用户信息表
+        SysUserInfoEntity sysUserInfoEntity = new SysUserInfoEntity();
+        sysUserInfoEntity.setAdminId(sysUserInfoVO.getAdminId());
+        sysUserInfoEntity.setRealName(sysUserInfoVO.getRealName());
+        sysUserInfoEntity.setEmail(sysUserInfoVO.getEmail());
+        sysUserInfoEntity.setGender(sysUserInfoVO.getGender());
+        sysUserInfoDao.update(sysUserInfoEntity, new QueryWrapper<SysUserInfoEntity>().eq("admin_id", sysUserInfoEntity.getAdminId()));
+
+        //修改用户与部门关联表
+        SysAdminDepartmentEntity sysAdminDepartmentEntity = new SysAdminDepartmentEntity();
+        sysAdminDepartmentEntity.setAdminId(sysUserInfoVO.getAdminId());
+        sysAdminDepartmentEntity.setDepartmentId(sysUserInfoVO.getOrgId());
+        sysAdminDepartmentDao.update(sysAdminDepartmentEntity, new QueryWrapper<SysAdminDepartmentEntity>().eq("admin_id", sysAdminDepartmentEntity.getAdminId()));
+
+
+        //先删除所对应的用户角色关联表与用户岗位关联表
+        sysUserRoleDao.delete(new QueryWrapper<SysUserRoleEntity>().eq("admin_id", sysUserInfoVO.getAdminId()));
+        sysAdminPostDao.delete(new QueryWrapper<SysAdminPostEntity>().eq("admin_id", sysUserInfoVO.getAdminId()));
+
+        //在把所有的关联都插入表中
+        List<Long> roleIdList = sysUserInfoVO.getRoleIdList();
+        for (Long roleId : roleIdList) {
+            SysUserRoleEntity sysUserRoleEntity = new SysUserRoleEntity();
+            sysUserRoleEntity.setAdminId(sysUserInfoVO.getAdminId());
+            sysUserRoleEntity.setRoleId(roleId);
+            sysUserRoleDao.insert(sysUserRoleEntity);
+        }
+        List<Long> postIdList = sysUserInfoVO.getPostIdList();
+        for (Long postId : postIdList) {
+            SysAdminPostEntity sysAdminPostEntity = new SysAdminPostEntity();
+            sysAdminPostEntity.setAdminId(sysUserInfoVO.getAdminId());
+            sysAdminPostEntity.setPostId(postId);
+            sysAdminPostDao.insert(sysAdminPostEntity);
+        }
+
+
+    }
+
 
     private Map<String, Object> getParams(SysUserQuery query) {
         Map<String, Object> params = new HashMap<>();
         params.put("username", query.getUsername());
         params.put("phone", query.getPhone());
         params.put("gender", query.getGender());
+
+        params.put(Constant.DATA_SCOPE, getDataScope("t4", "department_id"));
         return params;
     }
 

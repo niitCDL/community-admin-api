@@ -174,7 +174,6 @@ public class CustomExcelUtils {
                 dataList.add(obj);
             }
         } catch (Exception e) {
-            System.out.println("导入失败");
             throw new RuntimeException(e);
         }
     }

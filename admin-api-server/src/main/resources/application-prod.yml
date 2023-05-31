@@ -2,16 +2,16 @@ spring:
   data:
     redis:
       database: 1
-      host: 43.137.12.232
+      host: 106.14.246.27
       port: 6379
-      #password:
+      password: kobe24
       #timeout: 6000ms  # 连接超时时长（毫秒）
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://43.137.12.232:3306/smart_community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://106.14.246.27:3306/db_community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true
     username: root
-    password: 123456
+    password: kobe24
     hikari:
       connection-timeout: 30000     # 等待连接池分配链接的最大时长（毫秒），超过这个时长还没有可用的连接则发生 SQLException，默认：30 秒
       minimum-idle: 2               # 最小空闲连接数
@@ -22,24 +22,24 @@ spring:
       connection-test-query: SELECT 1
       pool-name: MyHikariCP
 
-#storage:
-#  enabled: true
-#  config:
-#    # 存储类型：local、aliyun、minio
-#    type: local
-#    domain: http://localhost:8080
-#  local:
-#    path: /Users/moqi/Documents/upload
-
 storage:
   enabled: true
   config:
-    type: minio
-  minio:
-    access-key: admin
-    secret-key: 12345678
-    end-point: http://43.137.12.232:9000
-    bucket-name: images
+    # 存储类型：local、aliyun、minio
+    type: local
+    domain: http://106.14.246.27:8080
+  local:
+    path: /home/admin/appendix
+
+#storage:
+#  enabled: true
+#  config:
+#    type: minio
+#  minio:
+#    access-key: admin
+#    secret-key: 12345678
+#    end-point: http://43.137.12.232:9000
+#    bucket-name: images
 
 #storage:
 #  enabled: true
