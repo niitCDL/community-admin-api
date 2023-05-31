@@ -139,7 +139,7 @@ public class SysUserController {
 
     @PutMapping
     @Operation(summary = "修改用户信息")
-    public Result<String> update(@RequestBody SysUserInfoVO sysUserInfoVO){
+    public Result<String> update(@RequestBody @Valid SysUserInfoVO sysUserInfoVO){
         sysUserService.updateByVo(sysUserInfoVO);
 
         return Result.ok();
