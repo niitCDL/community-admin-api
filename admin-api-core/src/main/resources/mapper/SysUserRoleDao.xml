@@ -3,6 +3,7 @@
 
 <mapper namespace="com.soft2242.one.system.dao.SysUserRoleDao">
 
+
     <select id="getRoleIdList" resultType="long">
         select role_id from sys_role_admin where admin_id = #{adminId} and deleted = 0
     </select>
@@ -13,5 +14,13 @@
         and t1.deleted = 0
         and t2.deleted = 0
     </select>
+
+    <delete id="unbindingUserAndRole">
+        delete from sys_role_admin t1
+        where t1.role_id = #{roleId} and t1.admin_id in
+        <foreach collection="adminIdList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
 
 </mapper>

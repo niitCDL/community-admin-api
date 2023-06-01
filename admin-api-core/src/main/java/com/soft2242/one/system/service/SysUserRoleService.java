@@ -4,6 +4,7 @@ package com.soft2242.one.system.service;
 import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.entity.SysUserRoleEntity;
+import com.soft2242.one.system.vo.SysUnbindingUserRoleVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 
@@ -67,4 +68,6 @@ public interface SysUserRoleService extends BaseService<SysUserRoleEntity> {
      * @return
      */
     List<SysUserInfoVO> getUserListByRoleId(Long roleId);
+
+    void unbindingUserAndRole(SysUnbindingUserRoleVO vo);
 }

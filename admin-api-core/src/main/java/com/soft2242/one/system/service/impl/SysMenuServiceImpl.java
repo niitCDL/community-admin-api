@@ -87,6 +87,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDao, SysMenuEntit
         return TreeUtils.build(SysMenuConvert.INSTANCE.convertList(menuList));
     }
 
+
     @Override
     public Long getSubMenuCount(Long pid) {
         return count(new LambdaQueryWrapper<SysMenuEntity>().eq(SysMenuEntity::getPid, pid));

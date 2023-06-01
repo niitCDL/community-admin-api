@@ -27,6 +27,8 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void update(SysUserEntity sysUserEntity);
 
     PageResult<SysUserInfoVO> page(SysUserQuery query);
+
+    PageResult<SysUserInfoVO> pageByRole(SysUserQuery query);
     List<SysUserVO> getList();
 
     void delete(List<Long> idList);
@@ -38,4 +40,10 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void importByExcel(MultipartFile file);
 
     void updateByVo(SysUserInfoVO sysUserInfoVO);
+
+    SysUserVO getByMobile(String mobile);
+
+    PageResult<SysUserInfoVO> page2(SysUserQuery query);
+
+    PageResult<SysUserInfoVO> page3(SysUserQuery query);
 }

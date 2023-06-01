@@ -1,13 +1,12 @@
-package com.soft2242.one.sms.cache;
+package com.soft2242.one.cache;
 
 import com.soft2242.one.base.common.cache.RedisCache;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
 /**
- * 短信发送 Cache
- *
- * @author ao&dl
+ * 短信发送缓存
  */
 @Service
 @AllArgsConstructor
@@ -26,7 +25,6 @@ public class SmsSendCache {
 
     public void saveCode(String mobile, String code) {
         String key = getCodeKey(mobile);
-
         // 保存到Redis，有效期10分钟
         redisCache.set(key, code, 10 * 60);
     }

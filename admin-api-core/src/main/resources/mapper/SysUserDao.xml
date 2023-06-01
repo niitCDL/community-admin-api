@@ -37,4 +37,5 @@
         where t1.username = #{username}
           and t1.deleted = 0
     </select>
+
 </mapper>

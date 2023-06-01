@@ -51,6 +51,12 @@
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.soft2242.one</groupId>
+            <artifactId>sms-plugin</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
     </dependencies>
 
 

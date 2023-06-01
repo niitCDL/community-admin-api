@@ -21,14 +21,12 @@ import java.util.Map;
 public interface SysPostService extends BaseService<SysPostEntity> {
 
     PageResult<SysPostVO> page(SysPostQuery query);
+
     List<SysPostVO> getList();
-
-
 
     void save(SysPostVO vo);
 
     void update(SysPostVO vo);
-
 
     void delete(List<Long> idList);
 }

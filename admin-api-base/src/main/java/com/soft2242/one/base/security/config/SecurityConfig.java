@@ -52,6 +52,11 @@ public class SecurityConfig {
     @Resource
     private ApplicationEventPublisher applicationEventPublisher;
 
+    @Resource
+    private MobileUserDetailsService mobileUserDetailsService;
+    @Resource
+    private MobileVerifyCodeService mobileVerifyCodeService;
+
 
 
     @Bean
@@ -62,11 +67,17 @@ public class SecurityConfig {
         return daoAuthenticationProvider;
     }
 
+    @Bean
+    MobileAuthenticationProvider mobileAuthenticationProvider() {
+        return new MobileAuthenticationProvider(mobileUserDetailsService, mobileVerifyCodeService);
+    }
+
 
     @Bean
     public AuthenticationManager authenticationManager() {
         List<AuthenticationProvider> providerList = new ArrayList<>();
         providerList.add(daoAuthenticationProvider());
+        providerList.add(mobileAuthenticationProvider());
 
         ProviderManager providerManager = new ProviderManager(providerList);
         providerManager.setAuthenticationEventPublisher(new DefaultAuthenticationEventPublisher(applicationEventPublisher));

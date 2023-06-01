@@ -10,6 +10,7 @@ import com.soft2242.one.system.entity.SysUserEntity;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.entity.SysUserRoleEntity;
 import com.soft2242.one.system.service.SysUserRoleService;
+import com.soft2242.one.system.vo.SysUnbindingUserRoleVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import org.springframework.stereotype.Service;
@@ -96,5 +97,10 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRoleDao, SysU
     public List<SysUserInfoVO> getUserListByRoleId(Long roleId) {
         List<SysUserInfoEntity> userList = baseMapper.getUserListByRoleId(roleId);
         return SysUserInfoConvert.INSTANCE.convertList(userList);
+    }
+
+    @Override
+    public void unbindingUserAndRole(SysUnbindingUserRoleVO vo) {
+        baseMapper.unbindingUserAndRole(vo);
     }
 }

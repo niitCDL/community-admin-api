@@ -29,9 +29,15 @@ public interface SysUserInfoDao extends BaseDao<SysUserInfoEntity> {
 
     List<SysUserInfoVO> getList(Map<String, Object> params);
 
+    List<SysUserInfoVO> getListByRoleId(Map<String, Object> params);
+
     List<SysUserVO> getList2();
 
     List<Long> getPostIdList(@Param("adminId") Long adminId);
 
     Long getDepartmentByAdminId(@Param("adminId") Long adminId);
+
+    List<SysUserInfoVO> getListByNotInRoleId(Map<String, Object> params);
+
+    List<Long> getAdminIdByRoleId(Long roleId);
 }
