@@ -6,6 +6,7 @@ import com.soft2242.one.system.service.SysAuthService;
 import com.soft2242.one.system.service.SysCaptchaService;
 import com.soft2242.one.system.vo.SysAccountLoginVO;
 import com.soft2242.one.system.vo.SysCaptchaVO;
+import com.soft2242.one.system.vo.SysMobileLoginVO;
 import com.soft2242.one.system.vo.SysTokenVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,6 +46,25 @@ public class SysAuthController {
     @Operation(summary = "退出")
     public Result<String> logout(HttpServletRequest request) {
         sysAuthService.logout(TokenUtils.getAccessToken(request));
+
+        return Result.ok();
+    }
+
+    @PostMapping("mobile")
+    @Operation(summary = "手机号登录")
+    public Result<SysTokenVO> mobile(@RequestBody SysMobileLoginVO login) {
+        SysTokenVO token = sysAuthService.loginByMobile(login);
+
+        return Result.ok(token);
+    }
+
+    @PostMapping("send/code")
+    @Operation(summary = "发送短信验证码")
+    public Result<String> sendCode(String mobile) {
+        boolean flag = sysAuthService.sendCode(mobile);
+        if (!flag) {
+            return Result.error("短信发送失败！");
+        }
 
         return Result.ok();
     }

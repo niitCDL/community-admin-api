@@ -29,6 +29,10 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
 
     PageResult<SysUserInfoVO> page(SysUserQuery query);
 
+<<<<<<< HEAD
+=======
+    PageResult<SysUserInfoVO> pageByRole(SysUserQuery query);
+>>>>>>> origin/test
     List<SysUserVO> getList();
 
     void delete(List<Long> idList);
@@ -41,5 +45,13 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
 
     void updateByVo(SysUserInfoVO sysUserInfoVO);
 
+<<<<<<< HEAD
     void saveAvatar(Long adminId,MultipartFile file) throws IOException;
+=======
+    SysUserVO getByMobile(String mobile);
+
+    PageResult<SysUserInfoVO> page2(SysUserQuery query);
+
+    PageResult<SysUserInfoVO> page3(SysUserQuery query);
+>>>>>>> origin/test
 }

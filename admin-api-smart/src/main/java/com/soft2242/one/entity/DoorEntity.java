@@ -37,6 +37,12 @@ public class DoorEntity extends BaseEntity {
 	private Long communityId;
 
 	/**
+	 * 0-在线
+	 * 1-离线
+	 */
+	private String onlineStatus;
+
+	/**
 	* 配置码
 	*/
 	private String sysCode;

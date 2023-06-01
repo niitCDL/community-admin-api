@@ -24,4 +24,5 @@ public interface SysUserConvert {
 
     List<SysUserEntity> convertList2(List<SysUserExcelVO> dataVoList);
 
+    SysUserVO convert(SysUserEntity user);
 }

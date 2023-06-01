@@ -4,15 +4,16 @@
 <mapper namespace="com.soft2242.one.dao.PassRecordDao">
 
     <select id="selectPageByQuery" resultType="com.soft2242.one.vo.PassRecordVO" parameterType="com.soft2242.one.query.PassRecordQuery">
-        SELECT tu.real_name as username, td.door_name as doorName, tc.community_name as communityName, pr.pass_way,
+        SELECT tu.real_name as username, sai.REAL_NAME as adminName, td.door_name as doorName, tc.community_name as communityName, pr.pass_way,
         pr.create_time
         FROM t_pass_record pr
         LEFT JOIN t_user tu on pr.user_id = tu.id
+        LEfT JOIN sys_admin_info sai on sai.ADMIN_ID = pr.user_id
         LEFT JOIN t_door td on pr.door_id = td.id
         LEFT JOIN t_community tc on pr.community_id = tc.id
         WHERE pr.deleted = 0
-        <if test="userId != null">
-            AND pr.user_id = #{userId}
+        <if test="username != null">
+            AND tu.real_name like "%"#{username}"%"
         </if>
         <if test="communityId != null">
             AND pr.community_id = #{communityId}

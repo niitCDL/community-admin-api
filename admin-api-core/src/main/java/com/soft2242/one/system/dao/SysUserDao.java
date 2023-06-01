@@ -24,5 +24,11 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
 
     SysUserEntity getByUsername(@Param("username") String username);
 
+<<<<<<< HEAD
     void saveAvatar(@Param("adminId")Long adminId,@Param("url")String url);
+=======
+    default SysUserEntity getByMobile(String mobile) {
+        return this.selectOne(new QueryWrapper<SysUserEntity>().eq("phone", mobile));
+    }
+>>>>>>> origin/test
 }

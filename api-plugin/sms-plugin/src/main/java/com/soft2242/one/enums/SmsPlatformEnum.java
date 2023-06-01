@@ -1,12 +1,11 @@
-package com.soft2242.one.sms.enums;
+package com.soft2242.one.enums;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
  * 短信平台枚举
- *
- * @author mqxu
  */
 @Getter
 @AllArgsConstructor
@@ -18,15 +17,7 @@ public enum SmsPlatformEnum {
     /**
      * 腾讯云
      */
-    TENCENT(1),
-    /**
-     * 七牛云
-     */
-    QINIU(2),
-    /**
-     * 华为云
-     */
-    HUAWEI(3);
+    TENCENT(1);
 
     private final int value;
 
