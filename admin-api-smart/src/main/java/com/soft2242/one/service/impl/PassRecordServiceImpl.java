@@ -13,6 +13,8 @@ import com.soft2242.one.vo.PassRecordVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 通行记录
  *
@@ -26,8 +28,13 @@ public class PassRecordServiceImpl extends BaseServiceImpl<PassRecordDao, PassRe
     @Override
     public PageResult<PassRecordVO> page(PassRecordQuery query) {
         IPage<PassRecordEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
-        return new PageResult<>(baseMapper.selectPageByQuery(query), page.getTotal());
+        List<PassRecordVO> recordList = baseMapper.selectPageByQuery(query);
+        recordList.forEach(item -> {
+            if (item.getPassWay().equals(3)) {
+                item.setUsername(item.getAdminName());
+            }
+        });
+        return new PageResult<>(recordList, page.getTotal());
     }
 
     private LambdaQueryWrapper<PassRecordEntity> getWrapper(PassRecordQuery query){

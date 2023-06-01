@@ -27,7 +27,7 @@ public class PassRecordEntity extends BaseEntity {
 	private Long doorId;
 
 	/**
-	* 出入方式 0-刷卡 1-人脸 2-指纹
+	* 出入方式 0-刷卡 1-人脸 2-指纹 3-物业开门
 	*/
 	private Integer passWay;
 
@@ -35,10 +35,5 @@ public class PassRecordEntity extends BaseEntity {
 	* 小区id
 	*/
 	private Long communityId;
-
-
-
-
-
 
 }

@@ -15,8 +15,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "通行记录查询")
 public class PassRecordQuery extends Query {
-    @Schema(description = "业主id")
-    private Long userId;
+    @Schema(description = "业主")
+    private String username;
 
     @Schema(description = "闸机id")
     private Long doorId;
