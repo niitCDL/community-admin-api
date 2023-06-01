@@ -31,6 +31,9 @@ public class DoorVO implements Serializable {
 	@Schema(description = "门禁图片")
 	private String doorImg;
 
+	@Schema(description = "门禁状态")
+	private Integer onlineStatus;
+
 	@Schema(description = "所属小区")
 	private Long communityId;
 
