@@ -16,6 +16,8 @@
              sys_admin_info t2
         where t1.id = t2.admin_id
           and t1.id = #{id}
+          and t1.deleted = 0
+          and t2.deleted = 0
     </select>
 
 
@@ -59,6 +61,8 @@
              sys_admin_info t2
         where t1.id = t2.admin_id
           and t1.id = #{id}
+          and t1.deleted = 0
+          and t2.deleted = 0
     </select>
     <select id="getPostIdList" resultType="java.lang.Long">
         select post_id from sys_admin_post where admin_id = #{adminId} and deleted = 0
