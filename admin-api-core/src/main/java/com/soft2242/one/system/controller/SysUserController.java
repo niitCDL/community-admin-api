@@ -50,6 +50,8 @@ public class SysUserController {
         }
 
 
+        System.out.println("新添加的用户密码为" + vo.getPassword());
+        System.out.println("加密过后的密码为:" + passwordEncoder.encode(vo.getPassword()));
         // 密码加密
         vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 
@@ -81,6 +83,24 @@ public class SysUserController {
         PageResult<SysUserInfoVO> page = sysUserService.page(query);
         return Result.ok(page);
     }
+
+    //通过角色roleId分页
+    @GetMapping("page/byRoleId")
+    @Operation(summary = "分页")
+    public Result<PageResult<SysUserInfoVO>> page2(@ParameterObject @Valid SysUserQuery query) {
+        PageResult<SysUserInfoVO> page = sysUserService.page2(query);
+        return Result.ok(page);
+    }
+
+    //找到没有该roleId的用户
+    @GetMapping("page/byNotInRoleId")
+    @Operation(summary = "分页")
+    public Result<PageResult<SysUserInfoVO>> page3(@ParameterObject @Valid SysUserQuery query) {
+        PageResult<SysUserInfoVO> page = sysUserService.page3(query);
+        return Result.ok(page);
+    }
+
+
     @GetMapping("list")
     @Operation(summary = "用户列表")
     public Result<List<SysUserVO>> list() {

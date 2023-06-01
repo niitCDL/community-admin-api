@@ -37,7 +37,7 @@ public class PlanTask {
     //一天的时间毫秒数
     public static final long DAY=1000*60*60*24;
 
-    @Scheduled(cron = "* * */6 * * ?")
+    @Scheduled(cron = "0 0 0-6 * * ?")
     public void generatedRecords(){
         //获取定时任务执行时的日期时间
         Date today=new Date();

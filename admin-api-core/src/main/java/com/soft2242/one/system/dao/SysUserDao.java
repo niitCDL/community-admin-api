@@ -23,4 +23,8 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
     String getTokenById(@Param("id") Long id);
 
     SysUserEntity getByUsername(@Param("username") String username);
+
+    default SysUserEntity getByMobile(String mobile) {
+        return this.selectOne(new QueryWrapper<SysUserEntity>().eq("phone", mobile));
+    }
 }

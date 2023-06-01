@@ -41,6 +41,13 @@ storage:
     end-point: http://43.137.12.232:9000
     bucket-name: images
 
+aliyun:
+  sms:
+    platform: 0
+    signName: FlobbyApp
+    templateId: SMS_206546276
+    accessKey: LTAI5tRU6tDBC2RWtKsvShLZ
+    secretKey: 7Q4sljdCFMLxMpPv7axRoPA3Yglrec
 
 #storage:
 #  enabled: true

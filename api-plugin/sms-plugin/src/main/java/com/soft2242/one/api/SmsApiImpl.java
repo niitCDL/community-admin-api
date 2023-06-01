@@ -1,28 +1,24 @@
-package com.soft2242.one.sms.api;
+package com.soft2242.one.api;
 
-import com.soft2242.one.sms.cache.SmsSendCache;
-import com.soft2242.one.sms.sms.service.SmsService;
+
+import com.soft2242.one.base.common.cache.RedisCache;
+import com.soft2242.one.base.common.constant.Constant;
+import com.soft2242.one.cache.SmsSendCache;
+import com.soft2242.one.service.SmsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
-
 /**
- * 短信服务Api
- *
- * @author mqxu
+ * 短信API实现类
  */
 @Component
 @AllArgsConstructor
 public class SmsApiImpl implements SmsApi {
     private final SmsService smsService;
     private final SmsSendCache smsSendCache;
-
-    @Override
-    public boolean send(String mobile, Map<String, String> params) {
-        return smsService.send(mobile, params);
-    }
+    private final RedisCache redisCache;
 
     @Override
     public boolean sendCode(String mobile, String key, String value) {
@@ -39,13 +35,18 @@ public class SmsApiImpl implements SmsApi {
 
     @Override
     public boolean verifyCode(String mobile, String code) {
-        String value = smsSendCache.getCode(mobile);
-        if (value != null) {
-            // 删除短信验证码
-            smsSendCache.deleteCode(mobile);
-            // 效验
-            return value.equalsIgnoreCase(code);
+        try {
+            String s = (String) redisCache.get(Constant.MOBILE_LOGIN_KEY + mobile);
+            if (s == null) {
+                return false;
+            }
+            if (!s.equals(code)) {
+                return false;
+            }
+            return true;
+        } finally {
+            redisCache.delete(Constant.MOBILE_LOGIN_KEY + mobile);
         }
-        return false;
+
     }
 }

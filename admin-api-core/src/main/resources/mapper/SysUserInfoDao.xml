@@ -89,4 +89,71 @@
           and t1.deleted = 0
           and t2.deleted = 0
     </select>
+
+    <select id="getListNotInAdminId" resultType="com.soft2242.one.system.vo.SysUserInfoVO"></select>
+
+    <select id="getListByRoleId" resultType="com.soft2242.one.system.vo.SysUserInfoVO">
+        select t1.id,
+        t1.username,
+        t2.real_name,
+        t2.admin_id,
+        t2.gender,
+        t1.phone
+        from sys_admin t1,
+        sys_admin_info t2,
+        sys_role_admin t3
+        where t1.id = t2.admin_id
+        and t1.id = t3.admin_id
+        and t1.deleted = 0
+        and t2.deleted = 0
+        and t3.deleted = 0
+        and t3.role_id = #{roleId}
+        <if test="username != null and username.trim() != ''">
+            and t1.username = #{username}
+        </if>
+        <if test="phone != null and phone.trim() != ''">
+            and t1.phone = #{phone}
+        </if>
+        <if test="gender != null">
+            and t2.gender = #{gender}
+        </if>
+    </select>
+
+    <select id="getListByNotInRoleId" resultType="com.soft2242.one.system.vo.SysUserInfoVO">
+        select t1.id,
+        t1.username,
+        t2.real_name,
+        t2.admin_id,
+        t2.gender,
+        t1.phone,
+        t1.create_time
+        from sys_admin t1,
+        sys_admin_info t2,
+        sys_role_admin t3
+        where t1.id = t2.admin_id
+        and t1.id = t3.admin_id
+        and t1.deleted = 0
+        and t2.deleted = 0
+        and t3.deleted = 0
+        and t3.admin_id not in
+        <foreach collection="excludeAdminIdList" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        <if test="username != null and username.trim() != ''">
+            and t1.username = #{username}
+        </if>
+        <if test="phone != null and phone.trim() != ''">
+            and t1.phone = #{phone}
+        </if>
+        <if test="gender != null">
+            and t2.gender = #{gender}
+        </if>
+    </select>
+
+    <select id="getAdminIdByRoleId" resultType="java.lang.Long">
+        select distinct admin_id
+        from sys_role_admin t1
+        where t1.deleted = 0
+          and role_id = #{roleId}
+    </select>
 </mapper>

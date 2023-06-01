@@ -1,11 +1,8 @@
-package com.soft2242.one.sms.sms;
+package com.soft2242.one.strategy;
 
 import java.util.Map;
-
 /**
- * 短信
- *
- * @author mqxu
+ * 短信策略接口
  */
 public interface SmsStrategy {
 

@@ -1,12 +1,15 @@
 package com.soft2242.one.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.system.convert.SysDepartmentConvert;
 import com.soft2242.one.system.convert.SysPostConvert;
+import com.soft2242.one.system.dao.SysAdminPostDao;
 import com.soft2242.one.system.dao.SysPostDao;
+import com.soft2242.one.system.entity.SysAdminPostEntity;
 import com.soft2242.one.system.entity.SysDepartmentEntity;
 import com.soft2242.one.system.entity.SysPostEntity;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
@@ -26,6 +29,8 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class SysPostServiceImpl extends BaseServiceImpl<SysPostDao, SysPostEntity> implements SysPostService {
+
+    private SysAdminPostDao sysAdminPostDao;
 
     @Override
     public PageResult<SysPostVO> page(SysPostQuery query) {
@@ -68,6 +73,10 @@ public class SysPostServiceImpl extends BaseServiceImpl<SysPostDao, SysPostEntit
 
     @Override
     public void delete(List<Long> idList) {
+        //删除用户与岗位关联表
+        for (Long postId : idList) {
+            sysAdminPostDao.delete(new QueryWrapper<SysAdminPostEntity>().eq("post_id",postId));
+        }
         baseMapper.deleteBatchIds(idList);
     }
 

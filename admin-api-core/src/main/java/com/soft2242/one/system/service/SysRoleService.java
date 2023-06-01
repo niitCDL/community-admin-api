@@ -7,6 +7,7 @@ import com.soft2242.one.system.entity.SysRoleEntity;
 import com.soft2242.one.system.query.SysRoleQuery;
 import com.soft2242.one.system.vo.SysRoleDataScopeVO;
 import com.soft2242.one.system.vo.SysRoleVO;
+import com.soft2242.one.system.vo.SysUserInfoVO;
 
 import java.util.List;
 
@@ -28,4 +29,5 @@ public interface SysRoleService extends BaseService<SysRoleEntity> {
     void dataScope(SysRoleDataScopeVO vo);
 
     void delete(List<Long> idList);
+
 }

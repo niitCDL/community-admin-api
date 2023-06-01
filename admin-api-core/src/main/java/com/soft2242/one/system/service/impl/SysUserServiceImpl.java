@@ -1,6 +1,7 @@
 package com.soft2242.one.system.service.impl;
 
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fhs.trans.service.impl.TransService;
@@ -24,6 +25,7 @@ import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
+import org.apache.poi.util.StringUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,6 +64,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
     public SysUserInfoVO getUserInfo(Long id) {
 
         SysUserInfoVO userInfo = sysUserInfoDao.getUserInfo(id);
+        userInfo.setPassword(null);
         userInfo.setOrgId(sysUserInfoDao.getDepartmentByAdminId(userInfo.getAdminId()));
         userInfo.setRoleIdList(sysUserRoleDao.getRoleIdList(userInfo.getAdminId()));
         userInfo.setPostIdList(sysUserInfoDao.getPostIdList(userInfo.getAdminId()));
@@ -182,6 +185,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         return new PageResult<>(list, page.getTotal());
     }
 
+    @Override
+    public PageResult<SysUserInfoVO> pageByRole(SysUserQuery query) {
+        return null;
+    }
+
     public List<SysUserVO> getList() {
         List<SysUserVO> list = sysUserInfoDao.getList2();
         return list;
@@ -266,7 +274,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         SysUserEntity sysUserEntity = new SysUserEntity();
         sysUserEntity.setId(sysUserInfoVO.getAdminId());
         sysUserEntity.setUsername(sysUserInfoVO.getUsername());
-        sysUserEntity.setPassword(passwordEncoder.encode(sysUserInfoVO.getPassword()));
+        if (StrUtil.isNotBlank(sysUserInfoVO.getPassword())){
+            sysUserEntity.setPassword(passwordEncoder.encode(sysUserInfoVO.getPassword()));
+        }else {
+            sysUserEntity.setPassword(sysUserDao.selectById(sysUserInfoVO.getAdminId()).getPassword());
+        }
         sysUserEntity.setPhone(sysUserInfoVO.getPhone());
         sysUserDao.updateById(sysUserEntity);
         changeAccountStatus(sysUserEntity.getId(), sysUserInfoVO.getAccountStatus());
@@ -309,9 +321,44 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
 
     }
 
+    @Override
+    public SysUserVO getByMobile(String mobile) {
+        SysUserEntity user = sysUserDao.getByMobile(mobile);
+        return SysUserConvert.INSTANCE.convert(user);
+    }
+
+    @Override
+    public PageResult<SysUserInfoVO> page2(SysUserQuery query) {
+        // 查询参数
+        Map<String, Object> params = getParams(query);
+        // 分页查询
+        IPage<SysUserInfoEntity> page = getPage(query);
+        params.put(Constant.PAGE, page);
+
+        // 数据列表
+        List<SysUserInfoVO> list = sysUserInfoDao.getListByRoleId(params);
+        return new PageResult<>(list, page.getTotal());
+    }
+
+    @Override
+    public PageResult<SysUserInfoVO> page3(SysUserQuery query) {
+        // 查询参数
+        Map<String, Object> params = getParams(query);
+        // 分页查询
+        IPage<SysUserInfoEntity> page = getPage(query);
+        params.put(Constant.PAGE, page);
+
+        List<Long> adminIdList = sysUserInfoDao.getAdminIdByRoleId(query.getRoleId());
+        params.put("excludeAdminIdList",adminIdList);
+        // 数据列表
+        List<SysUserInfoVO> list = sysUserInfoDao.getListByNotInRoleId(params);
+        return new PageResult<>(list, page.getTotal());
+    }
+
 
     private Map<String, Object> getParams(SysUserQuery query) {
         Map<String, Object> params = new HashMap<>();
+        params.put("roleId",query.getRoleId());
         params.put("username", query.getUsername());
         params.put("phone", query.getPhone());
         params.put("gender", query.getGender());
