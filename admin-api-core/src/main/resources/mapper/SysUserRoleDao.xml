@@ -10,6 +10,8 @@
         SELECT t1.* FROM sys_admin_info t1,sys_role_admin t2
         WHERE t1.ADMIN_ID=t2.admin_id
         AND t2.role_id=#{roleId}
+        and t1.deleted = 0
+        and t2.deleted = 0
     </select>
 
 </mapper>
