@@ -22,10 +22,13 @@ public class PassRecordVO implements Serializable {
 	@Schema(description = "用户")
 	private String username;
 
+	@Schema(description = "管理员名称")
+	private String adminName;
+
 	@Schema(description = "闸机id")
 	private String doorName;
 
-	@Schema(description = "出入方式 0-刷卡 1-人脸 2-指纹")
+	@Schema(description = "出入方式 0-刷卡 1-人脸 2-指纹 3-管理员开门")
 	private Integer passWay;
 
 	@Schema(description = "小区")
