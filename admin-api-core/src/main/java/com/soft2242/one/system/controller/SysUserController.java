@@ -141,7 +141,6 @@ public class SysUserController {
     @Operation(summary = "修改用户信息")
     public Result<String> update(@RequestBody @Valid SysUserInfoVO sysUserInfoVO){
         sysUserService.updateByVo(sysUserInfoVO);
-
         return Result.ok();
     }
 
