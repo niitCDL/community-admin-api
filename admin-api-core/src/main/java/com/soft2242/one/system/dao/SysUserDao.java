@@ -23,4 +23,6 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
     String getTokenById(@Param("id") Long id);
 
     SysUserEntity getByUsername(@Param("username") String username);
+
+    void saveAvatar(@Param("adminId")Long adminId,@Param("url")String url);
 }

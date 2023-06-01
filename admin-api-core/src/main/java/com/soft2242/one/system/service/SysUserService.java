@@ -10,6 +10,7 @@ import com.soft2242.one.system.vo.SysUserVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface SysUserService extends BaseService<SysUserInfoEntity> {
@@ -38,4 +39,6 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void importByExcel(MultipartFile file);
 
     void updateByVo(SysUserInfoVO sysUserInfoVO);
+
+    void saveAvatar(Long adminId,MultipartFile file) throws IOException;
 }

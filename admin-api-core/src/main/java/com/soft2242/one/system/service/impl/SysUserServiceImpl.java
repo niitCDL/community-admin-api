@@ -19,16 +19,19 @@ import com.soft2242.one.system.enums.SuperAdminEnum;
 import com.soft2242.one.system.enums.UserOnlineEnum;
 import com.soft2242.one.system.enums.UserStatusEnum;
 import com.soft2242.one.system.query.SysUserQuery;
+import com.soft2242.one.system.service.MinioService;
 import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -39,6 +42,8 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserInfoEntity> implements SysUserService {
+
+    private MinioService minioService;
 
     private SysUserDao sysUserDao;
 
@@ -325,4 +330,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
         return sysUserDao.getTokenById(id);
     }
 
+    @Override
+    public void saveAvatar(Long adminId,MultipartFile file) throws IOException {
+        String filename = minioService.upload(file);
+        String url = minioService.preview(filename);
+        sysUserDao.saveAvatar(adminId,url);
+    }
 }

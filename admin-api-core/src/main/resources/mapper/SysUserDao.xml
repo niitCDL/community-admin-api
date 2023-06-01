@@ -19,6 +19,11 @@
         set account_status = #{status}
         where id = #{id}
     </update>
+    <update id="saveAvatar">
+        update sys_admin_info
+        set avatar = #{url}
+        where admin_id = #{adminId}
+    </update>
 
 
     <select id="getMaxId" resultType="java.lang.Long">
