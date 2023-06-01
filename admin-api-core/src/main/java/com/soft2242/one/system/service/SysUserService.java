@@ -28,6 +28,7 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void update(SysUserEntity sysUserEntity);
 
     PageResult<SysUserInfoVO> page(SysUserQuery query);
+
     List<SysUserVO> getList();
 
     void delete(List<Long> idList);
