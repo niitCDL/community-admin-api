@@ -10,11 +10,14 @@ import com.soft2242.one.dao.ActivityDao;
 import com.soft2242.one.entity.Activity;
 import com.soft2242.one.query.ActivityQuery;
 import com.soft2242.one.service.ActivityService;
+import com.soft2242.one.service.ActivityTypeService;
+import com.soft2242.one.service.ICommunityService;
 import com.soft2242.one.vo.ActivityVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,15 +29,28 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> implements ActivityService {
+    private final ICommunityService communityService;
+    private final ActivityTypeService activityTypeService;
 
     @Override
     public PageResult<ActivityVO> page(ActivityQuery query) {
         IPage<Activity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
-
-        return new PageResult<>(ActivityConvert.INSTANCE.convertList(page.getRecords()), page.getTotal());
+        List<ActivityVO> activityVOS = ActivityConvert.INSTANCE.convertList(page.getRecords());
+        PageResult<ActivityVO> result;
+        try {
+            activityVOS.forEach(o -> {
+                o.setCommunityName(communityService.getById(o.getCommunityId()).getCommunityName());
+                o.setActivityType(activityTypeService.getById(o.getTypeId()).getName());
+            });
+            result = new PageResult<>(activityVOS, page.getTotal());
+        } catch (Exception e) {
+            result = new PageResult<>(new ArrayList<>(), page.getTotal());
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
-    private LambdaQueryWrapper<Activity> getWrapper(ActivityQuery query){
+    private LambdaQueryWrapper<Activity> getWrapper(ActivityQuery query) {
         LambdaQueryWrapper<Activity> wrapper = Wrappers.lambdaQuery();
         return wrapper;
     }
@@ -42,14 +58,12 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
     @Override
     public void save(ActivityVO vo) {
         Activity entity = ActivityConvert.INSTANCE.convert(vo);
-
         baseMapper.insert(entity);
     }
 
     @Override
     public void update(ActivityVO vo) {
         Activity entity = ActivityConvert.INSTANCE.convert(vo);
-
         updateById(entity);
     }
 
@@ -57,6 +71,27 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> idList) {
         removeByIds(idList);
+    }
+
+    @Override
+    public void status(Integer id) {
+        Activity activity = baseMapper.selectById(id);
+        Integer status = activity.getStatus();
+        if (status == 1) {
+            activity.setStatus(0);
+            System.out.println(activity);
+            baseMapper.updateById(activity);
+        } else if (status == 0) {
+            activity.setStatus(1);
+            System.out.println(activity);
+            baseMapper.updateById(activity);
+        }
+    }
+
+    @Override
+    public List<ActivityVO> getList() {
+        List<Activity> activities = baseMapper.selectList(getWrapper(new ActivityQuery()));
+        return ActivityConvert.INSTANCE.convertList(activities);
     }
 
 }

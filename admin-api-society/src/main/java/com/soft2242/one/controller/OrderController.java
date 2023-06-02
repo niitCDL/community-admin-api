@@ -1,12 +1,16 @@
 package com.soft2242.one.controller;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.OrderConvert;
 import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.OrderQuery;
+import com.soft2242.one.service.ICommunityService;
+import com.soft2242.one.service.IHouseService;
 import com.soft2242.one.service.IOrderService;
+import com.soft2242.one.vo.CommunityVO;
+import com.soft2242.one.vo.HouseVO;
+import com.soft2242.one.vo.OrderRecordVO;
 import com.soft2242.one.vo.OrderVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,14 +38,27 @@ import java.util.List;
 public class OrderController {
 
     private final IOrderService orderSevice;
+    private final IHouseService houseService;
+    private final ICommunityService communityService;
+
+
 
     @GetMapping("page")
     @Operation(summary = "分页查询")
     public Result<PageResult<OrderVO>> page(@ParameterObject @Valid OrderQuery query) {
-//        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段
+//        VO进行多表查询插入连表字段：插入房屋表的房屋编号和小区字段
         PageResult<OrderVO> page = orderSevice.page(query);
         return Result.ok(page);
     }
+
+    @GetMapping("recordPage")
+    @Operation(summary = "分页抄表")
+    public Result<PageResult<OrderVO>> recordPage(@ParameterObject @Valid OrderQuery query) {
+//        VO进行多表查询插入连表字段：插入房屋表的房屋编号和小区字段
+        PageResult<OrderVO> page = orderSevice.recordPage(query);
+        return Result.ok(page);
+    }
+
 
 
     @GetMapping("{id}")
@@ -67,7 +84,7 @@ public class OrderController {
         return Result.ok();
     }
 
-    @GetMapping("delete/{id}")
+    @PutMapping("delete/{id}")
     @Operation(summary = "删除订单")
     public Result<String> delete(@PathVariable @Valid Long id) {
         Order entity = orderSevice.getById(id);
@@ -90,9 +107,13 @@ public class OrderController {
 
     @GetMapping("export")
     @Operation(summary = "批量导出订单")
-
     public void export() {
         orderSevice.export();
+    }
+    @GetMapping("exportCount")
+    @Operation(summary = "批量导出统计订单")
+    public void export2() {
+        orderSevice.export2();
     }
 
 
@@ -103,5 +124,40 @@ public class OrderController {
         orderSevice.delete(idList);
         return Result.ok();
     }
+    @GetMapping("list")
+    @Operation(summary = "获取房屋列表")
+    public Result<List<HouseVO>> list() {
+        List<HouseVO> list = houseService.getList();
+        return Result.ok(list);
+    }
+    @GetMapping("community")
+    @Operation(summary = "获取小区列表")
+    public Result<List<CommunityVO>> communityList() {
+        List<CommunityVO> list = communityService.getList();
+        return Result.ok(list);
+    }
+
+    @GetMapping("orderList")
+    @Operation(summary = "订单列表")
+    public Result<List<Order>> orderList() {
+        List<Order> list = orderSevice.getList();
+        return Result.ok(list);
+    }
+
+    @GetMapping("money/{id}")
+    @Operation(summary = "根据房屋查询账单")
+    public Result<List<OrderVO>> getByHouseNum(@PathVariable("id") Long id) {
+        List<OrderVO> orderVOS = OrderConvert.INSTANCE.convertList(orderSevice.findByHouseId(id));
+//        根据房屋number查询账单
+        return Result.ok(orderVOS);
+    }
+
+    @GetMapping("record")
+    @Operation(summary = "统计账单")
+    public Result<List<OrderRecordVO>> getRecord() {
+        return Result.ok(orderSevice.getRecordList());
+    }
+
+
 
 }

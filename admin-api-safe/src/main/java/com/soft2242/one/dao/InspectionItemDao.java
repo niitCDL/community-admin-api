@@ -24,4 +24,6 @@ import java.util.Map;
 @Mapper
 public interface InspectionItemDao extends BaseDao<InspectionItemEntity> {
     List<InspectionItemVO> getInspectionList(Map<String,Object> params);
+
+    List<InspectionItemEntity> getByCommunityId(Long communtiyId);
 }

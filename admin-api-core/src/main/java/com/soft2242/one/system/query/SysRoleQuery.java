@@ -16,6 +16,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "角色查询")
 public class SysRoleQuery extends Query {
+
     @Schema(description = "角色名称")
     private String name;
 

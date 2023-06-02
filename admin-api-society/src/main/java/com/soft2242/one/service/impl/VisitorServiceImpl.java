@@ -12,21 +12,19 @@ import com.soft2242.one.entity.Visitor;
 import com.soft2242.one.query.VisitorQuery;
 import com.soft2242.one.service.IVisitorService;
 import com.soft2242.one.vo.VisitorVO;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
- * <p>
-<<<<<<< HEAD
- * 服务实现类
-=======
- *  服务实现类
->>>>>>> origin/test
  * </p>
  *
  * @author ysh
  * @since 2023-05-25
  */
 @Service
+@AllArgsConstructor
 
 public class VisitorServiceImpl extends BaseServiceImpl<VisitorMapper, Visitor> implements IVisitorService {
 
@@ -49,6 +47,13 @@ public class VisitorServiceImpl extends BaseServiceImpl<VisitorMapper, Visitor> 
     @Override
     public void update(VisitorVO vo) {
         updateById(VisitorConvert.INSTANCE.convert(vo));
+    }
+
+    @Override
+    public List<VisitorVO> getListById(Long id) {
+        List<Visitor> visitors = baseMapper.selectList(getWrapper(new VisitorQuery()).eq(Visitor::getId, id));
+        return VisitorConvert.INSTANCE.convertList(visitors);
+
     }
 
 

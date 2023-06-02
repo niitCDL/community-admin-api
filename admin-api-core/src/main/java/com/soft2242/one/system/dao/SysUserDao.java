@@ -5,9 +5,6 @@ import com.soft2242.one.base.mybatis.dao.BaseDao;
 import com.soft2242.one.system.entity.SysUserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 系统用户
@@ -17,11 +14,15 @@ import java.util.Map;
 @Mapper
 public interface SysUserDao extends BaseDao<SysUserEntity> {
 
-    default SysUserEntity getByUsername(String username) {
-        return this.selectOne(new QueryWrapper<SysUserEntity>().eq("username", username));
-    }
     Long getMaxId();
 
     String getTokenById(@Param("id") Long id);
 
+    SysUserEntity getByUsername(@Param("username") String username);
+
+    void saveAvatar(@Param("adminId")Long adminId,@Param("url")String url);
+
+    default SysUserEntity getByMobile(String mobile) {
+        return this.selectOne(new QueryWrapper<SysUserEntity>().eq("phone", mobile));
+    }
 }

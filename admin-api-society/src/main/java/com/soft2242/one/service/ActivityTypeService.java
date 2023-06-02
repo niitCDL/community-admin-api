@@ -19,10 +19,15 @@ import java.util.List;
 public interface ActivityTypeService extends BaseService<ActivityType> {
 
     PageResult<ActivityTypeVO> page(ActivityTypeQuery query);
+    PageResult<ActivityTypeVO> page2(ActivityTypeQuery query);
 
     void save(ActivityTypeVO vo);
 
     void update(ActivityTypeVO vo);
 
     void delete(List<Long> idList);
+
+    void status(Integer id);
+
+    List<ActivityTypeVO> getList();
 }

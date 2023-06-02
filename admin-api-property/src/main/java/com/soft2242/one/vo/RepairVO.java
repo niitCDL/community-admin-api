@@ -22,11 +22,11 @@ public class RepairVO implements Serializable {
 	private Long id;
 
 	@Schema(description = "社区id")
-	private Long communityId;
-
+	private String communityId;
+	private String communityName;
 	@Schema(description = "报修人id")
 	private Long userId;
-
+	private String userName;
 	@Schema(description = "报修类别(0:公共报修，1：个人报修)")
 	private Integer type;
 
@@ -49,7 +49,11 @@ public class RepairVO implements Serializable {
 	private Integer state;
 
 	@Schema(description = "处理人id，逗号分隔")
-	private String employeeIds;
+	//这里存着登录用户的信息
+	private String[] employeeIds = null;
+	private String employees = null;
+	//处理人姓名
+	private String[] employeeNames;
 
 	@Schema(description = "处理结果")
 	private String result;
@@ -65,6 +69,9 @@ public class RepairVO implements Serializable {
 	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
 	private Date evaluateTime;
 
+	@Schema(description = "创建时间")
+	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
+	private Date createTime;
 
 
 }

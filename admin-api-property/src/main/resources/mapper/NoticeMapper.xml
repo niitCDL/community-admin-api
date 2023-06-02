@@ -4,9 +4,53 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soft2242.one.dao.NoticeDao">
 
-    <select id="getList" resultType="com.soft2242.one.entity.NoticeEntity">
-        select t1.*
-            from t_notice t1 where t1.deleted = 0
+    <!--    <select id="getList" resultType="com.soft2242.one.vo.NoticeVO">-->
+    <!--        select t1.*-->
+    <!--            from t_notice t1 where t1.deleted = 0-->
+    <!--        <if test="title != null and title.trim() != ''">-->
+    <!--            and t1.title like CONCAT('%',#{title},'%')-->
+    <!--        </if>-->
+    <!--        <if test="noticeId != null and noticeId.trim() != ''">-->
+    <!--            and t1.id = #{noticeId}-->
+    <!--        </if>-->
+    <!--        <if test="content != null and content.trim() != ''">-->
+    <!--            and t1.content like   CONCAT('%',#{content},'%')-->
+    <!--        </if>-->
+    <!--        <if test="communityId != null and communityId != 0">-->
+    <!--            and t1.community_id = #{communityId}-->
+    <!--        </if>-->
+    <!--        <if test="adminId != null and adminId != 0">-->
+    <!--            and t1.admin_id = #{adminId}-->
+    <!--        </if>-->
+    <!--    </select>-->
+    <!--    <if test="communityId != null and communityId != 0">-->
+    <!--        ,t2.username-->
+    <!--    </if>-->
+    <!--    <if test="adminId != null and adminId != 0">-->
+    <!--        ,t3.username-->
+    <!--    </if>-->
+
+    <!--    <if test="communityId != null and communityId != 0">-->
+    <!--        join t_community t2 on t2.id = t1.community_id-->
+    <!--    </if>-->
+    <!--    <if test="adminId != null and adminId != 0">-->
+    <!--        join sys_admin t3 on t3.admin_id = sys_admin.id-->
+    <!--    </if>-->
+
+
+    <select id="getList" resultType="com.soft2242.one.vo.NoticeVO">
+        select distinct
+        t1.*,
+        t2.community_name,
+        t4.real_name userName
+        from t_notice t1
+        join t_community t2 on t2.id = t1.community_id
+        join sys_admin t3 on t1.admin_id = t3.id
+        join sys_admin_info t4 on t4.admin_id = t3.id
+        where t1.deleted = 0
+        and t2.deleted = 0
+        and t3.deleted = 0
+        and t4.deleted = 0
         <if test="title != null and title.trim() != ''">
             and t1.title like CONCAT('%',#{title},'%')
         </if>
@@ -14,10 +58,10 @@
             and t1.id = #{noticeId}
         </if>
         <if test="content != null and content.trim() != ''">
-            and t1.content like   CONCAT('%',#{content},'%')
+            and t1.content like CONCAT('%',#{content},'%')
         </if>
-        <if test="communityId != null and communityId != 0">
-            and t1.community_id = #{communityId}
+        <if test="communityId != null and communityId.length != 0">
+            and t1.community_id in (#{communityId})
         </if>
         <if test="adminId != null and adminId != 0">
             and t1.admin_id = #{adminId}

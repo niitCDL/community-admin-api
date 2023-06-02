@@ -26,11 +26,13 @@ public class BatchBuildingVO implements Serializable, TransPojo {
 
     @ExcelIgnore
     private Long id;
-    @MyExcelProperty("社区ID")
+    @ExcelIgnore
     private Long communityId;
+    @MyExcelProperty("小区名称")
+    private String communityName;
     @MyExcelProperty("楼宇名称")
     private String buildingName;
-    @MyExcelProperty("所在单元")
+    @MyExcelProperty("层数")
     private Integer units;
     @MyExcelProperty("占地面积")
     private Integer usedArea;

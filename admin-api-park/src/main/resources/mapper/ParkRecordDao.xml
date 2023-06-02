@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft2242.one.dao.ParkRecordDao">
+
+    <select id="getList" resultType="com.soft2242.one.vo.ParkRecordVO">
+    SELECT t1.* , t2.door_name ,t3.licence ,t4.park_name
+    FROM t_park_record t1
+    LEFT JOIN t_door t2 ON t2.id = t1.door_id
+    LEFT JOIN t_car t3 ON t3.id = t1.car_id
+    LEFT JOIN t_park t4 ON t4.id = t1.park_id
+    WHERE	t1.deleted = 0
+    <if test="doorName!=null and doorName.trim() != ''">
+        AND t2.door_name LIKE CONCAT('%',#{doorName},'%')
+    </if>
+    <if test="licence!=null and licence.trim() != ''">
+        AND t3.licence LIKE CONCAT('%',#{licence},'%')
+    </if>
+    <if test="parkName!=null and parkName.trim() != ''">
+        AND t4.park_name LIKE CONCAT('%',#{parkName},'%')
+    </if>
+    <if test="type!=null and type.trim() != ''">
+        AND t1.type = #{carportName}
+    </if>
+</select>
+
+</mapper>

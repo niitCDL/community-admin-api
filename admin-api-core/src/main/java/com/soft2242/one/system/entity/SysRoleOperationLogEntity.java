@@ -36,4 +36,10 @@ public class SysRoleOperationLogEntity extends BaseEntity {
 	@TableField(exist = false)
 	private String operationObjectName;
 
+	@TableField(exist = false)
+	private String operatorName;
+
+	@TableField(exist = false)
+	private String updaterName;
+
 }

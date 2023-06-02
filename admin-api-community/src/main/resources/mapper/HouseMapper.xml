@@ -4,11 +4,11 @@
 
 
     <select id="getList" resultType="com.soft2242.one.vo.HouseVO">
-        SELECT t1.community_name ,t2.building_name , t2.units , t3.*
-        FROM t_community t1
-            LEFT JOIN t_building t2 ON t2.community_id = t1.id
-            LEFT JOIN t_house t3 ON t3.community_id = t1.id
-        AND t3.deleted = 0
+        SELECT t1.community_name ,t2.building_name , t3.*
+        FROM t_house t3
+        LEFT JOIN t_building t2 ON t2.id = t3.building_id
+        LEFT JOIN t_community t1 ON t3.community_id = t1.id
+        WHERE	t3.deleted = 0
         <if test="buildingName!=null and buildingName.trim() != ''">
             AND t2.building_name LIKE CONCAT('%',#{buildingName},'%')
         </if>
@@ -16,7 +16,7 @@
             AND t1.community_name LIKE CONCAT('%',#{communityName},'%')
         </if>
         <if test="units!=null and units.trim() != ''">
-            AND t2.units LIKE CONCAT('%',#{units},'%')
+            AND t3.units LIKE CONCAT('%',#{units},'%')
         </if>
         <if test="houseNumber!=null and houseNumber.trim() != ''">
             AND t3.house_number LIKE CONCAT('%',#{houseNumber},'%')

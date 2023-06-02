@@ -3,25 +3,38 @@
 
 <mapper namespace="com.soft2242.one.dao.ComplaintDao">
 
-    <resultMap type="com.soft2242.one.entity.ComplaintEntity" id="complaintMap">
-        <result property="id" column="id"/>
-        <result property="communityId" column="community_id"/>
-        <result property="userId" column="user_id"/>
-        <result property="type" column="type"/>
-        <result property="titile" column="titile"/>
-        <result property="content" column="content"/>
-        <result property="imgs" column="imgs"/>
-        <result property="state" column="state"/>
-        <result property="result" column="result"/>
-        <result property="employeeIds" column="employee_ids"/>
-        <result property="handleTime" column="handle_time"/>
-        <result property="evaluate" column="evaluate"/>
-        <result property="evaluateTime" column="evaluate_time"/>
-        <result property="deleted" column="deleted"/>
-        <result property="createTime" column="create_time"/>
-        <result property="updateTime" column="update_time"/>
-        <result property="creator" column="creator"/>
-        <result property="updater" column="updater"/>
-    </resultMap>
+    <select id="getList" resultType="com.soft2242.one.vo.ComplaintVO">
+        select distinct t1.*,t1.employee_ids employees,
+        t2.community_name,
+        t3.real_name userName
+        from t_complaint t1
+        join t_community t2 on t2.id = t1.community_id
+        join t_user t3 on  t1.user_id = t3.id
+        where t1.deleted = 0
+        and t2.deleted = 0
+        and t3.deleted = 0
+        <if test="title != null and title.trim() != ''">
+            and t1.title like CONCAT('%',#{title},'%')
+        </if>
+
+        <if test="state != null and state.trim() != ''">
+            and t1.state = #{state}
+        </if>
+        <if test="type != null and type.trim() != ''">
+            and t1.type = #{type}
+        </if>
+        <if test="communityId != null and communityId.length != 0">
+            and t1.community_id  in (#{communityId})
+        </if>
+        <if test="createTime != null and createTime.length != 0">
+            and t1.create_time  between #{begin} and #{end}
+        </if>
+
+    </select>
+<!--
+    join sys_admin t3 on t1.user_id = t3.id
+    join sys_admin_info t4 on t4.admin_id = t3.id
+     and t4.deleted = 0
+-->
 
 </mapper>

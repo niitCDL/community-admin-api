@@ -23,15 +23,16 @@ public class ComplaintVO implements Serializable {
 
 	@Schema(description = "社区id")
 	private Long communityId;
-
+	private String communityName;
 	@Schema(description = "投诉人id")
 	private Long userId;
+	private String userName;
 
 	@Schema(description = "投诉类型(0:物业服务，1:社区服务)")
 	private Integer type;
 
 	@Schema(description = "投诉标题")
-	private String titile;
+	private String title;
 
 	@Schema(description = "投诉内容")
 	private String content;
@@ -46,8 +47,10 @@ public class ComplaintVO implements Serializable {
 	private String result;
 
 	@Schema(description = "处理人id，逗号分隔")
-	private Integer employeeIds;
+	private String[] employeeIds = null;
+	private String employees = null;
 
+	private String[] employeeNames;
 	@Schema(description = "处理时间")
 	@JsonFormat(pattern = DateUtils.DATE_TIME_PATTERN)
 	private Date handleTime;

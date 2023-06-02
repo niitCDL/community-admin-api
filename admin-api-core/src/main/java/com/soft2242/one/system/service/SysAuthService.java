@@ -2,6 +2,7 @@ package com.soft2242.one.system.service;
 
 
 import com.soft2242.one.system.vo.SysAccountLoginVO;
+import com.soft2242.one.system.vo.SysMobileLoginVO;
 import com.soft2242.one.system.vo.SysTokenVO;
 
 /**
@@ -19,4 +20,8 @@ public interface SysAuthService {
     SysTokenVO loginByAccount(SysAccountLoginVO login);
 
     void logout(String accessToken);
+
+    SysTokenVO loginByMobile(SysMobileLoginVO login);
+
+    boolean sendCode(String mobile);
 }

@@ -19,9 +19,11 @@ public interface PatrolPathService extends BaseService<PatrolPathEntity> {
     PageResult<PatrolPathVO> page(PatrolPathQuery query);
 
     void save(PatrolPathVO vo);
+
+    PatrolPathVO getPathById(Long id);
     List<CommunityVO> searchCommunity();
-    List<PatrolPointsVO> searchPoints();
-    List<InspectionItemVO> searchItems();
+    List<PatrolPointsVO> searchPoints(Long communityId);
+    List<InspectionItemVO> searchItems(Long communityId);
     public List<PatrolPathVO> getPathListByCommId(Long commId);
 
     public List<ComAndPathVO> getCommAndPath();
@@ -29,6 +31,8 @@ public interface PatrolPathService extends BaseService<PatrolPathEntity> {
     void update(PatrolPathVO vo);
 
     void delete(List<Long> idList);
+
+
 
 
 

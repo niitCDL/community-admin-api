@@ -3,13 +3,24 @@
 
 <mapper namespace="com.soft2242.one.system.dao.SysUserRoleDao">
 
+
     <select id="getRoleIdList" resultType="long">
-        select role_id from sys_role_admin where role_id = #{userId} and deleted = 0
+        select role_id from sys_role_admin where admin_id = #{adminId} and deleted = 0
     </select>
     <select id="getUserListByRoleId" resultType="com.soft2242.one.system.entity.SysUserInfoEntity">
         SELECT t1.* FROM sys_admin_info t1,sys_role_admin t2
         WHERE t1.ADMIN_ID=t2.admin_id
         AND t2.role_id=#{roleId}
+        and t1.deleted = 0
+        and t2.deleted = 0
     </select>
+
+    <delete id="unbindingUserAndRole">
+        delete from sys_role_admin t1
+        where t1.role_id = #{roleId} and t1.admin_id in
+        <foreach collection="adminIdList" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </delete>
 
 </mapper>

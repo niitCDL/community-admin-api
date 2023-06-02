@@ -5,6 +5,7 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.ActivityConvert;
 import com.soft2242.one.entity.Activity;
+import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.ActivityQuery;
 import com.soft2242.one.service.ActivityService;
 import com.soft2242.one.vo.ActivityVO;
@@ -16,6 +17,8 @@ import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 社区活动
@@ -66,6 +69,14 @@ public class ActivityController {
         return Result.ok();
     }
 
+    @PutMapping("status/{id}")
+    @Operation(summary = "修改状态")
+//    @PreAuthorize("hasAuthority('soft2242:type:update')")
+    public Result<String> status(@PathVariable Integer id) {
+        activityService.status(id);
+        return Result.ok();
+    }
+
     //    逻辑删除
     @PutMapping("delete/{id}")
     @Operation(summary = "删除")
@@ -77,5 +88,12 @@ public class ActivityController {
         activityService.update(vo);
         return Result.ok();
     }
+    @GetMapping("ActivityList")
+    @Operation(summary = "活动列表")
+    public Result<List<ActivityVO>> activityList() {
+        List<ActivityVO> list = activityService.getList();
+        return Result.ok(list);
+    }
+
 
 }

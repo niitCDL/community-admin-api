@@ -48,4 +48,11 @@ public interface PatrolPlanService extends BaseService<PatrolPlanEntity> {
      * @param communityId
      */
     void deleteByCommunityId(Long communityId);
+
+    /**
+     * 获取开始日期打到条件的计划
+     * @param Date 日期
+     * @return
+     */
+    List<PatrolPlanEntity> getPlanList(String Date);
 }

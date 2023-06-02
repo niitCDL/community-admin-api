@@ -77,6 +77,11 @@ public class UserDetail implements UserDetails {
      */
     private String token;
 
+    /**
+     * 部门ID
+     */
+    private Long orgId;
+
 
     /**
      * 数据权限范围

@@ -26,5 +26,7 @@ public class SysLoginLogEntity {
     private String address;
     private Integer deleted;
     private String createTime;
+    private Long creator;
+    private String creatorName;
 
 }

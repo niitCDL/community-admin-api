@@ -30,14 +30,16 @@ public interface PointsPathService extends BaseService<PointsPathEntity> {
 
     /**
      * 根据巡更点id，删除巡更点和路线之间的关系
-     * @param pointId 巡更点
+     * @param pointIdList 巡更点
      */
-    void deleteByPointId(Long pointId);
+    void deleteByPointId(List<Long> pointIdList);
 
     /**
      * 根据路线id,删除巡更点和路线之间的关系
      * @param pathId 路线id
      */
     void deleteByPathId(Long pathId);
+
+
 
 }

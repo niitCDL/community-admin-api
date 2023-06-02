@@ -36,20 +36,4 @@ public class FileUploadTest {
     @Resource
     private BuildingServiceImpl buildingService;
 
-    @Test
-    void batchInsert() {
-        List<Building> user = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            Building building = Building.builder()
-                    .id(51L+i)
-                    .communityId(2L)
-                    .buildingName("格正楼")
-                    .units(1+i)
-                    .usedArea(200+i)
-                    .content("格物致知").build();
-            user.add(building);
-        }
-        boolean b = buildingService.saveBatch(user);
-        System.out.println(b);
-    }
 }

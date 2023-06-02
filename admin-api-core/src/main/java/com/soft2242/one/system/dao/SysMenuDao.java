@@ -32,6 +32,7 @@ public interface SysMenuDao extends BaseDao<SysMenuEntity> {
      */
     List<SysMenuEntity> getUserMenuList(@Param("userId") Long userId, @Param("type") Integer type);
 
+
     /**
      * 查询用户权限列表
      *

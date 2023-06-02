@@ -10,11 +10,13 @@ import com.soft2242.one.system.vo.SysUserVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface SysUserService extends BaseService<SysUserInfoEntity> {
     SysUserInfoEntity getUserInfoByAdminId(Long id);
 
+    SysUserInfoVO getUserInfo(Long id);
     void save(SysUserInfoVO user);
 
     void recordLastLoginTime(@Param("lastLoginTime")String date, @Param("id")Long id);
@@ -25,7 +27,10 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
 
     void update(SysUserEntity sysUserEntity);
 
-    PageResult<SysUserVO> page(SysUserQuery query);
+    PageResult<SysUserInfoVO> page(SysUserQuery query);
+
+    PageResult<SysUserInfoVO> pageByRole(SysUserQuery query);
+    List<SysUserVO> getList();
 
     void delete(List<Long> idList);
 
@@ -34,4 +39,15 @@ public interface SysUserService extends BaseService<SysUserInfoEntity> {
     void export();
 
     void importByExcel(MultipartFile file);
+
+    void updateByVo(SysUserInfoVO sysUserInfoVO);
+
+    void saveAvatar(Long adminId,MultipartFile file) throws IOException;
+
+    SysUserVO getByMobile(String mobile);
+
+    PageResult<SysUserInfoVO> page2(SysUserQuery query);
+
+    PageResult<SysUserInfoVO> page3(SysUserQuery query);
+
 }

@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.base.security.cache.TokenStoreCache;
@@ -14,11 +15,14 @@ import com.soft2242.one.system.convert.SysRoleOperationLogConvert;
 import com.soft2242.one.system.dao.SysRoleDao;
 import com.soft2242.one.system.entity.SysRoleEntity;
 import com.soft2242.one.system.entity.SysRoleOperationLogEntity;
+import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.enums.DataScopeEnum;
 import com.soft2242.one.system.query.SysRoleQuery;
+import com.soft2242.one.system.query.SysUserQuery;
 import com.soft2242.one.system.service.*;
 import com.soft2242.one.system.vo.SysRoleDataScopeVO;
 import com.soft2242.one.system.vo.SysRoleVO;
+import com.soft2242.one.system.vo.SysUserInfoVO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,9 +32,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * 角色
@@ -44,6 +46,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
     private final SysRoleDataScopeService sysRoleDataScopeService;
     private final SysUserRoleService sysUserRoleService;
     private final SysRoleOperationLogService sysRoleOperationLogService;
+    private final SysUserService sysUserService;
     @Override
     public PageResult<SysRoleVO> page(SysRoleQuery query) {
         IPage<SysRoleEntity> page = baseMapper.selectPage(getPage(query), getWrapper(query));
@@ -139,5 +142,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntit
             sysRoleOperationLogService.log(id,"新增","");
         }
     }
+
+
 
 }

@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -80,6 +81,22 @@ public class HouseController {
     public Result<String> delete(@RequestBody(required = false) List<Long> ids) {
         houseService.delete(ids);
         return Result.ok("删除成功");
+    }
+    @GetMapping("export")
+    @Operation(summary = "导出房屋")
+    //@PreAuthorize("hasAuthority('sys:building:export')")
+    public void export(){
+        houseService.export();
+    }
+
+    @PostMapping("import")
+    @Operation(summary = "导入房屋")
+    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return Result.error("请选择需要上传的文件");
+        }
+        houseService.importByExcel(file);
+        return Result.ok();
     }
 
 }

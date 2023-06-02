@@ -15,24 +15,24 @@ import java.util.Map;
 @Configuration
 public class LoginConfig {
 
-    @Bean
-    @ConditionalOnMissingBean
-    SmsApi smsApi() {
-        return new SmsApi() {
-            @Override
-            public boolean send(String mobile, Map<String, String> params) {
-                return false;
-            }
-
-            @Override
-            public boolean sendCode(String mobile, String key, String value) {
-                return false;
-            }
-
-            @Override
-            public boolean verifyCode(String mobile, String code) {
-                return false;
-            }
-        };
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    SmsApi smsApi() {
+//        return new SmsApi() {
+//            @Override
+//            public boolean send(String mobile, Map<String, String> params) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean sendCode(String mobile, String key, String value) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean verifyCode(String mobile, String code) {
+//                return false;
+//            }
+//        };
+//    }
 }

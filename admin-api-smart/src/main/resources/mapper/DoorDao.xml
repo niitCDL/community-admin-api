@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.soft2242.one.dao.DoorDao">
+
+    <select id="selectPageByQuery" resultType="com.soft2242.one.vo.DoorVO" parameterType="com.soft2242.one.query.DoorQuery">
+        SELECT door.id, door.device_id, td.device_name, door.online_status, door.community_id, tc.community_name, door.door_name,
+        door.door_img,
+        door.sys_code
+        FROM t_door door
+        LEFT JOIN t_device td on door.device_id = td.id
+        LEFT JOIN t_community tc on door.community_id = tc.id
+        WHERE door.deleted = 0
+        <if test="deviceId != null">
+            AND door.device_id = #{deviceId}
+        </if>
+        <if test="doorName != null and doorName.trim() != ''">
+            AND door.door_name like "%"#{doorName}"%"
+        </if>
+        <if test="communityId != null">
+            AND door.community_id = #{communityId}
+        </if>
+        LIMIT ${page - 1}, ${limit}
+    </select>
+
+    <select id="selectSettingByQuery" resultType="com.soft2242.one.vo.DoorSettingVO">
+        SELECT door.id, door.door_name, door.community_id, door.allow_owed,
+        door.allow_visit, door.need_tel, door.need_id_card, door.allow_face, door.allow_finger, tc.community_name
+        FROM t_door door
+        LEFT JOIN t_community tc on door.community_id = tc.id
+        WHERE door.deleted = 0
+        <if test="id != null">
+            AND door.id = #{id}
+        </if>
+        <if test="communityId != null">
+            AND door.community_id = #{communityId}
+        </if>
+        LIMIT ${page - 1}, ${limit}
+    </select>
+
+</mapper>

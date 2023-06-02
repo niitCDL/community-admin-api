@@ -39,6 +39,7 @@ public class SysRoleController {
     private final SysMenuService sysMenuService;
     private final SysUserRoleService sysUserRoleService;
 
+
     @GetMapping("page")
     @Operation(summary = "分页")
     @PreAuthorize("hasAuthority('sys:role:page')")
@@ -156,5 +157,12 @@ public class SysRoleController {
         List<SysUserInfoVO> userList = sysUserRoleService.getUserListByRoleId(id);
 
         return Result.ok(userList);
+    }
+
+    @DeleteMapping("unbindingRole")
+    @Operation(summary = "用户解绑角色")
+    public Result<String> unbindingRole(@RequestBody SysUnbindingUserRoleVO vo) {
+        sysUserRoleService.unbindingUserAndRole(vo);
+        return Result.ok();
     }
 }

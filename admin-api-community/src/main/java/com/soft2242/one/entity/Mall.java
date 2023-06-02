@@ -1,10 +1,15 @@
 package com.soft2242.one.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -14,9 +19,14 @@ import java.time.LocalDateTime;
  * @author Dr.king
  * @since 2023-05-25
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @TableName("t_mall")
 public class Mall implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -58,12 +68,12 @@ public class Mall implements Serializable {
     /**
      * 商铺状态(0：未售出 1：已售出)
      */
-    private Byte mallStatus;
+    private Integer mallStatus;
 
     /**
      * 删除标识（0：未删除 1：已删除）
      */
-    private Byte deleted;
+    private Integer deleted;
 
     /**
      * 创建者
@@ -73,7 +83,8 @@ public class Mall implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 
     /**
      * 更新者
@@ -83,128 +94,8 @@ public class Mall implements Serializable {
     /**
      * 更新时间
      */
-    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date updateTime;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getCommunityId() {
-        return communityId;
-    }
-
-    public void setCommunityId(Long communityId) {
-        this.communityId = communityId;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getMallNumber() {
-        return mallNumber;
-    }
-
-    public void setMallNumber(String mallNumber) {
-        this.mallNumber = mallNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Integer getMallArea() {
-        return mallArea;
-    }
-
-    public void setMallArea(Integer mallArea) {
-        this.mallArea = mallArea;
-    }
-
-    public String getMallType() {
-        return mallType;
-    }
-
-    public void setMallType(String mallType) {
-        this.mallType = mallType;
-    }
-
-    public Byte getMallStatus() {
-        return mallStatus;
-    }
-
-    public void setMallStatus(Byte mallStatus) {
-        this.mallStatus = mallStatus;
-    }
-
-    public Byte getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Byte deleted) {
-        this.deleted = deleted;
-    }
-
-    public Long getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Long creator) {
-        this.creator = creator;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getUpdater() {
-        return updater;
-    }
-
-    public void setUpdater(Long updater) {
-        this.updater = updater;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    @Override
-    public String toString() {
-        return "Mall{" +
-            "id = " + id +
-            ", communityId = " + communityId +
-            ", userId = " + userId +
-            ", mallNumber = " + mallNumber +
-            ", address = " + address +
-            ", mallArea = " + mallArea +
-            ", mallType = " + mallType +
-            ", mallStatus = " + mallStatus +
-            ", deleted = " + deleted +
-            ", creator = " + creator +
-            ", createTime = " + createTime +
-            ", updater = " + updater +
-            ", updateTime = " + updateTime +
-        "}";
-    }
 }

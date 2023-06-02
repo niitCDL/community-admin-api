@@ -6,7 +6,6 @@ import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.base.security.user.SecurityUser;
 import com.soft2242.one.base.security.user.UserDetail;
 import com.soft2242.one.system.convert.SysUserInfoConvert;
-import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.query.SysUserQuery;
 import com.soft2242.one.system.service.SysUserService;
 import com.soft2242.one.system.vo.SysUserInfoVO;
@@ -21,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -37,9 +37,7 @@ public class SysUserController {
     @GetMapping("{id}")
     @Operation(summary = "信息")
     public Result<SysUserInfoVO> get(@PathVariable("id") Long id) {
-        SysUserInfoEntity entity = sysUserService.getUserInfoByAdminId(id);
-
-        SysUserInfoVO vo = SysUserInfoConvert.INSTANCE.convert(entity);
+        SysUserInfoVO vo = sysUserService.getUserInfo(id);
 
         return Result.ok(vo);
     }
@@ -52,6 +50,9 @@ public class SysUserController {
             Result.error("密码不能为空");
         }
 
+
+        System.out.println("新添加的用户密码为" + vo.getPassword());
+        System.out.println("加密过后的密码为:" + passwordEncoder.encode(vo.getPassword()));
         // 密码加密
         vo.setPassword(passwordEncoder.encode(vo.getPassword()));
 
@@ -70,18 +71,49 @@ public class SysUserController {
         return Result.ok(user);
     }
 
-    @PutMapping
+    @PutMapping("changeStatus")
     @Operation(summary = "修改用户状态")
     public Result changeAccountStatus(Long id,Integer accountStatus) {
         sysUserService.changeAccountStatus(id,accountStatus);
         return Result.ok();
     }
 
+    @PostMapping("avatar/{id}")
+    @Operation(summary = "保存用户头像")
+    public Result avatar(@PathVariable Long id,MultipartFile file) throws IOException {
+        sysUserService.saveAvatar(id,file);
+        return Result.ok();
+    }
+
     @GetMapping("page")
     @Operation(summary = "分页")
-    public Result<PageResult<SysUserVO>> page(@ParameterObject @Valid SysUserQuery query) {
-        PageResult<SysUserVO> page = sysUserService.page(query);
+    public Result<PageResult<SysUserInfoVO>> page(@ParameterObject @Valid SysUserQuery query) {
+        PageResult<SysUserInfoVO> page = sysUserService.page(query);
         return Result.ok(page);
+    }
+
+    //通过角色roleId分页
+    @GetMapping("page/byRoleId")
+    @Operation(summary = "分页")
+    public Result<PageResult<SysUserInfoVO>> page2(@ParameterObject @Valid SysUserQuery query) {
+        PageResult<SysUserInfoVO> page = sysUserService.page2(query);
+        return Result.ok(page);
+    }
+
+    //找到没有该roleId的用户
+    @GetMapping("page/byNotInRoleId")
+    @Operation(summary = "分页")
+    public Result<PageResult<SysUserInfoVO>> page3(@ParameterObject @Valid SysUserQuery query) {
+        PageResult<SysUserInfoVO> page = sysUserService.page3(query);
+        return Result.ok(page);
+    }
+
+
+    @GetMapping("list")
+    @Operation(summary = "用户列表")
+    public Result<List<SysUserVO>> list() {
+        List<SysUserVO> list = sysUserService.getList();
+        return Result.ok(list);
     }
 
     @DeleteMapping
@@ -132,4 +164,12 @@ public class SysUserController {
         sysUserService.importByExcel(file);
         return Result.ok();
     }
+
+    @PutMapping
+    @Operation(summary = "修改用户信息")
+    public Result<String> update(@RequestBody @Valid SysUserInfoVO sysUserInfoVO){
+        sysUserService.updateByVo(sysUserInfoVO);
+        return Result.ok();
+    }
+
 }

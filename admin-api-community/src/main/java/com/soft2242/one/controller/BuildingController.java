@@ -62,7 +62,7 @@ public class BuildingController {
 
     @PostMapping
     @Operation(summary = "新增楼宇")
-    //@PreAuthorize("hasAuthority('sys:community:save')")
+    //@PreAuthorize("hasAuthority('sys:building:save')")
     public Result<String> save(@RequestBody BuildingVO vo) {
         buildingService.save(vo);
         return Result.ok();
@@ -70,7 +70,7 @@ public class BuildingController {
 
     @PutMapping
     @Operation(summary = "修改楼宇")
-    //@PreAuthorize("hasAuthority('sys:community:update')")
+    //@PreAuthorize("hasAuthority('sys:building:update')")
     public Result<String> update(@RequestBody @Valid BuildingVO vo) {
         buildingService.update(vo);
         return Result.ok();
@@ -86,7 +86,7 @@ public class BuildingController {
 
     @GetMapping("export")
     @Operation(summary = "导出楼宇")
-    //@PreAuthorize("hasAuthority('sys:user:export')")
+    //@PreAuthorize("hasAuthority('sys:building:export')")
     public void export(){
         buildingService.export();
     }

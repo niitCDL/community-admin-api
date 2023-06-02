@@ -93,4 +93,6 @@ public class RepairEntity extends BaseEntity {
      * 报修评价时间
      */
     private Date evaluateTime;
+
+
 }

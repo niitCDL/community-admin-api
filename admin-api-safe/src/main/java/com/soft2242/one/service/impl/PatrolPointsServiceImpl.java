@@ -1,36 +1,32 @@
 package com.soft2242.one.service.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.CommunityConvert;
 import com.soft2242.one.convert.PatrolPointsConvert;
+import com.soft2242.one.dao.BuildingDao;
 import com.soft2242.one.dao.CommunityDao;
 import com.soft2242.one.dao.PatrolPointsDao;
 import com.soft2242.one.entity.Community;
-import com.soft2242.one.entity.PatrolPlanEntity;
 import com.soft2242.one.entity.PatrolPointsEntity;
-import com.soft2242.one.mapper.CommunityMapper;
-import com.soft2242.one.query.PatrolPlanQuery;
+import com.soft2242.one.query.CommunityQuery;
 import com.soft2242.one.query.PatrolPointsQuery;
 import com.soft2242.one.service.PatrolPointsService;
+import com.soft2242.one.vo.BuildingVO;
 import com.soft2242.one.vo.CommunityVO;
-import com.soft2242.one.vo.PatrolPlanVO;
+import com.soft2242.one.vo.PatrolPathVO;
 import com.soft2242.one.vo.PatrolPointsVO;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.springframework.data.support.PageableExecutionUtils.getPage;
 
 /**
  * 巡更点表
@@ -60,9 +56,16 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
 //        return wrapper;
 //    }
 
+//    private Map<String,Object> getParams(PatrolPointsQuery query){
+//        Map<String,Object> parmas=new HashMap<>();
+//        parmas.put("communityId",query.getCommunityId());
+//        return parmas;
+//    }
+
+
     private Map<String,Object> getParams(PatrolPointsQuery query){
         Map<String,Object> parmas=new HashMap<>();
-        parmas.put("communityId",query.getCommunityId());
+        parmas.put("communityIds",query.getCommunityIds());
         return parmas;
     }
 
@@ -81,6 +84,14 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
         return  communityVOS;
     }
 
+    @Resource
+    PatrolPointsDao patrolPointsDao;
+    @Override
+    public PatrolPointsVO getById(Long id) {
+        PatrolPointsVO byId = patrolPointsDao.getById(id);
+        return byId;
+    }
+
     @Override
     public void update(PatrolPointsVO vo) {
         PatrolPointsEntity entity = PatrolPointsConvert.INSTANCE.convert(vo);
@@ -93,5 +104,15 @@ public class PatrolPointsServiceImpl extends BaseServiceImpl<PatrolPointsDao, Pa
     public void delete(List<Long> idList) {
         removeByIds(idList);
     }
+BuildingDao buildingDao;
+    @Override
+    public List<BuildingVO> getByCommuntiyId(Long CommuntiyId) {
+
+        List<BuildingVO> buildingVOS = buildingDao.getByCommuntiyId(CommuntiyId);
+        return  buildingVOS;
+
+    }
+
+
 
 }

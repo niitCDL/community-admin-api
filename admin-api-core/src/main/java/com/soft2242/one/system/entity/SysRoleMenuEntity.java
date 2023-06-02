@@ -24,7 +24,6 @@ public class SysRoleMenuEntity extends BaseEntity {
     /**
      * 菜单ID
      */
-    @TableField("authority_id")
     private Long menuId;
 
 }

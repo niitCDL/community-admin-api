@@ -43,4 +43,6 @@ public interface Constant {
      */
     String OK = "OK";
 
+    String MOBILE_LOGIN_KEY = "message:sms:code";
+
 }

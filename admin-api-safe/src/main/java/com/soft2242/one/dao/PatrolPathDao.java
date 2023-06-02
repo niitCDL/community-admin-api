@@ -22,4 +22,6 @@ public interface PatrolPathDao extends BaseDao<PatrolPathEntity> {
 
     List<PatrolPathVO> getPathListByCommunityId(@Param("communityId") Long communityId);
 
+
+
 }

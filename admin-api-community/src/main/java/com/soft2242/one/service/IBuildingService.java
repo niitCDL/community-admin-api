@@ -54,6 +54,7 @@ public interface IBuildingService extends BaseService<Building> {
      */
     void delete(List<Long> ids);
 
+
     void export();
     void importByExcel(MultipartFile file);
 }

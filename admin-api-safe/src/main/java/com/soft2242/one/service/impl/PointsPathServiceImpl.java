@@ -38,6 +38,7 @@ public class PointsPathServiceImpl extends BaseServiceImpl<PointsPathDao, Points
      */
     @Override
     public void saveOrUpdate(List<Long> pointIds, Long pathId) {
+        System.out.println("-------------id-----------"+pathId);
         // 数据库菜单ID列表
         List<Long> dbPointList = getPointIdList(pathId);
         // 需要新增的菜单ID
@@ -61,12 +62,12 @@ public class PointsPathServiceImpl extends BaseServiceImpl<PointsPathDao, Points
     }
 
     /**
-     * 根据巡更点id，删除巡更点和路线之间的关系
-     * @param pointId 巡更点
+     * 根据巡更点id列表，删除巡更点和路线之间的关系
+     * @param pointIdList 巡更点id列表
      */
     @Override
-    public void deleteByPointId(Long pointId) {
-        remove(new LambdaQueryWrapper<PointsPathEntity>().eq(PointsPathEntity::getPointId,pointId));
+    public void deleteByPointId(List<Long> pointIdList) {
+        remove(new LambdaQueryWrapper<PointsPathEntity>().in(PointsPathEntity::getPointId,pointIdList));
     }
 
     /**

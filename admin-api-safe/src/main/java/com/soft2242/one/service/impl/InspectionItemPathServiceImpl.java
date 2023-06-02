@@ -60,12 +60,12 @@ public class InspectionItemPathServiceImpl extends BaseServiceImpl<InspectionIte
     }
 
     /**
-     * 根据巡检项目id，删除巡检项目和路线之间的关系
-     * @param inspectionItemId 巡检项目id
+     * 根据巡检项目id列表，删除巡检项目和路线之间的关系
+     * @param inspectionItemIdList 巡检项目id列表
      */
     @Override
-    public void deleteByInspectionItemId(Long inspectionItemId) {
-        remove(new LambdaQueryWrapper<InspectionItemPathEntity>().eq(InspectionItemPathEntity::getItemId,inspectionItemId));
+    public void deleteByInspectionItemId(List<Long> inspectionItemIdList) {
+        remove(new LambdaQueryWrapper<InspectionItemPathEntity>().in(InspectionItemPathEntity::getItemId,inspectionItemIdList));
     }
 
 

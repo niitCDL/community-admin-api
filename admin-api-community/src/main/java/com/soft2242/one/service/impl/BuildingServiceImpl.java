@@ -11,14 +11,8 @@ import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.BuildingConvert;
 import com.soft2242.one.dao.BuildingDao;
 import com.soft2242.one.entity.Building;
-import com.soft2242.one.entity.Community;
 import com.soft2242.one.query.BuildingQuery;
 import com.soft2242.one.service.IBuildingService;
-import com.soft2242.one.service.ICommunityService;
-import com.soft2242.one.system.convert.SysUserConvert;
-import com.soft2242.one.system.entity.SysUserEntity;
-import com.soft2242.one.system.vo.SysUserExcelVO;
-import com.soft2242.one.vo.BatchBuildingVO;
 import com.soft2242.one.vo.BuildingVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -102,9 +96,11 @@ public class BuildingServiceImpl extends BaseServiceImpl<BuildingDao, Building> 
 
     @Override
     public void export() {
-        List<BatchBuildingVO> userEntities = BuildingConvert.INSTANCE.convert2List(baseMapper.selectList(null));
+        BuildingQuery query = new BuildingQuery();
+        Map<String, Object> params = getParams(query);
+        List<BuildingVO> buildingVOList = baseMapper.getList(params);
         try {
-            customExcelUtils.export(userEntities);
+            customExcelUtils.export(buildingVOList);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -112,8 +108,8 @@ public class BuildingServiceImpl extends BaseServiceImpl<BuildingDao, Building> 
     @Override
     public void importByExcel(MultipartFile file) {
         try {
-            List<BatchBuildingVO> dataVoList = new ArrayList<>();
-            customExcelUtils.importExcel(file, BatchBuildingVO.class,dataVoList);
+            List<BuildingVO> dataVoList = new ArrayList<>();
+            customExcelUtils.importExcel(file, BuildingVO.class,dataVoList);
             System.out.println("导入成功！！！！");
             List<Building> buildings = BuildingConvert.INSTANCE.convertListEntity(dataVoList);
             for (Building building : buildings) {

@@ -7,6 +7,9 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.BaseService;
 import com.soft2242.one.query.VisitorQuery;
 import com.soft2242.one.vo.VisitorVO;
+import jdk.dynalink.linker.LinkerServices;
+
+import java.util.List;
 
 /**
  * <p>
@@ -29,5 +32,6 @@ public interface IVisitorService extends BaseService<Visitor> {
 
     void update(VisitorVO vo);
 
+    List<VisitorVO> getListById(Long id);
 
 }

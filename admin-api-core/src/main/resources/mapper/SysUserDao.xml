@@ -19,6 +19,11 @@
         set account_status = #{status}
         where id = #{id}
     </update>
+    <update id="saveAvatar">
+        update sys_admin_info
+        set avatar = #{url}
+        where admin_id = #{adminId}
+    </update>
 
 
     <select id="getMaxId" resultType="java.lang.Long">
@@ -30,5 +35,12 @@
         select token
         from sys_admin
         where id = #{id}
+          and deleted = 0
     </select>
+    <select id="getByUsername" resultType="com.soft2242.one.system.entity.SysUserEntity">
+        select t1.*,(t2.department_id) orgId from sys_Admin t1 left join sys_admin_department t2 ON t1.id = t2.admin_id
+        where t1.username = #{username}
+          and t1.deleted = 0
+    </select>
+
 </mapper>
