@@ -1,10 +1,16 @@
 package com.soft2242.one.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 
+import com.soft2242.one.constant.OwnerConstant;
+import com.soft2242.one.convert.OwnerConvert;
 import com.soft2242.one.entity.OwnerEntity;
+import com.soft2242.one.entity.UserEntity;
+import com.soft2242.one.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -34,6 +40,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class OwnerController {
     private final OwnerService ownerService;
+    private final UserService userService;
 
     @GetMapping("page")
     @Operation(summary = "分页")
@@ -46,9 +53,35 @@ public class OwnerController {
     @Operation(summary = "业主信息获取")
     public Result<List<OwnerEntity>> list(){
         QueryWrapper<OwnerEntity> wrapper = new QueryWrapper<>();
-        wrapper.select("DISTINCT identity_card,real_name,id");
+        wrapper.select(OwnerConstant.DEDUPLICATION_SQL);
         List<OwnerEntity> list = ownerService.list(wrapper).stream().filter(owner -> !Objects.equals(owner.getIdentityCard(), "")).collect(Collectors.toList());
         return Result.ok(list);
+    }
+    @PostMapping("findFamily")
+    @Operation(summary = "获取家庭成员信息")
+    public Result<List<OwnerEntity>> findFamily(Long ownerId){
+        QueryWrapper<OwnerEntity> wrapper = new QueryWrapper<>();
+        wrapper.lambda().select(OwnerEntity::getRealName,OwnerEntity::getPhone,OwnerEntity::getIdentityCard,OwnerEntity::getIdentity,OwnerEntity::getGender,OwnerEntity::getId)
+                .eq(OwnerEntity::getOwnerId,ownerId).eq(OwnerEntity::getState,1).ne(OwnerEntity::getDeleted,1);
+        List<OwnerEntity> list = ownerService.list(wrapper);
+        for(OwnerEntity owner:list){
+            QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
+            queryWrapper.lambda().eq(UserEntity::getPhone,owner.getPhone());
+            if(userService.count(queryWrapper)==0) {
+                owner.setIsRegister(OwnerConstant.UNREGISTERED);
+            }else{
+                owner.setIsRegister(OwnerConstant.REGISTERED);
+            }
+        }
+        return Result.ok(list);
+    }
+    @PostMapping("deFamily")
+    @Operation(summary = "删除家庭成员")
+    public Result<String> deFamily(Long id){
+        UpdateWrapper<OwnerEntity> wrapper = new UpdateWrapper<>();
+        wrapper.lambda().set(OwnerEntity::getDeleted,1).eq(OwnerEntity::getId,id);
+        ownerService.update(new OwnerEntity(),wrapper);
+        return Result.ok();
     }
     @GetMapping("{id}")
     @Operation(summary = "信息")
