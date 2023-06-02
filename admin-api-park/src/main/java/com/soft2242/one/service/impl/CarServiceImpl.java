@@ -16,7 +16,8 @@ import com.soft2242.one.entity.Carport;
 import com.soft2242.one.query.CarQuery;
 import com.soft2242.one.query.CarportQuery;
 import com.soft2242.one.service.CarService;
-import com.soft2242.one.service.CarportService;
+import org.springframework.web.multipart.MultipartFile;
+import java.util.ArrayList;
 import com.soft2242.one.vo.CarVO;
 import com.soft2242.one.vo.CarportVO;
 import lombok.AllArgsConstructor;
@@ -84,32 +85,32 @@ public class CarServiceImpl extends BaseServiceImpl<CarDao, Car> implements CarS
         removeByIds(ids);
     }
 
-//    @Override
-//    public void export() {
-//        CarportQuery query = new CarportQuery();
-//        Map<String, Object> params = getParams(query);
-//        List<CarportVO> houseVOList = baseMapper.getList(params);
-//        try {
-//            customExcelUtils.export(houseVOList);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//    @Override
-//    public void importByExcel(MultipartFile file) {
-//        try {
-//            List<CarportVO> dataVoList = new ArrayList<>();
-//            customExcelUtils.importExcel(file, CarportVO.class,dataVoList);
-//            System.out.println("导入成功！！！！");
-//            List<Carport> houses = CarportConvert.INSTANCE.convertListEntity(dataVoList);
-//            for (Carport house : houses) {
-//                baseMapper.insert(house);
-//            }
-//            System.out.println("导入成功");
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    @Override
+    public void export() {
+        CarQuery query = new CarQuery();
+        Map<String, Object> params = getParams(query);
+        List<CarVO> carList = baseMapper.getList(params);
+        try {
+            customExcelUtils.export(carList);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public void importByExcel(MultipartFile file) {
+        try {
+            List<CarVO> dataVoList = new ArrayList<>();
+            customExcelUtils.importExcel(file, CarVO.class,dataVoList);
+            System.out.println("导入成功！！！！");
+            List<Car> cars = CarConvert.INSTANCE.convertListEntity(dataVoList);
+            for (Car car : cars) {
+                baseMapper.insert(car);
+            }
+            System.out.println("导入成功");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * 查询条件构造
