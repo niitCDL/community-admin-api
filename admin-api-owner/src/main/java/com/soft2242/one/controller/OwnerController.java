@@ -1,6 +1,7 @@
 package com.soft2242.one.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.soft2242.one.base.common.constant.Constant;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
@@ -60,8 +61,8 @@ public class OwnerController {
     @Operation(summary = "获取家庭成员信息")
     public Result<List<OwnerEntity>> findFamily(Long ownerId){
         QueryWrapper<OwnerEntity> wrapper = new QueryWrapper<>();
-        wrapper.lambda().select(OwnerEntity::getRealName,OwnerEntity::getPhone,OwnerEntity::getIdentityCard,OwnerEntity::getIdentity,OwnerEntity::getGender)
-                .eq(OwnerEntity::getOwnerId,ownerId);
+        wrapper.lambda().select(OwnerEntity::getRealName,OwnerEntity::getPhone,OwnerEntity::getIdentityCard,OwnerEntity::getIdentity,OwnerEntity::getGender,OwnerEntity::getId)
+                .eq(OwnerEntity::getOwnerId,ownerId).eq(OwnerEntity::getState,1).ne(OwnerEntity::getDeleted,1);
         List<OwnerEntity> list = ownerService.list(wrapper);
         for(OwnerEntity owner:list){
             QueryWrapper<UserEntity> queryWrapper = new QueryWrapper<>();
@@ -73,6 +74,14 @@ public class OwnerController {
             }
         }
         return Result.ok(list);
+    }
+    @PostMapping("deFamily")
+    @Operation(summary = "删除家庭成员")
+    public Result<String> deFamily(Long id){
+        UpdateWrapper<OwnerEntity> wrapper = new UpdateWrapper<>();
+        wrapper.lambda().set(OwnerEntity::getDeleted,1).eq(OwnerEntity::getId,id);
+        ownerService.update(new OwnerEntity(),wrapper);
+        return Result.ok();
     }
     @GetMapping("{id}")
     @Operation(summary = "信息")
