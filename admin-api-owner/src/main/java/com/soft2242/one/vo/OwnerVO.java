@@ -64,7 +64,6 @@ public class OwnerVO implements Serializable {
 
 	@Schema(description = "身份标识(0:业主 1:家属 2:租户)")
 	private Integer identity;
-
 	@Schema(description = "默认地址(0：否 1：是)")
 	private Integer defaultAddress;
 
