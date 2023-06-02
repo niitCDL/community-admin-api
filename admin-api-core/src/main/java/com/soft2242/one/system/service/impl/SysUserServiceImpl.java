@@ -26,11 +26,6 @@ import com.soft2242.one.system.vo.SysUserExcelVO;
 import com.soft2242.one.system.vo.SysUserInfoVO;
 import com.soft2242.one.system.vo.SysUserVO;
 import lombok.AllArgsConstructor;
-<<<<<<< HEAD
-import org.jetbrains.annotations.NotNull;
-=======
-import org.apache.poi.util.StringUtil;
->>>>>>> origin/test
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,10 +60,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserInfoDao, SysUserI
 
     private final PasswordEncoder passwordEncoder;
 
+    @Override
     public SysUserInfoEntity getUserInfoByAdminId(Long id) {
         return sysUserInfoDao.getByAdminId(id);
     }
 
+    @Override
     public SysUserInfoVO getUserInfo(Long id) {
 
         SysUserInfoVO userInfo = sysUserInfoDao.getUserInfo(id);
