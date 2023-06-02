@@ -20,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -78,10 +79,11 @@ public class SysUserController {
         return Result.ok();
     }
 
-    @PostMapping("avatar/{id}")
+    @PostMapping("avatar")
     @Operation(summary = "保存用户头像")
-    public Result avatar(@PathVariable Long id,MultipartFile file) throws IOException {
-        sysUserService.saveAvatar(id,file);
+    public Result avatar(@RequestParam("file") MultipartFile file) throws IOException {
+        UserDetail user = SecurityUser.getUser();
+        sysUserService.saveAvatar(user.getId(), file);
         return Result.ok();
     }
 
