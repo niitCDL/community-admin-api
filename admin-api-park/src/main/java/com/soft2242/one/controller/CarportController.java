@@ -77,20 +77,21 @@ public class CarportController {
         carportService.delete(ids);
         return Result.ok("删除成功");
     }
-//    @GetMapping("export")
-//    @Operation(summary = "导出车位")
-//    //@PreAuthorize("hasAuthority('sys:carport:export')")
-//    public void export(){
-//        carportService.export();
-//    }
-//
-//    @PostMapping("import")
-//    @Operation(summary = "导入车位")
-//    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
-//        if (file.isEmpty()) {
-//            return Result.error("请选择需要上传的文件");
-//        }
-//        carportService.importByExcel(file);
-//        return Result.ok();
-//    }
+    @GetMapping("export")
+    @Operation(summary = "导出车位")
+    //@PreAuthorize("hasAuthority('sys:carport:export')")
+    public void export(){
+        carportService.export();
+    }
+
+    @PostMapping("import")
+    @Operation(summary = "导入车位")
+    //@PreAuthorize("hasAuthority('sys:carport:import')")
+    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return Result.error("请选择需要上传的文件");
+        }
+        carportService.importByExcel(file);
+        return Result.ok();
+    }
 }

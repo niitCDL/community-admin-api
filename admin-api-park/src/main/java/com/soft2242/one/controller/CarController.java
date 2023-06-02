@@ -18,6 +18,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -80,20 +81,21 @@ public class CarController {
         carService.delete(ids);
         return Result.ok("删除成功");
     }
-//    @GetMapping("export")
-//    @Operation(summary = "导出车位")
-//    //@PreAuthorize("hasAuthority('sys:car:export')")
-//    public void export(){
-//        carportService.export();
-//    }
-//
-//    @PostMapping("import")
-//    @Operation(summary = "导入车位")
-//    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
-//        if (file.isEmpty()) {
-//            return Result.error("请选择需要上传的文件");
-//        }
-//        carportService.importByExcel(file);
-//        return Result.ok();
-//    }
+    @GetMapping("export")
+    @Operation(summary = "导出车辆")
+    //@PreAuthorize("hasAuthority('sys:car:export')")
+    public void export(){
+        carService.export();
+    }
+
+    @PostMapping("import")
+    @Operation(summary = "导入车辆")
+    //@PreAuthorize("hasAuthority('sys:car:import')")
+    public Result<String> importExcel(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return Result.error("请选择需要上传的文件");
+        }
+        carService.importByExcel(file);
+        return Result.ok();
+    }
 }
