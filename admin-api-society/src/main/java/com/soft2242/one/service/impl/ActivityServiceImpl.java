@@ -36,6 +36,10 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
     private final ICommunityService communityService;
     private final ActivityTypeService activityTypeService;
 
+    private String changeForm(LocalDateTime create, LocalDateTime end) {
+        return create.toString().substring(0, 10) + "~" + end.toString().substring(0, 10);
+    }
+
     //    修改查询条件： 根据活动时间，活动名称
     @Override
     public PageResult<ActivityVO> page(ActivityQuery query) {
@@ -43,15 +47,15 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
         System.out.println(query);
 //        根据活动名查询
         if (query.getActivityName() != null)
-            if (!(query.getActivityName().isBlank() && query.getActivityName().isEmpty()))
+            if (!query.getActivityName().isBlank() && !query.getActivityName().isEmpty())
                 wrapper.eq(Activity::getActivityName, query.getActivityName());
 //        时间是否为空
         if (!(query.getCreateTime() == null && query.getEndTime() == null)) {
 //            格式
             DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             System.out.println(query.getCreateTime().toString());
-            LocalDateTime createTime = LocalDateTime.parse(dateTimeFormatter.format(query.getCreateTime()),dateTimeFormatter );
-            LocalDateTime endTime = LocalDateTime.parse(dateTimeFormatter.format(query.getEndTime()),dateTimeFormatter);
+            LocalDateTime createTime = LocalDateTime.parse(query.getCreateTime(),dateTimeFormatter );
+            LocalDateTime endTime = LocalDateTime.parse(query.getEndTime(),dateTimeFormatter);
             System.out.println(createTime);
             System.out.println(endTime);
 
@@ -69,6 +73,7 @@ public class ActivityServiceImpl extends BaseServiceImpl<ActivityDao, Activity> 
             activityVOS.forEach(o -> {
                 o.setCommunityName(communityService.getById(o.getCommunityId()).getCommunityName());
                 o.setActivityType(activityTypeService.getById(o.getTypeId()).getName());
+                o.setATime(changeForm(o.getCreateTime(),o.getEndTime()));
             });
             result = new PageResult<>(activityVOS, page.getTotal());
         } catch (Exception e) {

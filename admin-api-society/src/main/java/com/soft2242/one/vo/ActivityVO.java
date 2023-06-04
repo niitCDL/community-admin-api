@@ -80,4 +80,9 @@ public class ActivityVO implements Serializable {
 	@Schema(description = "活动类别")
 	private String activityType;
 
+	@Schema(description = "活动时间段")
+	private String ATime;
+
+	@Schema(description = "活动封面")
+	private String cover;
 }

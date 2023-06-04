@@ -14,5 +14,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "订单查询")
 public class OrderQuery extends Query {
-
+    @Schema(description = "账单创建时间")
+    private String createTime;
+    //    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(description = "账单截至时间")
+    private String endTime;
 }

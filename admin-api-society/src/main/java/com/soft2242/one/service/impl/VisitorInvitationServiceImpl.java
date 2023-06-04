@@ -9,6 +9,9 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.VisitorInvitationConvert;
 import com.soft2242.one.dao.VisitorInvitationMapper;
+import com.soft2242.one.entity.Activity;
+import com.soft2242.one.entity.Community;
+import com.soft2242.one.entity.House;
 import com.soft2242.one.entity.VisitorInvitation;
 import com.soft2242.one.query.VisitorInvitationQuery;
 import com.soft2242.one.service.ICommunityService;
@@ -48,35 +51,40 @@ public class VisitorInvitationServiceImpl extends BaseServiceImpl<VisitorInvitat
     private List<VisitorInvitationVO> addInfo(List<VisitorInvitationVO> vos) {
 
         vos.forEach(o -> {
-            try {
-                o.setHouseNumber(houseService.getById(o.getHouseId()).getHouseNumber());
-            } catch (Exception e) {
-                throw new ServerException("不存在房屋id！" + e.getMessage());
+            House house = houseService.getById(o.getHouseId());
+            if (house != null) {
+                Community community = communityService.getById(house.getCommunityId());
+
+                try {
+                    o.setHouseNumber(house.getHouseNumber());
+                } catch (Exception e) {
+                    throw new ServerException("不存在房屋id！" + e.getMessage());
+                }
+                //            开门次数
+                try {
+                    o.setCount(visitorService.getById(o.getVisitorId()).getCount());
+                } catch (Exception e) {
+                    throw new ServerException("不存在访客！" + e.getMessage());
+                }
+                //            插入有效时间
+                Duration duration = Duration.between(o.getCreateTime(), o.getEndTime());
+                o.setValidTime(String.valueOf((duration.toMinutes() / 60)) + "小时");
+                //            插入社区名称
+                //            获取社区id
+                try {
+                    o.setCommunityName(community.getCommunityName());
+                } catch (Exception e) {
+                    throw new ServerException("不存在房屋或者该社区！" + e.getMessage());
+                }
+                //            根据adminId获取授权人
+                SysUserInfoEntity user = sysUserService.getUserInfoByAdminId(o.getUserId());
+                if (user == null)
+                    new ServerException("不存在该用户！");
+                else {
+                    o.setOwner(user.getRealName());
+                }
             }
-            //            开门次数
-            try {
-                o.setCount(visitorService.getById(o.getVisitorId()).getCount());
-            } catch (Exception e) {
-                throw new ServerException("不存在访客！" + e.getMessage());
-            }
-            //            插入有效时间
-            Duration duration = Duration.between(o.getCreateTime(), o.getEndTime());
-            o.setValidTime(String.valueOf((duration.toMinutes() / 60)) + "小时");
-            //            插入社区名称
-            //            获取社区id
-            try {
-                Long communityId = houseService.getById(o.getHouseId()).getCommunityId();
-                o.setCommunityName(communityService.getById(communityId).getCommunityName());
-            } catch (Exception e) {
-                throw new ServerException("不存在房屋或者该社区！" + e.getMessage());
-            }
-            //            根据adminId获取授权人
-            SysUserInfoEntity user = sysUserService.getUserInfoByAdminId(o.getUserId());
-            if (user == null)
-                new ServerException("不存在该用户！");
-            else {
-                o.setOwner(user.getRealName());
-            }
+
         });
 
         return vos;
@@ -84,7 +92,11 @@ public class VisitorInvitationServiceImpl extends BaseServiceImpl<VisitorInvitat
 
     @Override
     public PageResult<VisitorInvitationVO> page(VisitorInvitationQuery query) {
-        IPage<VisitorInvitation> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+        LambdaQueryWrapper<VisitorInvitation> wrapper = getWrapper(query);
+//        if (query.getCommunityName() != null)
+//            if (!query.getActivityName().isBlank() && !query.getCommunityName().isEmpty())
+//                wrapper.eq(VisitorInvitation::gec, query.getCommunityName());
+        IPage<VisitorInvitation> page = baseMapper.selectPage(getPage(query), wrapper);
         List<VisitorInvitationVO> vos = VisitorInvitationConvert.INSTANCE.convertList(page.getRecords());
         return new PageResult<>(addInfo(vos), page.getTotal());
     }
