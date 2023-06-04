@@ -4,6 +4,7 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.CarConvert;
 import com.soft2242.one.convert.CarportConvert;
+import com.soft2242.one.dao.CarDao;
 import com.soft2242.one.entity.Car;
 import com.soft2242.one.entity.Carport;
 import com.soft2242.one.query.CarQuery;
@@ -34,6 +35,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CarController {
     private final CarService carService;
+    private final CarDao carDao;
 
     @GetMapping("page")
     @Operation(summary = "车辆分页")
@@ -56,6 +58,13 @@ public class CarController {
     public Result<CarVO> get(@PathVariable("id") Long id) {
         Car entity = carService.getById(id);
         return Result.ok(CarConvert.INSTANCE.convert(entity));
+    }
+    @GetMapping("/VO/{id}")
+    @Operation(summary = "车辆VO信息")
+    //@PreAuthorize("hasAuthority('sys:car:info')")
+    public Result<CarVO> vo(@PathVariable("id") Long id) {
+        CarVO entity = carDao.getInfo(id);
+        return Result.ok(entity);
     }
 
     @PostMapping

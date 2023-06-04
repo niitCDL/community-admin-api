@@ -2,12 +2,9 @@ package com.soft2242.one.service;
 
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.BaseService;
-import com.soft2242.one.entity.Carport;
 import com.soft2242.one.entity.ParkRecord;
-import com.soft2242.one.query.ParkQuery;
 import com.soft2242.one.query.ParkRecordQuery;
 import com.soft2242.one.vo.ParkRecordVO;
-import com.soft2242.one.vo.ParkVO;
 
 import java.util.List;
 
@@ -32,4 +29,5 @@ public interface ParkRecordService extends BaseService<ParkRecord> {
      * @return list
      */
     List<ParkRecordVO> getList();
+    ParkRecordVO getInfo(Long id);
 }

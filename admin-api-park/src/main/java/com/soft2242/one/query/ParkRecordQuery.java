@@ -15,6 +15,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "停车记录查询")
 public class ParkRecordQuery extends Query {
+    @Schema(description = "主键id")
+    private Long id;
     @Schema(description = "停车场名称")
     private String parkName;
     @Schema(description = "车牌号")

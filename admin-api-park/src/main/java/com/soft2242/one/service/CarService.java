@@ -33,6 +33,7 @@ public interface CarService extends BaseService<Car> {
      * @return list
      */
     List<CarVO> getList();
+    CarVO getInfo(Long id);
 
     /**
      * 新增车位

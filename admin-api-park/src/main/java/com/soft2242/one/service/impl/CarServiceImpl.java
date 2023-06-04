@@ -37,6 +37,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class CarServiceImpl extends BaseServiceImpl<CarDao, Car> implements CarService {
+    private  final CarDao carDao;
 
     private final CustomExcelUtils customExcelUtils;
     @Override
@@ -66,10 +67,21 @@ public class CarServiceImpl extends BaseServiceImpl<CarDao, Car> implements CarS
     }
 
     @Override
+    public CarVO getInfo(Long id) {
+        CarQuery query = new CarQuery();
+        CarVO carVO = carDao.getInfo(id);
+        return carVO;
+    }
+
+
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void save(CarVO vo) {
         Car entity = CarConvert.INSTANCE.convert(vo);
         baseMapper.insert(entity);
+
+
     }
 
     @Override
@@ -77,6 +89,7 @@ public class CarServiceImpl extends BaseServiceImpl<CarDao, Car> implements CarS
     public void update(CarVO vo) {
         Car entity = CarConvert.INSTANCE.convert(vo);
         updateById(entity);
+        baseMapper.updatePhone(vo.getUserId(),vo.getPhone());
     }
 
     @Override

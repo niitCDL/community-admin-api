@@ -22,5 +22,16 @@
         AND t1.type = #{carportName}
     </if>
 </select>
+    <select id="getInfo" resultType="com.soft2242.one.vo.ParkRecordVO">
+        SELECT t1.* , t2.door_name ,t3.licence ,t4.park_name
+        FROM t_park_record t1
+        LEFT JOIN t_door t2 ON t2.id = t1.door_id
+        LEFT JOIN t_car t3 ON t3.id = t1.car_id
+        LEFT JOIN t_park t4 ON t4.id = t1.park_id
+        WHERE	t1.deleted = 0
+        <if test="id!=null">
+            AND t1.id = #{id}
+        </if>
+    </select>
 
 </mapper>
