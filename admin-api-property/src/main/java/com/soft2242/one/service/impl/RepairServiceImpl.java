@@ -45,7 +45,6 @@ public class RepairServiceImpl extends BaseServiceImpl<RepairDao, RepairEntity> 
         IPage<RepairEntity> page = getPage(query);
         map.put("page", page);
         map.put("communityId", MyUtils.convertToString(query.getCommunityId()));
-        LambdaQueryWrapper<RepairEntity> wrapper = getWrapper(query);
         List<RepairVO> list = repairDao.getList(map);
         return new PageResult<>(list, page.getTotal());
     }

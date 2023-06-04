@@ -49,8 +49,6 @@ public class NoticeController {
 
     private final NoticeService noticeService;
     private final NoticeReaderService noticeReaderService;
-    private final SysUserService sysUserService;
-    private final ICommunityService communityService;
     @GetMapping("page")
     @Operation(summary = "分页")
 //    @PreAuthorize("hasAuthority('sys:user:page')")

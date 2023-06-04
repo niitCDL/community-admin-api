@@ -38,7 +38,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ComplaintController {
     private final ComplaintService complaintService;
-    private final ICommunityService communityService;
     private final SysUserService sysUserService;
     @GetMapping("page")
     @Operation(summary = "分页")
