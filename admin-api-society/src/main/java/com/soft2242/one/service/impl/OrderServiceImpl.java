@@ -9,6 +9,7 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.OrderConvert;
 import com.soft2242.one.dao.OrderMapper;
+import com.soft2242.one.entity.Activity;
 import com.soft2242.one.entity.House;
 import com.soft2242.one.entity.Order;
 import com.soft2242.one.query.OrderQuery;
@@ -21,17 +22,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+import org.apache.poi.ss.formula.functions.Odd;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import com.soft2242.one.service.IHouseService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 服务实现类
+ *
  * @author ysh
  * @since 2023-05-25
  */
@@ -54,6 +58,24 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         return create.toString().substring(0, 10) + "~" + end.toString().substring(0, 10);
     }
 
+    private String orderTypeSelector(Integer id) {
+//        订单类型 0：购买车位订单1：租赁车位订单2：停车订单3：水费4：电费5：物业费
+        String name = "";
+        if (id == 0)
+            name = "购车位订单";
+        if (id == 1)
+            name = "租车车位订单";
+        if (id == 2)
+            name = "停车订单";
+        if (id == 3)
+            name = "水费";
+        if (id == 4)
+            name = "电费";
+        if (id == 5)
+            name = "物业费";
+        return name;
+    }
+
     private List<OrderVO> changeVO(List<OrderVO> orderVOS) {
         orderVOS.forEach(orderVO -> {
             House house = houseService.getById(orderVO.getHouseId());
@@ -64,8 +86,9 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 orderVO.setOTime(changeForm(orderVO.getCreateTime(), orderVO.getEndTime()));
 //                计算价格
                 orderVO.setOrderMoney(
-                        Double.parseDouble(orderVO.getPrice())* orderVO.getAmount()
+                        Double.parseDouble(orderVO.getPrice()) * orderVO.getAmount()
                 );
+                orderVO.setOrderTypeName(orderTypeSelector(orderVO.getOrderType()));
             }
         });
         return orderVOS;
@@ -74,15 +97,50 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
 
     @Override
     public PageResult<OrderVO> page(OrderQuery query) {
-        IPage<Order> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+        LambdaQueryWrapper<Order> wrapper = getWrapper(query);
+        System.out.println(query);
+////        根据活动名查询
+//        if (query.getCreateTime() != null)
+//            if (!query.getActivityName().isBlank() && !query.getActivityName().isEmpty())
+//                wrapper.eq(Activity::getActivityName, query.getActivityName());
+//        时间是否为空
+        if (!(query.getCreateTime() == null && query.getEndTime() == null))
+            if (!query.getCreateTime().isBlank() && !query.getEndTime().isEmpty()) {
+//            格式
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                System.out.println(query.getCreateTime().toString());
+                LocalDateTime createTime = LocalDateTime.parse(query.getCreateTime(), dateTimeFormatter);
+                LocalDateTime endTime = LocalDateTime.parse(query.getEndTime(), dateTimeFormatter);
+                System.out.println(createTime);
+                System.out.println(endTime);
+
+                wrapper.or().between(Order::getCreateTime, createTime, endTime)
+                        .and(a -> a.between(Order::getEndTime, createTime, endTime));
+            }
+        IPage<Order> page = baseMapper.selectPage(getPage(query), wrapper);
         List<OrderVO> orderVOS = OrderConvert.INSTANCE.convertList(page.getRecords());
 //        VO进行多表查询插入连表字段：插入房屋表的房屋编号字段和小区字段
         return new PageResult<>(changeVO(orderVOS), page.getTotal());
+
     }
 
     @Override
     public PageResult<OrderVO> recordPage(OrderQuery query) {
         LambdaQueryWrapper<Order> wrapper = Wrappers.lambdaQuery();
+        if (!(query.getCreateTime() == null && query.getEndTime() == null))
+            if (!query.getCreateTime().isBlank() && !query.getEndTime().isEmpty()) {
+//            格式
+                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                System.out.println(query.getCreateTime().toString());
+                LocalDateTime createTime = LocalDateTime.parse(query.getCreateTime(), dateTimeFormatter);
+                LocalDateTime endTime = LocalDateTime.parse(query.getEndTime(), dateTimeFormatter);
+                System.out.println(createTime);
+                System.out.println(endTime);
+
+                wrapper.or().between(Order::getCreateTime, createTime, endTime)
+                        .and(a -> a.between(Order::getEndTime, createTime, endTime));
+            }
+
 //        根据订单类型抄表水电费订单
         wrapper.eq(Order::getOrderType, 3).or().eq(Order::getOrderType, 4);
         IPage<Order> page = baseMapper.selectPage(getPage(query), wrapper);
@@ -117,13 +175,11 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
         ExcelUtils.readAnalysis(file, OrderExcelVO.class, new ExcelFinishCallBack<>() {
             @Override
             public void doAfterAllAnalysed(List<OrderExcelVO> result) {
-                System.out.println(result);
                 saveUser(result);
             }
 
             @Override
             public void doSaveBatch(List<OrderExcelVO> result) {
-                System.out.println(result);
                 saveUser(result);
             }
 
@@ -139,11 +195,10 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     @Override
     @SneakyThrows
     public void export() {
+
         List<Order> list = list(Wrappers.lambdaQuery(Order.class).eq(Order::getStatus, 0));
 
-        System.out.println(list);
         List<OrderExcelVO> orderExcelVOS = OrderConvert.INSTANCE.convertList2(list);
-        System.out.println(orderExcelVOS);
         ExcelUtils.excelExport(OrderExcelVO.class, "order_export", "sheet1", orderExcelVOS);
     }
 

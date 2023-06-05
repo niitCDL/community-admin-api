@@ -16,4 +16,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "活动分类查询")
 public class ActivityTypeQuery extends Query {
+    @Schema(description = "活动类型名称")
+    private String TypeName;
 }

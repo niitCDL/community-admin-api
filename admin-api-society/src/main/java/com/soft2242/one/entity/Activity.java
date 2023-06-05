@@ -116,6 +116,10 @@ public class Activity {
 	 */
 	private LocalDateTime updateTime;
 
+//	活动封面
+	private String cover;
+
+
 	public Long getId() {
 		return id;
 	}

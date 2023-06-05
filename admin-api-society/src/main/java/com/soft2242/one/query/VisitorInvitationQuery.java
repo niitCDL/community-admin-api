@@ -14,4 +14,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Schema(description = "访客开门记录查询")
 public class VisitorInvitationQuery extends Query {
+    @Schema(description = "所属社区")
+    private String communityName;
 }

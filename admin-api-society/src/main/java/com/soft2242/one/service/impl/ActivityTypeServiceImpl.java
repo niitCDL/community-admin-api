@@ -8,6 +8,7 @@ import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
 import com.soft2242.one.convert.ActivityTypeConvert;
 import com.soft2242.one.dao.ActivityTypeDao;
+import com.soft2242.one.entity.Activity;
 import com.soft2242.one.entity.ActivityType;
 
 import com.soft2242.one.query.ActivityTypeQuery;
@@ -34,7 +35,13 @@ public class ActivityTypeServiceImpl extends BaseServiceImpl<ActivityTypeDao, Ac
 
     @Override
     public PageResult<ActivityTypeVO> page(ActivityTypeQuery query) {
-        IPage<ActivityType> page = baseMapper.selectPage(getPage(query), getWrapper(query));
+        LambdaQueryWrapper<ActivityType> wrapper = getWrapper(query);
+        System.out.println(query);
+        if (query.getTypeName() != null)
+            if (!query.getTypeName().isBlank() && !query.getTypeName().isEmpty())
+                wrapper.eq(ActivityType::getName, query.getTypeName());
+
+        IPage<ActivityType> page = baseMapper.selectPage(getPage(query),wrapper);
         List<ActivityTypeVO> activityTypeVOS = ActivityTypeConvert.INSTANCE.convertList(page.getRecords());
 //        配置小区名字
         activityTypeVOS.forEach(a -> a.setCommunityName(communityService.getById(a.getCommunityId()).getCommunityName()));
