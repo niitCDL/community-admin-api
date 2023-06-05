@@ -53,7 +53,7 @@ public class NoticeServiceImpl extends BaseServiceImpl<NoticeDao, NoticeEntity> 
         }
         IPage<NoticeEntity> page = getPage(query);
 //        map.put("queryWrapper",page);
-        map.put("page", getWrapper(query));
+        map.put("page", page);
         if (ArrayUtils.isNotEmpty(query.getCreateTime())) {
             Date begin = ArrayUtils.isNotEmpty(query.getCreateTime()) ? query.getCreateTime()[0] : null;
             Date end = ArrayUtils.isNotEmpty(query.getCreateTime()) ? query.getCreateTime()[1] : null;

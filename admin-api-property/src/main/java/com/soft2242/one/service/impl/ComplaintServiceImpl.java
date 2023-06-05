@@ -48,7 +48,7 @@ public class ComplaintServiceImpl extends BaseServiceImpl<ComplaintDao, Complain
         }
         IPage<ComplaintEntity> page = getPage(query);
 //        map.put("queryWrapper",page);
-        map.put("page",getWrapper(query));
+        map.put("page",page);
         map.put("communityId", MyUtils.convertToString(query.getCommunityId()));
         if (ArrayUtils.isNotEmpty(query.getCreateTime())){
             Date begin = ArrayUtils.isNotEmpty(query.getCreateTime()) ? query.getCreateTime()[0] : null;

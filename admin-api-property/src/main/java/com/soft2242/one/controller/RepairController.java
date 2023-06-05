@@ -5,8 +5,10 @@ import com.soft2242.one.base.common.utils.Result;
 import com.soft2242.one.convert.RepairConvert;
 import com.soft2242.one.entity.Community;
 import com.soft2242.one.entity.RepairEntity;
+import com.soft2242.one.entity.RepairRecordEntity;
 import com.soft2242.one.query.RepairQuery;
 import com.soft2242.one.service.ICommunityService;
+import com.soft2242.one.service.RepairRecordService;
 import com.soft2242.one.service.RepairService;
 import com.soft2242.one.system.entity.SysUserInfoEntity;
 import com.soft2242.one.system.service.SysUserService;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -38,7 +41,7 @@ import java.util.List;
 public class RepairController {
     private final RepairService repairService;
     private final SysUserService sysUserService;
-    private final ICommunityService communityService;
+    private final RepairRecordService repairRecordService;
     @GetMapping("page")
     @Operation(summary = "分页")
 //    @PreAuthorize("hasAuthority('soft2242:repair:page')")
@@ -81,12 +84,22 @@ public class RepairController {
         return Result.ok();
     }
 
+    /**
+     * 这里的修改等价与分配
+     * @param vo
+     * @return
+     */
     @PutMapping
     @Operation(summary = "修改")
 //    @PreAuthorize("hasAuthority('soft2242:repair:update')")
     public Result<String> update(@RequestBody @Valid RepairVO vo){
         repairService.update(vo);
+        String employees = vo.getEmployees();
 
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("repairId", vo.getId());
+        map.put("eIds",vo.getEmployeeIds());
+        repairRecordService.sOrUOrD(map);
         return Result.ok();
     }
 
