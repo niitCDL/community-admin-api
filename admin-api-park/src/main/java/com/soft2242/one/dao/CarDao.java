@@ -6,6 +6,7 @@ import com.soft2242.one.entity.Carport;
 import com.soft2242.one.vo.CarVO;
 import com.soft2242.one.vo.CarportVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -20,4 +21,6 @@ import java.util.Map;
 public interface CarDao extends BaseDao<Car> {
 
     List<CarVO> getList(Map<String,Object> params);
+    CarVO getInfo(Long id);
+    void updatePhone(@Param("id") Long id,@Param("phone") String phone);
 }

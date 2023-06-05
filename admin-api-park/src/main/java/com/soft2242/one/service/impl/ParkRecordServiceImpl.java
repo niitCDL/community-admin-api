@@ -4,20 +4,13 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.soft2242.one.base.common.myexcel.CustomExcelUtils;
 import com.soft2242.one.base.common.utils.PageResult;
 import com.soft2242.one.base.mybatis.service.impl.BaseServiceImpl;
-import com.soft2242.one.convert.CarportConvert;
 import com.soft2242.one.convert.ParkRecordConvert;
-import com.soft2242.one.dao.CarportDao;
 import com.soft2242.one.dao.ParkRecordDao;
-import com.soft2242.one.entity.Carport;
 import com.soft2242.one.entity.ParkRecord;
-import com.soft2242.one.query.CarportQuery;
 import com.soft2242.one.query.ParkRecordQuery;
-import com.soft2242.one.service.CarportService;
 import com.soft2242.one.service.ParkRecordService;
-import com.soft2242.one.vo.CarportVO;
 import com.soft2242.one.vo.ParkRecordVO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,6 +28,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class ParkRecordServiceImpl extends BaseServiceImpl<ParkRecordDao, ParkRecord> implements ParkRecordService {
+    private ParkRecordDao dao;
 
     @Override
     public PageResult<ParkRecordVO> page(ParkRecordQuery query) {
@@ -62,6 +56,13 @@ public class ParkRecordServiceImpl extends BaseServiceImpl<ParkRecordDao, ParkRe
 
         return ParkRecordConvert.INSTANCE.convertList(entityList);
     }
+    @Override
+    public ParkRecordVO getInfo(Long id) {
+//        ParkRecordQuery query = new ParkRecordQuery();
+        ParkRecordVO entityList = dao.getInfo(id);
+
+        return entityList;
+    }
     /**
      * 查询条件构造
      *
@@ -74,4 +75,5 @@ public class ParkRecordServiceImpl extends BaseServiceImpl<ParkRecordDao, ParkRe
         wrapper.like(StrUtil.isNotBlank(query.getParkName()), ParkRecord::getType, query.getParkName());
         return wrapper;
     }
+
 }

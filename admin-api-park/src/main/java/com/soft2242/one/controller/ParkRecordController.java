@@ -30,7 +30,7 @@ import java.util.List;
  * @Date 2023/5/30 09:14
  */
 @RestController
-@RequestMapping("sys/parkRecord")
+@RequestMapping("sys/record")
 @Tag(name="停车记录")
 @AllArgsConstructor
 public class ParkRecordController {
@@ -58,5 +58,12 @@ public class ParkRecordController {
     public Result<ParkRecordVO> get(@PathVariable("id") Long id) {
         ParkRecord entity = parkRecordService.getById(id);
         return Result.ok(ParkRecordConvert.INSTANCE.convert(entity));
+    }
+    @GetMapping("/info/{id}")
+    @Operation(summary = "停车记录VO信息")
+    //@PreAuthorize("hasAuthority('sys:building:info')")
+    public Result<ParkRecordVO> info(@PathVariable("id") Long id) {
+        ParkRecordVO entity = parkRecordService.getInfo(id);
+        return Result.ok(entity);
     }
 }

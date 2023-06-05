@@ -17,4 +17,5 @@ import java.util.Map;
 @Mapper
 public interface ParkRecordDao extends BaseDao<ParkRecord> {
     List<ParkRecordVO> getList(Map<String,Object> params);
+    ParkRecordVO getInfo(Long id);
 }
